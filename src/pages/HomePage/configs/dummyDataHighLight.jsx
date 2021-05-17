@@ -11,6 +11,6 @@ function dummyDataHighlight(title, path, createdDate = new Date()){
 
 export default [
     dummyDataHighlight("Trang web này cực xịn", "google.com"),
-    dummyDataHighlight("Link fb này cực xinh", "google.com"),
+    dummyDataHighlight("Link fb này cực xinh", "https://www.facebook.com/hoaikhang.230798"),
     dummyDataHighlight("Trang web này cực xịn", "google.com"),
 ]

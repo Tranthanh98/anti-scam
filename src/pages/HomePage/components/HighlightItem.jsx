@@ -9,7 +9,7 @@ function HighlightItem({
     createdDate
 }) {
     const _goto = (item) =>{
-        alert("còn cái nịt")
+        alert("bạn này de thuong ne:"+item.path);
     }
     return (
             <Box cursor="pointer" onClick={() => _goto(id)} margin="8px 0">
