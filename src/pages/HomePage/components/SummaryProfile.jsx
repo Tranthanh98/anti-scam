@@ -34,7 +34,7 @@ function SummaryProfile(props) {
                     <Avatar>HK</Avatar>
                 </Box>
                 <Box margin="8px 0" 
-                    fontWeight="bold" 
+                    // fontWeight="bold" 
                     color="primary.main" 
                     cursor="pointer" 
                     display="flex" 

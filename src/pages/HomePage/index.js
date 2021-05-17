@@ -173,7 +173,9 @@ function HomePage(props) {
                                     return (
                                         <ListItem className={menuSelected.id == menu.id ? classes.selected : null} onClick={() => _goTo(menu)} button key={index}>
                                             <ListItemIcon>{menu.icon}</ListItemIcon>
-                                            <Box style={{fontWeight:"bold", }}>{menu.title}</Box>
+                                            <Box 
+                                                // style={{fontWeight:"bold", }}
+                                                >{menu.title}</Box>
                                         </ListItem>
                                     )
                                 }

@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         alignItems:"center",
         margin:"8px 0" ,
-        fontWeight:"bold" ,
+        // fontWeight:"bold" ,
         // width:"100%" 
         height:"100px",
         display:"flex" ,

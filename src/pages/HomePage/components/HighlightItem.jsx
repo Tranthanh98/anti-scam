@@ -13,7 +13,10 @@ function HighlightItem({
     }
     return (
             <Box cursor="pointer" onClick={() => _goto(id)} margin="8px 0">
-                <Box fontWeight="bold" fontSize="20px" color="primary.main">{title}</Box>
+                <Box 
+                // fontWeight="bold" 
+                fontSize="20px"
+                 color="primary.main">{title}</Box>
                 <Box>Ngày viết: {formateDateTime(createdDate)}</Box>
             </Box>
     )

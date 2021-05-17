@@ -44,7 +44,7 @@ function ReportItem(props) {
                     <Box className={classes.title}
                         margin="8px 0"
                         fontSize="20px"
-                        fontWeight={theme.typography.fontWeightBold}
+                        // fontWeight={theme.typography.fontWeightBold}
                     >
                         {title}
                     </Box>
@@ -53,20 +53,26 @@ function ReportItem(props) {
                             <Box textAlign="start" display="flex" margin="8px 0">
                                 {type.label}: {
                                     type.value === 3 ? <a style={{marginLeft:4}} href={object} target="_blank">{object}</a> : 
-                                        <Box marginLeft="4px" fontWeight="bold" color="error.main">{object}</Box>
+                                        <Box marginLeft="4px" 
+                                            // fontWeight="bold"
+                                            color="error.main">{object}</Box>
                                 }
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <Box textAlign="start" display="flex" margin="8px 0">
-                                Người báo: <Box marginLeft="4px" fontWeight="bold" color="success.main">{writer}</Box>
+                                Người báo: <Box marginLeft="4px" 
+                                    // fontWeight="bold" 
+                                    color="success.main">{writer}</Box>
                             </Box>
                         </Grid>
                     </Grid>
                     <Grid container spacing={1}>
                         <Grid item xs={12} sm={6}>
                             <Box textAlign="start" display="flex" margin="8px 0">
-                                Lượt review: <Box marginLeft="4px" fontWeight="bold" color="warning.main">{reviewNumber}</Box>
+                                Lượt review: <Box marginLeft="4px" 
+                                                // fontWeight="bold" 
+                                                color="warning.main">{reviewNumber}</Box>
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={6}>
