@@ -5,12 +5,13 @@ const theme = createMuiTheme({
         primary :{
             main:"#608fb9",
             light:"#608fb9",
-            dark:"#ccc",
-            selected:"#ccc"
+            dark:"#13528a",
+            background:"#000228", //màu header trang report
+            selected:"#ccc"//màu được chọn
         },
         secondary:{
             main:"#41cc51",
-            light:"#41cc51",
+            light:"#aef7b6",
             dark:"#41cc51"
         },
         // error:{
@@ -25,5 +26,9 @@ const theme = createMuiTheme({
     MuiButton: {
         size: 'small',
     },
+    MuiTextField:{
+        size:"small",
+        variant:"outlined"
+    }
 })
 export default theme;
