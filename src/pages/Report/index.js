@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Grid, makeStyles, TextField } from '@material-ui/core'
+import { Box, Button, Card, CardContent, CardHeader, Grid, makeStyles, TextField } from '@material-ui/core'
 import { Pagination } from '@material-ui/lab'
 import React, { Component, useEffect, useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
@@ -53,8 +53,6 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         alignItems:"center",
         margin:"8px 0" ,
-        // fontWeight:"bold" ,
-        // width:"100%" 
         height:"100px",
         display:"flex" ,
         justifyContent:"center",
@@ -89,10 +87,13 @@ function ReportPage (props) {
     const isMobile = window.mobileCheck();
     return (
         <Box>
-            <div className={classes.headerCss}>
+            {/* <div className={classes.headerCss}>
                 CÁC TRANG WEB, SỐ TÀI KHOẢN BỊ BÁO CÁO XẤU
-            </div>
+            </div> */}
             <Card>
+                <CardHeader
+                    title="CÁC TRANG WEB, SỐ TÀI KHOẢN BỊ BÁO CÁO XẤU"
+                />
                 <CardContent>
                     <Grid container>
                         <Grid item xs={12}>
@@ -137,16 +138,6 @@ function ReportPage (props) {
                     </Grid>
                 </CardContent>
             </Card>
-            <Box margin="16px" display="flex" justifyContent="center">
-                <Pagination 
-                    size={isMobile ? "small":"medium"} 
-                    // page={2} 
-                    count={10} 
-                    color="secondary"
-                    variant="outlined" 
-                    shape="rounded" 
-                />
-            </Box>
             <Box>
                 {
                     dummyDataReport.map((data, index)=>{
@@ -158,6 +149,16 @@ function ReportPage (props) {
                         )
                     })
                 }
+            </Box>
+            <Box margin="16px" display="flex" justifyContent="center">
+                <Pagination 
+                    size={isMobile ? "small":"medium"} 
+                    // page={2} 
+                    count={10} 
+                    color="secondary"
+                    variant="outlined" 
+                    shape="rounded" 
+                />
             </Box>
         </Box>
     )

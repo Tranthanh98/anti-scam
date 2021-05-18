@@ -7,12 +7,14 @@ const theme = createMuiTheme({
             light:"#608fb9",
             dark:"#13528a",
             background:"#000228", //màu header trang report
-            selected:"#ccc"//màu được chọn
+            selected:"#ccc", //màu được chọn,
+            backgroundBody:"#f1f1f18a"
         },
         secondary:{
             main:"#41cc51",
             light:"#aef7b6",
-            dark:"#41cc51"
+            dark:"#41cc51",
+            selected:"#50b94d"
         },
         // error:{
         //     main:"#f55a4e"
