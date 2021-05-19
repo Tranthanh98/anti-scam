@@ -1,5 +1,9 @@
 const types = [
     {
+        value:0,
+        label: "Tất cả"
+    },
+    {
         value:1,
         label: "Trang web"
     },

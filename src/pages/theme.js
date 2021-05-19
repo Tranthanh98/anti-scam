@@ -16,6 +16,7 @@ const theme = createMuiTheme({
             dark:"#41cc51",
             selected:"#50b94d"
         },
+        buttonCancel:"#fff"
         // error:{
         //     main:"#f55a4e"
         // },

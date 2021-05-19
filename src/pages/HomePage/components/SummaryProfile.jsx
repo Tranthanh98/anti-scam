@@ -23,7 +23,8 @@ const userProfile = {
     userName:"Bạn xinh đẹp",
     email:"hk@gmail.com",
     joinedDate:new Date(),
-    totalPosts: 12
+    totalPosts: 12,
+    imageLink:"/file/getFileById/1"
 }
 function SummaryProfile(props) {
     const classes = useStyles();
@@ -31,7 +32,7 @@ function SummaryProfile(props) {
         <Card>
             <CardContent>
                 <Box display="flex" justifyContent="center">
-                    <Avatar>HK</Avatar>
+                    <Avatar alt={userProfile.userName} src={userProfile.imageLink}/>
                 </Box>
                 <Box margin="8px 0" 
                     // fontWeight="bold" 

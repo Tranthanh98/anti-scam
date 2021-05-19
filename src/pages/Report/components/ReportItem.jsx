@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Box, Card, CardContent, CardHeader, Grid, makeStyles, Typography, useTheme } from '@material-ui/core'
+import { Box, Card, CardContent, Grid, makeStyles, useTheme } from '@material-ui/core';
+import React from 'react';
 import { formateDateTime } from '../../../general/helper';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const useStyles = makeStyles(theme => ({
     wrapper: {
@@ -12,7 +12,6 @@ const useStyles = makeStyles(theme => ({
         overflow: "hidden",
         minWidth: "100%",
         // height: "30px" ,
-        overflow: "hidden",
         // whiteSpace: "nowrap",
         display: "inline-block",
         textAlign: "start",
@@ -68,14 +67,15 @@ function ReportItem(props) {
                         </Grid>
                     </Grid>
                     <Grid container spacing={1}>
-                        <Grid item xs={12} sm={6}>
-                            <Box textAlign="start" display="flex" margin="8px 0">
-                                Lượt review: <Box marginLeft="4px" 
+                        <Grid item xs={4}>
+                            <Box textAlign="start" display="flex" margin="8px 0" alignItems="center">
+                                <VisibilityIcon/>
+                                 <Box marginLeft="4px" 
                                                 // fontWeight="bold" 
                                                 color="warning.main">{reviewNumber}</Box>
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={8}>
                             <Box textAlign="start" margin="8px 0">
                                 Ngày báo: {formateDateTime(createdDate)}
                             </Box>

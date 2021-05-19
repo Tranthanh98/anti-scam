@@ -1,41 +1,41 @@
-import { FormControl, InputBase, InputLabel, MenuItem, Select, TextField, withStyles } from '@material-ui/core'
-import React, { Component } from 'react';
+import { InputBase, MenuItem, TextField, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
-const BootstrapInput = withStyles((theme) => ({
-    root: {
-        'label + &': {
-            marginTop: theme.spacing(3),
-        },
-    },
-    input: {
-        borderRadius: 4,
-        position: 'relative',
-        backgroundColor: theme.palette.background.paper,
-        border: '1px solid #ced4da',
-        fontSize: 16,
-        padding: '10px 26px 10px 12px',
-        transition: theme.transitions.create(['border-color', 'box-shadow']),
-        // Use the system font instead of the default Roboto font.
-        fontFamily: [
-            '-apple-system',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-        ].join(','),
-        '&:focus': {
-            borderRadius: 4,
-            borderColor: '#80bdff',
-            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-        },
-    },
-}))(InputBase);
+// const BootstrapInput = withStyles((theme) => ({
+//     root: {
+//         'label + &': {
+//             marginTop: theme.spacing(3),
+//         },
+//     },
+//     input: {
+//         borderRadius: 4,
+//         position: 'relative',
+//         backgroundColor: theme.palette.background.paper,
+//         border: '1px solid #ced4da',
+//         fontSize: 16,
+//         padding: '10px 26px 10px 12px',
+//         transition: theme.transitions.create(['border-color', 'box-shadow']),
+//         // Use the system font instead of the default Roboto font.
+//         fontFamily: [
+//             '-apple-system',
+//             'BlinkMacSystemFont',
+//             '"Segoe UI"',
+//             'Roboto',
+//             '"Helvetica Neue"',
+//             'Arial',
+//             'sans-serif',
+//             '"Apple Color Emoji"',
+//             '"Segoe UI Emoji"',
+//             '"Segoe UI Symbol"',
+//         ].join(','),
+//         '&:focus': {
+//             borderRadius: 4,
+//             borderColor: '#80bdff',
+//             boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+//         },
+//     },
+// }))(InputBase);
 
 class SelectOption extends Component {
     _onChangeSelect = (e) => {
@@ -49,35 +49,12 @@ class SelectOption extends Component {
             defaultValue,
             options,
             multiple,
-            classes,
             label,
             width,
             variant
         } = this.props;
         console.log("variant:", variant);
         return (
-            // <FormControl style={{minWidth:width}} className={classes.sizeSelect}>
-            //     {label ? <InputLabel id="label-select-option">{label}</InputLabel> :null }
-            //     <Select
-            //         labelId="label-select-option"
-            //         value={value}
-            //         onChange={this._onChangeSelect}
-            //         defaultValue={defaultValue ?? undefined}
-            //         inputProps={{ 'aria-label': 'Without label' }}
-            //         variant={variant}
-            //         multiple={multiple}
-            //         input={<BootstrapInput />}
-            //         fullWidth
-            //     >
-            //         {
-            //             options.map(i => {
-            //                 return (
-            //                     <MenuItem key={i.value} value={i.value}>{i.label}</MenuItem>
-            //                 )
-            //             })
-            //         }
-            //     </Select>
-            // </FormControl>
             <TextField
                 id="outlined-select-currency"
                 select
@@ -90,7 +67,7 @@ class SelectOption extends Component {
                 size="small"
             >
                 {options.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
+                    <MenuItem key={option.value} value={option}>
                         {option.label}
                     </MenuItem>
                 ))}

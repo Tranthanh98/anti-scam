@@ -10,6 +10,8 @@ import RegisterPage from './pages/Register';
 import theme from './pages/theme';
 import logo from './logo.svg';
 import './App.css';
+import BaseModal from './components/BaseModal';
+import BaseDrawer from './components/BaseDrawer';
 
 window.mobileCheck = function () {
   return window.innerWidth <= 960 && window.innerHeight <= 1024;
@@ -28,6 +30,8 @@ function App() {
               <Route path="/" render={prop => <HomePage {...prop} isMobile={isMobile}/>}/>
             </Switch>
           </Router>
+          <BaseModal/>
+          <BaseDrawer/>
         </ThemeProvider>
 
       </div>

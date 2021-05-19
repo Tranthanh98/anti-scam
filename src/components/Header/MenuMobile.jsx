@@ -1,4 +1,4 @@
-import { Box, Drawer, IconButton, makeStyles, useTheme } from '@material-ui/core';
+import { Avatar, Box, Drawer, IconButton, makeStyles, useTheme } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -102,6 +102,10 @@ const useStyle = makeStyles(theme => ({
         // width:"100%",
         display:"flex",
         alignItems:"center"
+    },
+    logoAntiScam :{
+        width:"50px",
+        height:"50px"
     }
 }));
 
@@ -125,7 +129,7 @@ function MenuMobile(props) {
     const menuSelected = useSelector(state => state.selectMenu);
     const theme = useTheme();
     return (
-        <Box className={classes.boxShadowHeader} position="fixed" width="100%" height="50px">
+        <Box className={classes.boxShadowHeader} position="fixed" width="100%" height="56px">
             <Box padding="0 12px" display="flex" justifyContent="space-between" alignItems="center" width="100%">
                 <MenuIcon style={{color:"white"}} onClick={_handleDrawerOpen}/>
                 <img src={logoText} height="20px" />
@@ -143,7 +147,8 @@ function MenuMobile(props) {
             >
                 <Box display="flex" className={classes.drawerHeader}>
                     <Box display="flex">
-                        <img src={logo} width="50px" height="auto" />
+                        <Avatar src={logo} variant="square" alt="AntiScam" className={classes.logoAntiScam}/>
+                        {/* <img src={logo} width="50px" height="auto" /> */}
                         <Box
                             display="flex"
                             justifyContent="center"

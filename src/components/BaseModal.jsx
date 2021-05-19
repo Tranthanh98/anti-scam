@@ -1,84 +1,66 @@
-import Drawer from '@material-ui/core/Drawer';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { useState } from 'react';
+import { Box, DialogActions, DialogContent, makeStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeModalAct } from '../actions/modal.action';
 
-const useStyles = makeStyles({
+const useStytes = makeStyles(theme =>({
   rootModal:{
-    width:"100vw",
-  },
-  list: {
-    padding:"50px 10px 10px 10px",
-  },
-  titleSearch:{
-      display:"flex",
-      alignItems: "center",
-      justifyContent: "center"
-  },
-  search:{
-      marginTop:"10px",
-      display:"flex",
-      justifyContent:"center",
-      alignItems:"center",
-      position:"relative"
+    minWidth:"350px",
+    minHeight:"300px",
+    padding:theme.spacing(1)
   }
-});
+}))
 
-function useOnChangeInput(){
-  const [value, setValue] = useState("");
+function BaseModal() {
+  const classes = useStytes();
+  const modalData = useSelector(state => state.modalReducer);
 
-  const _onChange = (e) =>{
-    setValue(e.target.value);
+  const dispatch =  useDispatch();
+
+  const _handleClose = ()=>{
+    dispatch(closeModalAct());
   }
-  return [value, _onChange];
-}
 
-export default function BaseModal(props) {
-  const classes = useStyles();
-  const [state, setState] = React.useState({
-    left: false,
-    right:false
-  });
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-  const _closeModal = (event)=>{
-    toggleDrawer(props.dir, false)(event);
+  const _onCancel = (callback)=>{
+    typeof(callback) == "function" && callback();
+    _handleClose();
   }
-  let body = React.cloneElement(
-    props.modalBody,
-    {
-      closeModal: _closeModal
-    }
-  )
 
-  const list = (anchor) => (
-    <div
-      className={classes.list}
-      style={{width:props.width}}
-      role="presentation"
-    >
-        {body}
-    </div>
-  );
-
-  const _clickItemMenu = (event)=>{
-    toggleDrawer(props.dir, !state[props.dir])(event)
+  const _onConfirm = (callback)=>{
+    typeof(callback) == "function" && callback();
+    _handleClose();
   }
+
+  const body = modalData.body ? React.cloneElement(modalData.body, {
+    onClose : _handleClose,
+    onCancel: _onCancel,
+    onConfirm : _onConfirm
+  }) : <div></div>;
+
   return (
-    <div>
-      <React.Fragment>
-          <div onClick={_clickItemMenu}>
-            <i className={props.iconClassName}></i>
-          </div>
-          <Drawer anchor={props.dir} open={state[props.dir]} onClose={toggleDrawer(props.dir, false)}>
-            {list(props.dir)}
-          </Drawer>
-        </React.Fragment>
-    </div>
+    <Dialog  
+      onClose={_handleClose} 
+      {...modalData.style}
+      aria-labelledby="simple-dialog-title" 
+      open={modalData.isOpen}>
+      <DialogTitle id="simple-dialog-title">{modalData.title}</DialogTitle>
+      <DialogContent>
+        {body}
+      </DialogContent>
+      <DialogActions>
+          <Button onClick={_onCancel} variant="contained" color="inherit">
+            Hủy
+          </Button>
+          <Button onClick={_onConfirm} variant="contained" color="primary">
+            Xác nhận
+          </Button>
+      </DialogActions>
+    </Dialog>
   );
 }
+
+export default BaseModal;

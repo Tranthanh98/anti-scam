@@ -36,7 +36,10 @@ const useStyles = makeStyles((theme) => ({
         width:"100%"
     },
     selected:{
-        color: theme.palette.secondary.selected
+        color: theme.palette.secondary.selected,
+        borderBottomColor: theme.palette.secondary.selected,
+        borderBottomStyle :"solid",
+        borderBottomWidth: theme.spacing(0.5)
     }
 }));
 
@@ -53,19 +56,6 @@ export default function MenuHeader() {
         <div className={classes.boxShadowMenu}>
             <Box display="flex" padding="8px 8px 0 8px" justifyContent="space-between">
                 <img src={logoText} height="20px" />
-                {/* <Box display="flex" padding="8px 8px 0 8px" alignItems="flex-end">
-                    <Box marginRight="4px">Ngôn ngữ</Box>
-                    <select
-                        value={en.value}
-                        onChange={(value) => setEn(value)}
-                    >
-                        {
-                            languages.map(item => {
-                                return <option key={item.value}>{item.title}</option>
-                            })
-                        }
-                    </select>
-                </Box> */}
                 <SelectLanguage/>
             </Box>
             <Box display="flex" justifyContent="flex-end" width="100%" height="50px">
@@ -75,9 +65,9 @@ export default function MenuHeader() {
                             <Box key={index} onClick={()=>_goTo(menu)} className={clsx(classes.title, {
                                 [classes.selected] : menuSelected.id === menu.id
                             })}>
-                                <Box margin="0 8px">
+                                {/* <Box margin="0 8px">
                                     {menu.icon}
-                                </Box>
+                                </Box> */}
                                 {menu.title}
                             </Box>
                         )
