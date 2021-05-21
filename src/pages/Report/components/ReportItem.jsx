@@ -83,7 +83,12 @@ function ReportItem(props) {
                 {object}
               </a>
             ) : (
-              <Box marginLeft="4px" color="error.main">
+              <Box
+                textOverflow="ellipsis"
+                overflow="hidden"
+                marginLeft="4px"
+                color="error.main"
+              >
                 {object}
               </Box>
             )}
@@ -121,7 +126,7 @@ function ReportItem(props) {
             </Grid>
             <Grid
               item
-              xs={12}
+              xs={6}
               sm={6}
               md={3}
               style={{ display: "flex", alignItems: "center" }}
@@ -145,7 +150,7 @@ function ReportItem(props) {
             </Grid>
             <Grid
               item
-              xs={12}
+              xs={6}
               sm={6}
               md={3}
               style={{ display: "flex", alignItems: "center" }}
