@@ -11,7 +11,6 @@ class SelectOption extends PureComponent {
   render() {
     const { value, defaultValue, options, multiple, label, width, variant } =
       this.props;
-    console.log("variant:", variant);
     return (
       <TextField
         id="outlined-select-currency"

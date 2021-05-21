@@ -11,7 +11,7 @@ import {
 import { Pagination } from "@material-ui/lab";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { openDrawerAct } from "../../actions/drawer.action";
 import { openModalAct } from "../../actions/modal.action";
@@ -22,7 +22,7 @@ import { useInputText } from "../../general/CustomHook";
 import { SORT_DAY } from "../../general/enum";
 import HighLightReputation from "../HomePage/components/HighLightReputation";
 import SummaryProfile from "../HomePage/components/SummaryProfile";
-import route from "../route";
+import route, { Paths } from "../route";
 import BodyFormReport from "./components/BodyFormReport";
 import ProfileAnonymous from "./components/ProfileAnonymous";
 import ReportItem from "./components/ReportItem";
@@ -78,9 +78,17 @@ function ReportPage(props) {
   const _componentDidMount = () => {
     const { location } = history;
     let findLocation = route.find((i) => i.path === location.pathname);
-
-    dispatch(selectMenuAct(findLocation));
+    if (findLocation) {
+      dispatch(selectMenuAct(findLocation));
+    } else {
+      if (location.pathname === "/") {
+        let findLocationHome = route.find((i) => i.path === Paths.report);
+        dispatch(selectMenuAct(findLocationHome));
+      }
+    }
   };
+
+  const user = useSelector((state) => state.loginReducer);
 
   useEffect(() => {
     _componentDidMount();
@@ -179,7 +187,7 @@ function ReportPage(props) {
   const rightChildren = () => {
     return (
       <>
-        {false ? <SummaryProfile /> : <ProfileAnonymous />}
+        {user?.data?.isAuth ? <SummaryProfile /> : <ProfileAnonymous />}
         <Box margin="8px 0">
           <HighLightReputation />
         </Box>

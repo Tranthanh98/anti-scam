@@ -29,6 +29,7 @@ function BaseLayout({ leftChilren, rightChildren }) {
       padding={widthScreen > 1280 ? "0 48px" : undefined}
       display="flex"
       justifyContent="center"
+      minHeight="100vh"
     >
       <Box width={isMobile ? "100%" : "70%"}>
         <main

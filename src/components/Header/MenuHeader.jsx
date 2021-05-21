@@ -52,7 +52,13 @@ export default function MenuHeader() {
     dispatch(selectMenuAct(menu));
     history.push(menu.path);
   };
+
+  const _logout = () => {
+    dispatch({ type: "LOGOUT" });
+  };
   const menuSelected = useSelector((state) => state.selectMenu);
+  const user = useSelector((state) => state.loginReducer);
+
   return (
     <div className={classes.boxShadowMenu}>
       <Box
@@ -82,6 +88,17 @@ export default function MenuHeader() {
             );
           }
         })}
+
+        <Box borderRight="1px solid grey"></Box>
+        {user.data?.isAuth ? (
+          <Box onClick={_logout} className={classes.title}>
+            Đăng xuất
+          </Box>
+        ) : (
+          <Box onClick={() => history.push("/login")} className={classes.title}>
+            Đăng nhập
+          </Box>
+        )}
         <Box marginLeft="48px"></Box>
       </Box>
     </div>

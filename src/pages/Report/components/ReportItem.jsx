@@ -2,7 +2,9 @@ import {
   Box,
   Card,
   CardContent,
+  CardHeader,
   Grid,
+  Icon,
   makeStyles,
   useTheme,
 } from "@material-ui/core";
@@ -38,8 +40,17 @@ const useStyles = makeStyles((theme) => ({
 function ReportItem(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const { title, writer, object, reviewNumber, type, createdDate, link, id } =
-    props;
+  const {
+    title,
+    writer,
+    object,
+    reviewNumber,
+    type,
+    createdDate,
+    link,
+    id,
+    comment,
+  } = props;
 
   const history = useHistory();
 
@@ -52,47 +63,93 @@ function ReportItem(props) {
       <Card className={classes.cardCss}>
         <CardContent>
           <Box
-            className={classes.title}
-            margin="8px 0"
-            fontSize="20px"
-            // fontWeight={theme.typography.fontWeightBold}
+            color="primary.dark"
+            textAlign="start"
+            fontSize={theme.spacing(2.5)}
+            display="flex"
+            alignItems="center"
           >
             {title}
           </Box>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Box textAlign="start" display="flex" margin="8px 0">
-                {type.label}:{" "}
-                {type.value === 3 ? (
-                  <a style={{ marginLeft: 4 }} href={object} target="_blank">
-                    {object}
-                  </a>
-                ) : (
-                  <Box
-                    marginLeft="4px"
-                    // fontWeight="bold"
-                    color="error.main"
-                  >
-                    {object}
-                  </Box>
-                )}
+          <Box
+            textAlign="start"
+            display="flex"
+            margin="8px 0"
+            alignItems="center"
+          >
+            {type.label}:{" "}
+            {type.value === 3 ? (
+              <a style={{ marginLeft: 4 }} href={object} target="_blank">
+                {object}
+              </a>
+            ) : (
+              <Box marginLeft="4px" color="error.main">
+                {object}
               </Box>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Box textAlign="start" display="flex" margin="8px 0">
-                Người báo:{" "}
-                <Box
-                  marginLeft="4px"
-                  // fontWeight="bold"
-                  color="success.main"
-                >
+            )}
+          </Box>
+          <Grid container spacing={1}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={3}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <Box display="flex" alignItems="center">
+                <Icon>person</Icon>
+                <Box textAlign="start" marginLeft="4px">
                   {writer}
                 </Box>
               </Box>
             </Grid>
-          </Grid>
-          <Grid container spacing={1}>
-            <Grid item xs={4}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={3}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <Box
+                display="flex"
+                alignItems="center"
+                textAlign="start"
+                margin="8px 0"
+              >
+                Ngày báo: {formateDateTime(createdDate)}
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={3}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <Box
+                textAlign="start"
+                display="flex"
+                margin="8px 0"
+                alignItems="center"
+              >
+                Comment:
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  marginLeft="4px"
+                  color="warning.main"
+                >
+                  {comment}
+                </Box>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={3}
+              style={{ display: "flex", alignItems: "center" }}
+            >
               <Box
                 textAlign="start"
                 display="flex"
@@ -101,17 +158,13 @@ function ReportItem(props) {
               >
                 <VisibilityIcon />
                 <Box
+                  display="flex"
+                  alignItems="center"
                   marginLeft="4px"
-                  // fontWeight="bold"
                   color="warning.main"
                 >
                   {reviewNumber}
                 </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={8}>
-              <Box textAlign="start" margin="8px 0">
-                Ngày báo: {formateDateTime(createdDate)}
               </Box>
             </Grid>
           </Grid>

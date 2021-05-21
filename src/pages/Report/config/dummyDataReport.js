@@ -9,7 +9,8 @@ function dummyData(
   reviewNumber,
   type,
   createdDate,
-  link
+  link,
+  comment = 3
 ) {
   return {
     id: id++,
@@ -20,6 +21,14 @@ function dummyData(
     type,
     createdDate,
     link,
+    comment,
+    description:
+      "Sau này, chỉ có làm, chịu khó, cần cù thì bù siêng năng, chỉ có làm thì mới có ăn. Những cái loại không làm mà đòi có ăn thì ăn đồng bằng, ăn cát :))",
+    imageList: [
+      "https://i.pinimg.com/564x/3c/77/16/3c771649b5de0375b045a64599a6acf2.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Fq-fvoVqe1_R8hwTatkwtOBj-My42fAOyg&usqp=CAU",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4uDQ2Uomp7076bfVGEi-PWj0jCzJMvFMB8Q&usqp=CAU",
+    ],
   };
 }
 export default [

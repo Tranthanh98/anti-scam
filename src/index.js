@@ -1,28 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 // import * as serviceWorker from './serviceWorker';
 
-import { createStore, applyMiddleware } from 'redux';
-import appReducers from './reducers/index';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from "redux";
+import appReducers from "./reducers/index";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 // import * as Firebase from 'firebase';
-// import { persistStore, persistReducer } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
-// import { PersistGate } from 'redux-persist/integration/react';
-// import LoadingView from './components/Common/LoadingView';
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { PersistGate } from "redux-persist/integration/react";
+import LoadingComponent from "./components/LoadingComponent";
 
-// const persistConfig = {
-//   key: 'carts',
-//   storage: storage,
-//   whitelist: ['carts'] // Xem thêm tại mục "Quá trình merge".
-// };
+const persistConfig = {
+  key: "userProfile",
+  storage: storage,
+  whitelist: ["loginReducer"], // Xem thêm tại mục "Quá trình merge".
+};
 
-// const pReducer = persistReducer(persistConfig, appReducers);
+const pReducer = persistReducer(persistConfig, appReducers);
 
-const store = createStore(appReducers, applyMiddleware(thunk));
+const store = createStore(pReducer, applyMiddleware(thunk));
+const persistor = persistStore(store);
 // const persistor = persistStore(store);
 
 // const store = createStore(appReducers, applyMiddleware(thunk));
@@ -42,9 +43,11 @@ const store = createStore(appReducers, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={<LoadingComponent />} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

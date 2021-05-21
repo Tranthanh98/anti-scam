@@ -1,13 +1,9 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { Box, Button, Grid, IconButton, TextField } from "@material-ui/core";
-import SelectOption from "../../../components/SelectOption";
-import types from "../config/dummyTypes";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { DropzoneArea } from "material-ui-dropzone";
-import { useInputText } from "../../../general/CustomHook";
-import * as yup from "yup";
+import React, { useState } from "react";
+import SelectOption from "../../../components/SelectOption";
 import UploadComponent from "../../../components/UploadComponent";
+import types from "../config/dummyTypes";
 
 const typeOptions = [...types].splice(1);
 
