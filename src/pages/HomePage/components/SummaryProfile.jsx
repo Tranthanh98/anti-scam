@@ -33,7 +33,7 @@ const userProfile = {
   totalPosts: 12,
   imageLink: "/file/getFileById/1",
 };
-function SummaryProfile(props) {
+const SummaryProfile = React.memo((props) => {
   const classes = useStyles();
   const userData = useSelector((state) => state.loginReducer);
 
@@ -105,7 +105,7 @@ function SummaryProfile(props) {
       </CardContent>
     </Card>
   );
-}
+});
 
 SummaryProfile.propTypes = {};
 

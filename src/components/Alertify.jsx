@@ -1,7 +1,7 @@
-import { makeStyles } from "@material-ui/styles";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@material-ui/icons/Close";
+import { makeStyles } from "@material-ui/styles";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { clearAlert, removeAlert } from "../actions/alertify.action";
 
 const useStyle = makeStyles({
@@ -43,7 +43,7 @@ function Alertify(props) {
   useEffect(() => {
     let interval = setInterval(() => {
       dispatch(clearAlert());
-    }, 2000);
+    }, 3000);
     if (listAlert.length == 0) {
       clearInterval(interval);
     }

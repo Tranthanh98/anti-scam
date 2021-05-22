@@ -1,8 +1,23 @@
-import { Box, Button, Grid, IconButton, TextField } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Grid,
+  IconButton,
+  TextField,
+} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import * as yup from "yup";
+import { addAlert } from "../../../actions/alertify.action";
+import { loadingAct } from "../../../actions/loading.action";
 import SelectOption from "../../../components/SelectOption";
 import UploadComponent from "../../../components/UploadComponent";
+import { useInputText } from "../../../general/CustomHook";
+import { sleep } from "../../../general/helper";
 import types from "../config/dummyTypes";
 
 const typeOptions = [...types].splice(1);
@@ -12,6 +27,15 @@ function BodyFormReport(props) {
 
   const [listTypeInput, setListType] = useState([]);
   const [fileImages, setFileImage] = useState([]);
+
+  const [openDialogConfirm, setOpenDialogConfirm] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const titleReport = useInputText(
+    null,
+    yup.string().required("trường này là bắt buộc").max(150)
+  );
 
   const _onChangeType = (value) => {
     setType(value);
@@ -62,6 +86,41 @@ function BodyFormReport(props) {
       setFileImage(cloneListImage);
     }
   };
+
+  const _validateData = () => {
+    if (!titleReport.value || titleReport.value.length === 0) {
+      dispatch(addAlert("Trường title là bắt buộc", "error"));
+      return false;
+    }
+    if (listTypeInput.length === 0) {
+      dispatch(addAlert("Chọn ít nhất 1 thể loại", "error"));
+      return false;
+    }
+    return true;
+  };
+
+  const _onConfirm = async () => {
+    if (!_validateData()) {
+      return;
+    }
+    dispatch(loadingAct(true));
+    await sleep(1500);
+    props.onConfirm();
+    dispatch(loadingAct(false));
+    dispatch(addAlert("gửi báo cáo lừa đảo thành công", "error"));
+  };
+
+  const _onCancel = () => {
+    props.onConfirm();
+  };
+
+  const _closeDialogConfirm = () => {
+    setOpenDialogConfirm(false);
+  };
+
+  const _openDialogConfirm = () => {
+    setOpenDialogConfirm(true);
+  };
   return (
     <Box>
       <Grid container spacing={2}>
@@ -72,6 +131,8 @@ function BodyFormReport(props) {
             placeholder="Nhập title, phần này được xem như một trường tìm kiếm"
             size="small"
             fullWidth
+            {...titleReport}
+            required
           />
         </Grid>
         <Grid item xs={12}>
@@ -85,6 +146,12 @@ function BodyFormReport(props) {
                     options={typeOptions}
                     label="Thể loại"
                     size="small"
+                    error={listTypeInput.length === 0}
+                    helperText={
+                      listTypeInput.length === 0
+                        ? "Chọn ít nhất 1 thể loại để báo cáo"
+                        : undefined
+                    }
                   />
                 </Grid>
                 <Grid item xs={4} md={3}>
@@ -175,6 +242,36 @@ function BodyFormReport(props) {
           </Grid>
         </Grid>
       </Grid>
+      <Box marginTop="20px" display="flex" justifyContent="center">
+        <Button onClick={_onCancel} variant="contained" color="inherit">
+          Hủy bỏ
+        </Button>
+        <Box margin="16px 0" width="16px"></Box>
+        <Button
+          onClick={_openDialogConfirm}
+          variant="contained"
+          color="primary"
+        >
+          Xác nhận
+        </Button>
+      </Box>
+      <Dialog open={openDialogConfirm} onClose={_closeDialogConfirm}>
+        <DialogContent>
+          Cam đoan những điều bạn vừa điền là chính xác
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={_closeDialogConfirm}
+            variant="contained"
+            color="inherit"
+          >
+            Hủy
+          </Button>
+          <Button onClick={_onConfirm} variant="contained" color="primary">
+            Xác nhận và gửi
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

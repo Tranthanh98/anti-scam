@@ -2,18 +2,16 @@ import {
   Box,
   Card,
   CardContent,
-  CardHeader,
   Grid,
   Icon,
   makeStyles,
   useTheme,
 } from "@material-ui/core";
-import React from "react";
-import { formateDateTime } from "../../../general/helper";
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import React from "react";
 import { useHistory } from "react-router";
-import { Paths } from "../../route";
 import createLinkDetail from "../../../general/createLinkDetail";
+import { formateDateTime } from "../../../general/helper";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {

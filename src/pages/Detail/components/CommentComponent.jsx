@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Avatar, Box, Card, CardContent, makeStyles } from "@material-ui/core";
-import { formateDateTime } from "../../../general/helper";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  makeStyles,
+  TextField,
+} from "@material-ui/core";
+import { formateDateTime, sleep } from "../../../general/helper";
+import { useSelector } from "react-redux";
+import { useInputText } from "../../../general/CustomHook";
+import TextFromField from "../../../components/TextFromField";
+import ItemComponent from "./ItemComponent";
 
+let idComment = 1;
 function createComment(name, imageAvatar, commentContent) {
   return {
+    id: idComment++,
     name,
     imageAvatar,
     commentContent,
@@ -33,83 +47,112 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function CommentComponent(props) {
-  const [comment, setComment] = useState([]);
+  const userData = useSelector((state) => state.loginReducer);
+  const currentUser = userData.data;
+
+  const [commentList, setCommentList] = useState([]);
+
+  const [yourComment, setYourComment] = useState("");
+
+  const [commentHtml, setCommentHtml] = useState("");
 
   const _getComment = async () => {
-    setComment(commentItem);
+    setCommentList(commentItem);
   };
   useEffect(() => {
     _getComment();
-  });
+    document.addEventListener("keyup", _onKeyPressComment);
+    return () => {
+      document.removeEventListener("keyup", _onKeyPressComment);
+    };
+  }, []);
 
+  const _onChangeYourComment = (e) => {
+    const { value } = e.target;
+    setYourComment(value);
+  };
+
+  const _onComment = () => {
+    const cmt = createComment(
+      currentUser.userName,
+      currentUser.imageAvatar,
+      yourComment,
+      new Date()
+    );
+    let cloneCommentList = [...commentList];
+    cloneCommentList.unshift(cmt);
+
+    setCommentList(cloneCommentList);
+    setYourComment("");
+  };
+  const _onKeyPressComment = (e) => {
+    if (e.keyCode === 13) {
+      let cloneYourComment = commentHtml + yourComment;
+      cloneYourComment = cloneYourComment + "<br />";
+
+      setCommentHtml(cloneYourComment);
+    }
+  };
   const classes = useStyles();
   return (
     <Box marginTop="16px">
-      {/* <Card className={classes.cardCss}>
-        <CardContent
-          classes={{
-            root: classes.cardContentCss,
-          }}
-        >
-          <Box display="flex">
-            <Box padding="8px">
-              <Avatar alt={cmt.name} src="/125.jpg" />
-            </Box>
-            <Box width="100%">
-              <Box
-                padding="8px"
-                className={classes.nameCss}
-                display="flex"
-                justifyContent="space-between"
-              >
-                <Box color="primary.main" fontWeight="bold">
-                  {cmt.name}
-                </Box>
-                <Box fontWeight="400" fontStyle="italic">
-                  {formateDateTime(cmt.createdDate, "DD/MM/YYYY hh:mm A")}
-                </Box>
+      {currentUser?.isAuth ? (
+        <Card className={classes.cardCss}>
+          <CardContent
+            classes={{
+              root: classes.cardContentCss,
+            }}
+          >
+            <Box display="flex">
+              <Box padding="8px">
+                <Avatar
+                  alt={currentUser?.userName}
+                  src={currentUser?.imageAvatar}
+                />
               </Box>
-              <Box padding="8px" textAlign="start">
-                {cmt.commentContent}
-              </Box>
-            </Box>
-          </Box>
-        </CardContent>
-      </Card> */}
-      {comment.map((cmt, index) => {
-        return (
-          <Card className={classes.cardCss} key={index}>
-            <CardContent
-              classes={{
-                root: classes.cardContentCss,
-              }}
-            >
-              <Box display="flex">
-                <Box padding="8px">
-                  <Avatar alt={cmt.name} src="/125.jpg" />
+              <Box width="100%">
+                <Box
+                  padding="8px"
+                  className={classes.nameCss}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  <Box color="primary.main" fontWeight="bold">
+                    {currentUser?.userName}
+                  </Box>
                 </Box>
-                <Box width="100%">
-                  <Box
-                    padding="8px"
-                    className={classes.nameCss}
-                    display="flex"
-                    justifyContent="space-between"
+                <Box padding="8px" textAlign="start">
+                  <TextFromField
+                    variant="standard"
+                    fullWidth
+                    multiline
+                    rows={2}
+                    value={yourComment}
+                    onChange={_onChangeYourComment}
+                    placeholder="Viết bình luận"
+                  />
+                </Box>
+                <Box display="flex" justifyContent="flex-start">
+                  <Button
+                    onClick={_onComment}
+                    variant="contained"
+                    color="primary"
+                    size="small"
                   >
-                    <Box color="primary.main" fontWeight="bold">
-                      {cmt.name}
-                    </Box>
-                    <Box fontWeight="400" fontStyle="italic">
-                      {formateDateTime(cmt.createdDate, "DD/MM/YYYY hh:mm A")}
-                    </Box>
-                  </Box>
-                  <Box padding="8px" textAlign="start">
-                    {cmt.commentContent}
-                  </Box>
+                    Bình luận
+                  </Button>
                 </Box>
               </Box>
-            </CardContent>
-          </Card>
-        );
+            </Box>
+          </CardContent>
+        </Card>
+      ) : (
+        <Box margin="16px 0" fontStyle="italic">
+          Đăng nhập để bình luận
+        </Box>
+      )}
+      {commentList.map((cmt, index) => {
+        return <ItemComponent key={cmt.id} cmt={cmt} />;
       })}
     </Box>
   );

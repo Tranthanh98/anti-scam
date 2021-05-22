@@ -8,6 +8,7 @@ import { selectMenuAct } from "../../actions/select-menu";
 import logoText from "../../assets/images/antiscam.png";
 import route, { Paths } from "../../pages/route";
 import SelectLanguage from "../SelectLanguage";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,6 +94,8 @@ export default function MenuHeader() {
         {user.data?.isAuth ? (
           <Box onClick={_logout} className={classes.title}>
             Đăng xuất
+            <Box width="8px"></Box>
+            <ExitToAppIcon />
           </Box>
         ) : (
           <Box onClick={() => history.push("/login")} className={classes.title}>

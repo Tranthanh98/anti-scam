@@ -1,16 +1,14 @@
 import { Box, ThemeProvider } from "@material-ui/core";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+import Alertify from "./components/Alertify";
+import BaseDrawer from "./components/BaseDrawer";
+import BaseModal from "./components/BaseModal";
+import LoadingComponent from "./components/LoadingComponent";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import theme from "./pages/theme";
-import logo from "./logo.svg";
-import "./App.css";
-import BaseModal from "./components/BaseModal";
-import BaseDrawer from "./components/BaseDrawer";
-import Alertify from "./components/Alertify";
-import LoadingComponent from "./components/LoadingComponent";
 
 window.mobileCheck = function () {
   return window.innerWidth <= 960 && window.innerHeight <= 1024;
@@ -18,6 +16,7 @@ window.mobileCheck = function () {
 
 function App() {
   const isMobile = window.mobileCheck();
+
   return (
     <Box style={{ backgroundColor: "#f1f1f18a" }}>
       <div className="App">

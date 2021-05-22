@@ -39,11 +39,13 @@ function LeftPageDetail(props) {
           <Box color="primary.main" fontSize={theme.spacing(2.5)}>
             {title}
           </Box>
-          <Box marginTop="8px" display="flex" alignItems="center">
+          <Box marginTop="8px">
             <Box color="secondary.main">{type.label} :</Box>
-            <Box marginLeft="4px">
-              {type.value == 3 && type.value == 1 ? (
-                <a href={object} target="_blank" />
+            <Box marginLeft="4px" style={{ wordBreak: "break-all" }}>
+              {type.value == 3 || type.value == 1 ? (
+                <a href={object} target="_blank">
+                  {object}
+                </a>
               ) : (
                 object
               )}

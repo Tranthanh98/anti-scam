@@ -5,24 +5,19 @@ import {
   CardContent,
   CardHeader,
   Grid,
-  makeStyles,
   TextField,
 } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
-import { openDrawerAct } from "../../actions/drawer.action";
+import { addAlert } from "../../actions/alertify.action";
 import { openModalAct } from "../../actions/modal.action";
-import { selectMenuAct } from "../../actions/select-menu";
 import BaseLayout from "../../components/BaseLayout";
 import SelectOption from "../../components/SelectOption";
 import { useInputText } from "../../general/CustomHook";
-import { SORT_DAY } from "../../general/enum";
+import { KIND_OF, SORT_DAY } from "../../general/enum";
 import HighLightReputation from "../HomePage/components/HighLightReputation";
 import SummaryProfile from "../HomePage/components/SummaryProfile";
-import route, { Paths } from "../route";
 import BodyFormReport from "./components/BodyFormReport";
 import ProfileAnonymous from "./components/ProfileAnonymous";
 import ReportItem from "./components/ReportItem";
@@ -40,60 +35,14 @@ const sortOptions = [
   },
 ];
 
-const useStyles = makeStyles((theme) => ({
-  headerCss: {
-    backgroundColor: theme.palette.primary.background,
-    color: "white",
-    display: "flex",
-    alignItems: "center",
-    margin: "8px 0",
-    height: "100px",
-    justifyContent: "center",
-    padding: "8px",
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(1.5),
-  },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
-  hide: {
-    display: "none",
-  },
-}));
-
-const widthScreen = window.innerWidth;
-
 function ReportPage(props) {
   const [type, setType] = useState();
   const [sortType, setSortType] = useState(sortOptions[0]);
 
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const _componentDidMount = () => {
-    const { location } = history;
-    let findLocation = route.find((i) => i.path === location.pathname);
-    if (findLocation) {
-      dispatch(selectMenuAct(findLocation));
-    } else {
-      if (location.pathname === "/") {
-        let findLocationHome = route.find((i) => i.path === Paths.report);
-        dispatch(selectMenuAct(findLocationHome));
-      }
-    }
-  };
-
   const user = useSelector((state) => state.loginReducer);
 
-  useEffect(() => {
-    _componentDidMount();
-    //react-hooks/exhaustive-deps
-  }, []);
+  const dispatch = useDispatch();
+
   const searchText = useInputText("");
   const _onChangeType = (value) => {
     setType(value);
@@ -103,17 +52,20 @@ function ReportPage(props) {
   };
 
   const _onClickReport = () => {
-    let modalData = {
-      title: "Báo cáo lừa đảo",
-      body: <BodyFormReport />,
-      style: {
-        fullWidth: true,
-        maxWidth: "md",
-      },
-    };
-    dispatch(openModalAct(modalData));
+    if (user?.data?.isAuth) {
+      let modalData = {
+        title: "Báo cáo lừa đảo",
+        body: <BodyFormReport />,
+        style: {
+          fullWidth: true,
+          maxWidth: "md",
+        },
+      };
+      dispatch(openModalAct(modalData));
+    } else {
+      dispatch(addAlert("Đăng nhập để báo cáo lừa đảo", "error"));
+    }
   };
-  const classes = useStyles();
   const isMobile = window.mobileCheck();
   const leftChildren = () => {
     return (
@@ -167,9 +119,11 @@ function ReportPage(props) {
           </CardContent>
         </Card>
         <Box>
-          {dummyDataReport.map((data, index) => {
-            return <ReportItem key={data.id} {...data} />;
-          })}
+          {dummyDataReport
+            .filter((i) => i.kindOf === KIND_OF.Cheat)
+            .map((data, index) => {
+              return <ReportItem key={data.id} {...data} />;
+            })}
         </Box>
         <Box margin="16px" display="flex" justifyContent="center">
           <Pagination

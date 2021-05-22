@@ -1,5 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
 import {
   Box,
   Card,
@@ -8,10 +6,11 @@ import {
   Grid,
   TextField,
 } from "@material-ui/core";
+import React from "react";
+import { connectToContext } from "../../../components/BaseContext";
 import SelectOption from "../../../components/SelectOption";
 import types from "../../Report/config/dummyTypes";
 import { sortOptions } from "../index";
-import { connectToContext } from "../../../components/BaseContext";
 
 function FilterReputation({
   searchText,

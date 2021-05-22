@@ -1,8 +1,11 @@
+import { KIND_OF } from "../../../general/enum";
 import types from "./dummyTypes";
 
-let id = 1;
+var dateTime = new Date();
 
-function dummyData(
+let id = dateTime.getTime();
+
+export function dummyData(
   title,
   writer,
   object,
@@ -10,7 +13,8 @@ function dummyData(
   type,
   createdDate,
   link,
-  comment = 3
+  comment = 3,
+  kindOf = KIND_OF.Cheat
 ) {
   return {
     id: id++,
@@ -29,6 +33,7 @@ function dummyData(
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Fq-fvoVqe1_R8hwTatkwtOBj-My42fAOyg&usqp=CAU",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4uDQ2Uomp7076bfVGEi-PWj0jCzJMvFMB8Q&usqp=CAU",
     ],
+    kindOf,
   };
 }
 export default [
@@ -46,7 +51,7 @@ export default [
     "Thanh dep trai 123",
     "https://www.facebook.com/hoaikhang.230798",
     8,
-    types[2],
+    types[3],
     new Date(),
     "thang-cho"
   ),
@@ -76,5 +81,60 @@ export default [
     types[1],
     new Date(),
     "nha-tien-tri-vu-tru-tran-dan"
+  ),
+  dummyData(
+    "Trang web này cực xịn",
+    "Thanh dep trai 123",
+    "02145568471",
+    8,
+    types[1],
+    new Date(),
+    "thang-cho",
+    4,
+    KIND_OF.Reputation
+  ),
+  dummyData(
+    "Bạn này dẹp trai",
+    "Thanh dep trai 123",
+    "https://www.facebook.com/thanhtran2412/",
+    8,
+    types[3],
+    new Date(),
+    "thanh-dep-trai",
+    5,
+    KIND_OF.Reputation
+  ),
+  dummyData(
+    "ahihi :))",
+    "Thanh dep trai 123",
+    "02145568471",
+    8,
+    types[1],
+    new Date(),
+    "alo-alo-toi-la-de-nhat-quoc-su-Hoa-Ky",
+    6,
+    KIND_OF.Reputation
+  ),
+  dummyData(
+    "Thằng chó mày lừa bố mày",
+    "Thanh dep trai 123",
+    "02145568471",
+    8,
+    types[1],
+    new Date(),
+    "dep-trai-khoai-to",
+    9,
+    KIND_OF.Reputation
+  ),
+  dummyData(
+    "Thằng chó mày lừa bố mày",
+    "Thanh dep trai 123",
+    "02145568471",
+    8,
+    types[1],
+    new Date(),
+    "nha-tien-tri-vu-tru-tran-dan",
+    1,
+    KIND_OF.Reputation
   ),
 ];

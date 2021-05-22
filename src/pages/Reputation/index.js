@@ -60,11 +60,11 @@ class ReputationPage extends Component {
   };
 }
 
-const mapStateToPropss = (state) => {};
+const mapStateToProps = (state) => ({});
 const mapDispatchToProps = {
   selectMenuAct: selectMenuAct,
 };
 export default connect(
-  mapStateToPropss,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(ReputationPage));

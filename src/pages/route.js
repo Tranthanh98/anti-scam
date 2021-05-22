@@ -7,6 +7,7 @@ import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
 import InfoIcon from "@material-ui/icons/Info";
 import Detail from "./Detail";
+import UserProfile from "./UserProfile/UserProfile";
 
 let i = 1;
 function createRoute(title, icon, path, component, isShow = true) {
@@ -37,7 +38,7 @@ export default [
     Paths.reputation,
     ReputationPage
   ),
-  createRoute("Profile", <AccountCircleIcon />, Paths.profile, ReportPage),
+  createRoute("Profile", <AccountCircleIcon />, Paths.profile, UserProfile),
   createRoute("Liên hệ", <ContactPhoneIcon />, Paths.contact, ReportPage),
   createRoute("Về chúng tôi", <InfoIcon />, Paths.about, ReportPage),
 ];

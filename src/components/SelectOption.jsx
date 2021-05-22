@@ -9,8 +9,17 @@ class SelectOption extends PureComponent {
     onChange(value);
   };
   render() {
-    const { value, defaultValue, options, multiple, label, width, variant } =
-      this.props;
+    const {
+      value,
+      defaultValue,
+      options,
+      multiple,
+      label,
+      width,
+      variant,
+      helperText,
+      error,
+    } = this.props;
     return (
       <TextField
         id="outlined-select-currency"
@@ -18,10 +27,11 @@ class SelectOption extends PureComponent {
         label={label}
         value={value}
         onChange={this._onChangeSelect}
-        helperText={`Chọn ${label}`}
+        helperText={helperText ?? `Chọn ${label}`}
         variant={variant}
         fullWidth
         size="small"
+        error={error}
       >
         {options.map((option) => (
           <MenuItem key={option.value} value={option}>

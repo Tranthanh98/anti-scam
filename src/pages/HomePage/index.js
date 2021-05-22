@@ -1,9 +1,11 @@
 import { Box, Container, makeStyles } from "@material-ui/core";
-import React from "react";
-import { Redirect, Route, Switch } from "react-router";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Redirect, Route, Switch, useHistory } from "react-router";
+import { selectMenuAct } from "../../actions/select-menu";
 import MenuHeader from "../../components/Header/MenuHeader";
 import MenuMobile from "../../components/Header/MenuMobile";
-import route from "../route";
+import route, { Paths } from "../route";
 
 const styles = makeStyles((theme) => ({
   backgroundBody: {
@@ -14,6 +16,26 @@ const styles = makeStyles((theme) => ({
 function HomePage(props) {
   const { isMobile } = props;
   const classes = styles();
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const _componentDidMount = () => {
+    const { location } = history;
+    let findLocation = route.find((i) => i.path === location.pathname);
+    if (findLocation) {
+      dispatch(selectMenuAct(findLocation));
+    } else {
+      if (location.pathname === "/") {
+        let findLocationHome = route.find((i) => i.path === Paths.report);
+        dispatch(selectMenuAct(findLocationHome));
+      }
+    }
+  };
+
+  useEffect(() => {
+    _componentDidMount();
+    //react-hooks/exhaustive-deps
+  }, []);
   return (
     <Box>
       {isMobile ? <MenuMobile isMobile={isMobile} /> : <MenuHeader />}

@@ -16,7 +16,7 @@ export const alertify = (state = initState, action) => {
     }
     case REMOVE_ALERT: {
       let newState = [...state];
-      let index = newState.findIndex((i) => i.id == action.id);
+      let index = newState.findIndex((i) => i.id === action.id);
       newState.splice(index, 1);
       // newState.pop();
       return newState;
