@@ -33,6 +33,7 @@ function LeftPageProfile(props) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [totalPost, setTotalPost] = useState(0);
+  const [openChangePw, setOpenChangePw] = useState(false);
 
   const userName = useInputText(
     user?.userName,
@@ -136,8 +137,17 @@ function LeftPageProfile(props) {
                 <Grid item xs={12} sm={6}>
                   <Card>
                     <CardContent className={classes.cardContentCss}>
-                      <Box>Đổi mật khẩu ?</Box>
-                      <FormChangePassword callbackOnSave={null} />
+                      <Box
+                        margin="16px 0"
+                        onClick={() => setOpenChangePw(!openChangePw)}
+                      >
+                        Đổi mật khẩu ?
+                      </Box>
+                      {openChangePw ? (
+                        <FormChangePassword
+                          callbackOnSave={() => setOpenChangePw(false)}
+                        />
+                      ) : null}
                     </CardContent>
                   </Card>
                 </Grid>

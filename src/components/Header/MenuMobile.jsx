@@ -25,6 +25,7 @@ import SelectLanguage from "../SelectLanguage";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { addAlert } from "../../actions/alertify.action";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
 
 const drawerWidth = 240;
 
@@ -228,12 +229,20 @@ function MenuMobile(props) {
               <ListItemText primary="Đăng xuất" />
             </ListItem>
           ) : (
-            <ListItem onClick={() => history.push("/login")} button>
-              <Box marginRight="16px">
-                <LockOpenIcon />
-              </Box>
-              <ListItemText primary="Đăng nhập" />
-            </ListItem>
+            <>
+              <ListItem onClick={() => history.push("/login")} button>
+                <Box marginRight="16px">
+                  <LockOpenIcon />
+                </Box>
+                <ListItemText primary="Đăng nhập" />
+              </ListItem>
+              <ListItem onClick={() => history.push("/sign-up")} button>
+                <Box marginRight="16px">
+                  <VpnKeyIcon />
+                </Box>
+                <ListItemText primary="Đăng ký" />
+              </ListItem>
+            </>
           )}
         </List>
         <Divider />

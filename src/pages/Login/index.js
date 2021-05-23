@@ -18,15 +18,16 @@ import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { loginAct } from "../../actions/login.action";
 import { addAlert } from "../../actions/alertify.action";
+import { useLastLocation } from "react-router-last-location";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Anti Scam VietNam
       </Link>{" "}
-      {new Date().getFullYear()}
+      {2021}
       {"."}
     </Typography>
   );
@@ -80,8 +81,14 @@ export default function LoginPage() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const lastHistory = useLastLocation();
   const _gotoBack = () => {
-    history.goBack();
+    console.log("lastHistory:", lastHistory);
+    if (lastHistory == null || lastHistory.pathname === "/sign-in") {
+      history.push("/");
+    } else {
+      history.goBack();
+    }
   };
 
   const _login = () => {
@@ -102,7 +109,7 @@ export default function LoginPage() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Đăng nhập
           </Typography>
           <div className={classes.form}>
             <TextField
@@ -110,7 +117,7 @@ export default function LoginPage() {
               margin="normal"
               required
               fullWidth
-              label="Email Address"
+              label="Địa chỉ email"
               autoComplete="email"
               autoFocus
               {...userName}
@@ -120,14 +127,10 @@ export default function LoginPage() {
               margin="normal"
               required
               fullWidth
-              label="Password"
+              label="Mật khẩu"
               type="password"
               autoComplete="current-password"
               {...password}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               fullWidth
@@ -136,17 +139,17 @@ export default function LoginPage() {
               className={classes.submit}
               onClick={_login}
             >
-              Sign In
+              Đăng nhập
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm>
+                <Link href="/sign-up" variant="body2">
+                  Quên mật khẩu?
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+              <Grid item xs={12} sm>
+                <Link href="/sign-up" variant="body2">
+                  {"Bạn chưa có tài khoản? Đăng ký."}
                 </Link>
               </Grid>
             </Grid>

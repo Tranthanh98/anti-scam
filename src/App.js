@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import theme from "./pages/theme";
+import { LastLocationProvider } from "react-router-last-location";
 
 window.mobileCheck = function () {
   return window.innerWidth <= 960 && window.innerHeight <= 1024;
@@ -22,22 +23,24 @@ function App() {
       <div className="App">
         <ThemeProvider theme={theme}>
           <Router>
-            <Switch>
-              <Route
-                path="/login"
-                render={(prop) => <LoginPage {...prop} isMobile={isMobile} />}
-              />
-              <Route
-                path="/sign-up"
-                render={(prop) => (
-                  <RegisterPage {...prop} isMobile={isMobile} />
-                )}
-              />
-              <Route
-                path="/"
-                render={(prop) => <HomePage {...prop} isMobile={isMobile} />}
-              />
-            </Switch>
+            <LastLocationProvider>
+              <Switch>
+                <Route
+                  path="/login"
+                  render={(prop) => <LoginPage {...prop} isMobile={isMobile} />}
+                />
+                <Route
+                  path="/sign-up"
+                  render={(prop) => (
+                    <RegisterPage {...prop} isMobile={isMobile} />
+                  )}
+                />
+                <Route
+                  path="/"
+                  render={(prop) => <HomePage {...prop} isMobile={isMobile} />}
+                />
+              </Switch>
+            </LastLocationProvider>
           </Router>
           <BaseModal />
           <BaseDrawer />

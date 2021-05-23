@@ -98,9 +98,20 @@ export default function MenuHeader() {
             <ExitToAppIcon />
           </Box>
         ) : (
-          <Box onClick={() => history.push("/login")} className={classes.title}>
-            Đăng nhập
-          </Box>
+          <>
+            <Box
+              onClick={() => history.push("/login")}
+              className={classes.title}
+            >
+              Đăng nhập
+            </Box>
+            <Box
+              onClick={() => history.push("/sign-up")}
+              className={classes.title}
+            >
+              Đăng ký
+            </Box>
+          </>
         )}
         <Box marginLeft="48px"></Box>
       </Box>

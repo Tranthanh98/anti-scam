@@ -1,27 +1,34 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { loadingAct } from "../../actions/loading.action";
+import { sleep } from "../../general/helper";
+import { addAlert } from "../../actions/alertify.action";
+import { useHistory } from "react-router";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+        Anti Scam VietNam
+      </Link>{" "}
+      {2021}
+      {"."}
     </Typography>
   );
 }
@@ -29,16 +36,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -46,8 +53,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const validationSchema = yup.object({
+  email: yup.string().email("Email không hợp lệ").required("Bắc buộc"),
+  password: yup.string().required("Bắt buộc").min(6, "ít nhất 6 ký tự"),
+  userName: yup.string(),
+});
+
 export default function RegisterPage() {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const _onSignUp = async () => {
+    dispatch(loadingAct(true));
+    try {
+      await sleep(1500);
+      dispatch(addAlert("Đăng ký thành công", "success"));
+      history.push("/login");
+    } catch (e) {
+      dispatch(addAlert(String(e), "error"));
+    } finally {
+      dispatch(loadingAct(false));
+    }
+  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      userName: "Ẩn danh",
+    },
+    validationSchema: validationSchema,
+    onSubmit: _onSignUp,
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -57,42 +94,23 @@ export default function RegisterPage() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Đăng ký tài khoản
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Địa chỉ email"
                 name="email"
                 autoComplete="email"
+                value={formik.values.email}
+                error={Boolean(formik.errors.email)}
+                helperText={formik.errors.email}
+                onChange={formik.handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -101,16 +119,31 @@ export default function RegisterPage() {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Mật khẩu"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={formik.values.password}
+                error={Boolean(formik.errors.password)}
+                helperText={formik.errors.password}
+                onChange={formik.handleChange}
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+              <TextField
+                autoComplete="fname"
+                name="userName"
+                variant="outlined"
+                required
+                fullWidth
+                id="userName"
+                label="Tên người dùng"
+                placeholder="Bạn không nên đặt tên thật"
+                autoFocus
+                value={formik.values.userName}
+                error={Boolean(formik.errors.userName)}
+                helperText={formik.errors.userName}
+                onChange={formik.handleChange}
               />
             </Grid>
           </Grid>
@@ -121,12 +154,12 @@ export default function RegisterPage() {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Đăng ký
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
+              <Link href="/login" variant="body2">
+                Bạn đã có tài khoản? Đăng nhập
               </Link>
             </Grid>
           </Grid>
