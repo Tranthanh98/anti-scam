@@ -3,7 +3,7 @@ import types from "./dummyTypes";
 
 var dateTime = new Date();
 
-let id = dateTime.getTime();
+let id = 10000001;
 
 export function dummyData(
   title,

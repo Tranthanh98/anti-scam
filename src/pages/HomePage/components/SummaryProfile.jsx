@@ -1,5 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
 import {
   Avatar,
   Box,
@@ -8,8 +6,11 @@ import {
   Chip,
   makeStyles,
 } from "@material-ui/core";
-import { formateDateTime } from "../../../general/helper";
+import React from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { formateDateTime } from "../../../general/helper";
+import { Paths } from "../../route";
 
 const useStyles = makeStyles((theme) => ({
   userName: {
@@ -26,24 +27,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const userProfile = {
-  userName: "Bạn xinh đẹp",
-  email: "hk@gmail.com",
-  joinedDate: new Date(),
-  totalPosts: 12,
-  imageLink: "/file/getFileById/1",
-};
 const SummaryProfile = React.memo((props) => {
   const classes = useStyles();
   const userData = useSelector((state) => state.loginReducer);
 
   const user = userData.data;
-  console.log("user:", user);
+  const history = useHistory();
   return (
     <Card>
       <CardContent>
         <Box display="flex" justifyContent="center">
-          <Avatar alt={userProfile.userName} src={userProfile.imageLink} />
+          <Avatar alt={user.userName} src={user.imageAvatar} />
         </Box>
         <Box
           margin="8px 0"
@@ -74,7 +68,7 @@ const SummaryProfile = React.memo((props) => {
           className={classes.userName}
           fontStyle="italic"
         >
-          Ngày tham gia: {formateDateTime(userProfile.joinedDate)}
+          Ngày tham gia: {formateDateTime(user.joinedDate)}
         </Box>
         <Box
           margin="8px 0"
@@ -94,6 +88,7 @@ const SummaryProfile = React.memo((props) => {
           justifyContent="center"
           alignItems="center"
           className={classes.userName}
+          onClick={() => history.push(Paths.profile)}
         >
           <Chip
             label="View your profile"

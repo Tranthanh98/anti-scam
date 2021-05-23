@@ -213,7 +213,7 @@ function MenuMobile(props) {
                   button
                   key={menu.path}
                 >
-                  <ListItemIcon>{menu.icon}</ListItemIcon>
+                  <Box marginRight="16px">{menu.icon}</Box>
                   <ListItemText primary={menu.title} />
                 </ListItem>
               );
@@ -222,16 +222,16 @@ function MenuMobile(props) {
           <Divider />
           {user.data?.isAuth ? (
             <ListItem onClick={_logout} button>
-              <ListItemIcon>
+              <Box marginRight="16px">
                 <ExitToAppIcon />
-              </ListItemIcon>
+              </Box>
               <ListItemText primary="Đăng xuất" />
             </ListItem>
           ) : (
             <ListItem onClick={() => history.push("/login")} button>
-              <ListItemIcon>
+              <Box marginRight="16px">
                 <LockOpenIcon />
-              </ListItemIcon>
+              </Box>
               <ListItemText primary="Đăng nhập" />
             </ListItem>
           )}

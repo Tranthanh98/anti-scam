@@ -39,7 +39,7 @@ function HomePage(props) {
   return (
     <Box>
       {isMobile ? <MenuMobile isMobile={isMobile} /> : <MenuHeader />}
-      <Box height={isMobile ? "50px" : "90px"}></Box>
+      <Box height={isMobile ? "50px" : "80px"}></Box>
       <Box
         className={classes.backgroundBody}
         display="flex"

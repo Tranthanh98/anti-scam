@@ -107,7 +107,9 @@ function BodyFormReport(props) {
     await sleep(1500);
     props.onConfirm();
     dispatch(loadingAct(false));
-    dispatch(addAlert("gửi báo cáo lừa đảo thành công", "error"));
+    dispatch(
+      addAlert("gửi báo cáo lừa đảo thành công và đang chờ duyệt", "success")
+    );
   };
 
   const _onCancel = () => {
@@ -133,6 +135,8 @@ function BodyFormReport(props) {
             fullWidth
             {...titleReport}
             required
+            multiline
+            rows={3}
           />
         </Grid>
         <Grid item xs={12}>
@@ -210,7 +214,13 @@ function BodyFormReport(props) {
               <Grid container spacing={1}>
                 {fileImages.map((ima, index) => {
                   return (
-                    <Grid item xs={1} sm={4} style={{ maxHeight: 150 }}>
+                    <Grid
+                      key={index}
+                      item
+                      xs={6}
+                      sm={4}
+                      style={{ maxHeight: 150 }}
+                    >
                       <Box
                         display="flex"
                         justifyContent="center"

@@ -1,6 +1,5 @@
 import { Box } from "@material-ui/core";
 import React from "react";
-import { connectToContext } from "../../../components/BaseContext";
 import { KIND_OF } from "../../../general/enum";
 import ReportItem from "../../Report/components/ReportItem";
 import dummyDataReport from "../../Report/config/dummyDataReport";

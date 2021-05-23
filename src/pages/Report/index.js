@@ -11,6 +11,7 @@ import { Pagination } from "@material-ui/lab";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAlert } from "../../actions/alertify.action";
+import { openDrawerAct } from "../../actions/drawer.action";
 import { openModalAct } from "../../actions/modal.action";
 import BaseLayout from "../../components/BaseLayout";
 import SelectOption from "../../components/SelectOption";
@@ -39,6 +40,7 @@ function ReportPage(props) {
   const [type, setType] = useState();
   const [sortType, setSortType] = useState(sortOptions[0]);
 
+  const isMobile = window.mobileCheck();
   const user = useSelector((state) => state.loginReducer);
 
   const dispatch = useDispatch();
@@ -61,12 +63,15 @@ function ReportPage(props) {
           maxWidth: "md",
         },
       };
-      dispatch(openModalAct(modalData));
+      if (isMobile) {
+        dispatch(openDrawerAct(modalData));
+      } else {
+        dispatch(openModalAct(modalData));
+      }
     } else {
       dispatch(addAlert("Đăng nhập để báo cáo lừa đảo", "error"));
     }
   };
-  const isMobile = window.mobileCheck();
   const leftChildren = () => {
     return (
       <>
@@ -145,6 +150,18 @@ function ReportPage(props) {
         <Box margin="8px 0">
           <HighLightReputation />
         </Box>
+        <div>
+          <iframe
+            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbeatvn.network%2F&tabs=timeline&width=260&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+            width="260"
+            height="500"
+            style={{ border: "none", overflow: "hidden" }}
+            scrolling="no"
+            frameBorder="0"
+            allowFullScreen={true}
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          ></iframe>
+        </div>
       </>
     );
   };

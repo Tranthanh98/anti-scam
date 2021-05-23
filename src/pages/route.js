@@ -1,12 +1,12 @@
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import { Icon } from "@material-ui/core";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import AboutMeIcon from "@material-ui/icons/ChevronRight";
+import ContactIcon from "@material-ui/icons/Mail";
+import ReportIcon from "@material-ui/icons/Report";
+import React from "react";
+import Detail from "./Detail";
 import ReportPage from "./Report";
 import ReputationPage from "./Reputation";
-import React from "react";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
-import ContactPhoneIcon from "@material-ui/icons/ContactPhone";
-import InfoIcon from "@material-ui/icons/Info";
-import Detail from "./Detail";
 import UserProfile from "./UserProfile/UserProfile";
 
 let i = 1;
@@ -31,14 +31,14 @@ export const Paths = {
 };
 export default [
   createRoute("Detail", null, Paths.detail, Detail, false),
-  createRoute("Báo cáo xấu", <RemoveCircleIcon />, Paths.report, ReportPage),
+  createRoute("Báo cáo lừa đảo", <ReportIcon />, Paths.report, ReportPage),
   createRoute(
     "Trang web uy tín",
-    <CheckCircleIcon />,
+    <Icon>verified_user</Icon>,
     Paths.reputation,
     ReputationPage
   ),
   createRoute("Profile", <AccountCircleIcon />, Paths.profile, UserProfile),
-  createRoute("Liên hệ", <ContactPhoneIcon />, Paths.contact, ReportPage),
-  createRoute("Về chúng tôi", <InfoIcon />, Paths.about, ReportPage),
+  createRoute("Liên hệ", <ContactIcon />, Paths.contact, ReportPage),
+  createRoute("Về chúng tôi", <AboutMeIcon />, Paths.about, ReportPage),
 ];

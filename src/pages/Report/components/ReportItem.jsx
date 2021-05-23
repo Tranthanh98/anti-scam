@@ -77,9 +77,11 @@ function ReportItem(props) {
           >
             {type.label}:{" "}
             {type.value === 3 ? (
-              <a style={{ marginLeft: 4 }} href={object} target="_blank">
-                {object}
-              </a>
+              <Box style={{ wordBreak: "break-all" }}>
+                <a style={{ marginLeft: 4 }} href={object} target="_blank">
+                  {object}
+                </a>
+              </Box>
             ) : (
               <Box
                 textOverflow="ellipsis"

@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { useInputText } from "../../../general/CustomHook";
 import TextFromField from "../../../components/TextFromField";
 import ItemComponent from "./ItemComponent";
+import { Pagination } from "@material-ui/lab";
 
 let idComment = 1;
 function createComment(name, imageAvatar, commentContent) {
@@ -46,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
     padding: 12,
   },
 }));
-function CommentComponent(props) {
+const CommentComponent = React.memo((props) => {
+  const isMobile = window.mobileCheck();
   const userData = useSelector((state) => state.loginReducer);
   const currentUser = userData.data;
 
@@ -154,9 +156,19 @@ function CommentComponent(props) {
       {commentList.map((cmt, index) => {
         return <ItemComponent key={cmt.id} cmt={cmt} />;
       })}
+      <Box display="flex" justifyContent="center" margin="16px 0">
+        <Pagination
+          size={isMobile ? "small" : "medium"}
+          // page={2}
+          count={10}
+          color="secondary"
+          variant="outlined"
+          shape="rounded"
+        />
+      </Box>
     </Box>
   );
-}
+});
 
 CommentComponent.propTypes = {};
 

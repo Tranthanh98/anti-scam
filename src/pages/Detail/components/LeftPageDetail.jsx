@@ -11,6 +11,7 @@ import {
 import { useHistory, useParams } from "react-router";
 import { connectToContext } from "../../../components/BaseContext";
 import CommentComponent from "./CommentComponent";
+import RightpageDetail from "./RightpageDetail";
 
 const useStyles = makeStyles((theme) => ({
   titleCss: {
@@ -32,8 +33,14 @@ function LeftPageDetail(props) {
 
   const classes = useStyles();
   const theme = useTheme();
+  const isMobile = window.mobileCheck();
   return (
     <Box>
+      {isMobile ? (
+        <Box margin="16px 0">
+          <RightpageDetail />
+        </Box>
+      ) : null}
       <Card>
         <Box textAlign="start" margin="8px 0" className={classes.titleCss}>
           <Box color="primary.main" fontSize={theme.spacing(2.5)}>

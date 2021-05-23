@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 class TextFromField extends PureComponent {
   render() {
-    console.log(`render TextFromField`);
     return <TextField {...this.props} />;
   }
 }
@@ -19,6 +18,7 @@ TextFromField.defaultProps = {
   multiline: false,
   value: "",
   placeholder: "",
+  size: "small",
 };
 
 export default TextFromField;

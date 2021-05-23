@@ -1,4 +1,4 @@
-import { Box } from "@material-ui/core";
+import { Box, withTheme } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
@@ -13,8 +13,10 @@ import RightpageDetail from "./components/RightpageDetail";
 class Detail extends Component {
   state = {
     post: null,
+    kindOf: null,
   };
   async componentDidMount() {
+    window.scrollTo(0, 0);
     const { history } = this.props;
     const { location } = history;
     let findLocation = route.find((i) => i.path === location.pathname);
@@ -28,10 +30,11 @@ class Detail extends Component {
     let post = dummyDataReport.find((i) => i.id == Number(match.params.id));
     if (post) {
       this.setState({ post });
+      this.setState({ kindOf: post.kindOf });
     }
   };
   render() {
-    const { post } = this.state;
+    const { post, kindOf } = this.state;
     let provider = {
       ...this.state,
     };
