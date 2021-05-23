@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContentCss: {
     padding: 12,
+    "&:last-child": {
+      paddingBottom: 12,
+    },
   },
 }));
 const CommentComponent = React.memo((props) => {
@@ -114,8 +117,8 @@ const CommentComponent = React.memo((props) => {
               </Box>
               <Box width="100%">
                 <Box
-                  padding="8px"
-                  className={classes.nameCss}
+                  // padding="8px"
+                  // className={classes.nameCss}
                   display="flex"
                   justifyContent="space-between"
                 >
@@ -125,7 +128,7 @@ const CommentComponent = React.memo((props) => {
                 </Box>
                 <Box padding="8px" textAlign="start">
                   <TextFromField
-                    variant="standard"
+                    variant="outlined"
                     fullWidth
                     multiline
                     rows={2}
@@ -134,7 +137,11 @@ const CommentComponent = React.memo((props) => {
                     placeholder="Viết bình luận"
                   />
                 </Box>
-                <Box display="flex" justifyContent="flex-start">
+                <Box
+                  paddingLeft="8px"
+                  display="flex"
+                  justifyContent="flex-start"
+                >
                   <Button
                     onClick={_onComment}
                     variant="contained"

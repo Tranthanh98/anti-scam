@@ -9,6 +9,7 @@ import logoText from "../../assets/images/antiscam.png";
 import route, { Paths } from "../../pages/route";
 import SelectLanguage from "../SelectLanguage";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import logo from "../../assets/images/logo-primary.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,7 +68,10 @@ export default function MenuHeader() {
         padding="8px 8px 0 8px"
         justifyContent="space-between"
       >
-        <img src={logoText} height="20px" />
+        <Box display="flex" alignItems="center">
+          <img src={logo} height="25px" style={{ margin: "0 8px 0 0" }} />
+          <img src={logoText} height="20px" />
+        </Box>
         <SelectLanguage />
       </Box>
       <Box display="flex" justifyContent="flex-end" width="100%" height="50px">

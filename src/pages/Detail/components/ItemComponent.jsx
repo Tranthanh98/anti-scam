@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContentCss: {
     padding: 12,
+    "&:last-child": {
+      paddingBottom: 12,
+    },
   },
 }));
 
@@ -32,8 +35,8 @@ const ItemComponent = React.memo((props) => {
           </Box>
           <Box width="100%">
             <Box
-              padding="8px"
-              className={classes.nameCss}
+              // padding="8px"
+              // className={classes.nameCss}
               display="flex"
               justifyContent="space-between"
               alignItems="center"

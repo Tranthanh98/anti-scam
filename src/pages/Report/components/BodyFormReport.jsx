@@ -33,9 +33,11 @@ function BodyFormReport(props) {
   const dispatch = useDispatch();
 
   const titleReport = useInputText(
-    null,
+    "",
     yup.string().required("trường này là bắt buộc").max(150)
   );
+
+  const description = useInputText("");
 
   const _onChangeType = (value) => {
     setType(value);
@@ -95,6 +97,12 @@ function BodyFormReport(props) {
     if (listTypeInput.length === 0) {
       dispatch(addAlert("Chọn ít nhất 1 thể loại", "error"));
       return false;
+    }
+    for (let item of listTypeInput) {
+      if (!item.value || item.value.length === 0) {
+        dispatch(addAlert("Điền đầy đủ các trường", "error"));
+        return false;
+      }
     }
     return true;
   };
@@ -173,7 +181,7 @@ function BodyFormReport(props) {
                           placeholder={`Nhập ${item.type.label}`}
                           size="small"
                           fullWidth
-                          value={item.data}
+                          value={item.data || ""}
                           onChange={(e) => _onChangeValueType(e, item)}
                           error={!Boolean(item.data)}
                           helperText={
@@ -184,7 +192,6 @@ function BodyFormReport(props) {
                         />
                         <IconButton
                           style={{ width: 40, height: 40 }}
-                          sty
                           onClick={() => _onDeleteForm(item)}
                         >
                           <DeleteIcon />
@@ -203,8 +210,9 @@ function BodyFormReport(props) {
                   placeholder="Mô tả bạn bị nó lừa như thế nào..."
                   size="small"
                   fullWidth
-                  rows={4}
+                  rows={6}
                   multiline
+                  {...description}
                 />
               </Box>
               <Box marginBottom="12px">
