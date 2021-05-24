@@ -99,7 +99,7 @@ function BodyFormReport(props) {
       return false;
     }
     for (let item of listTypeInput) {
-      if (!item.value || item.value.length === 0) {
+      if (!item.data || item.data.length === 0) {
         dispatch(addAlert("Điền đầy đủ các trường", "error"));
         return false;
       }
