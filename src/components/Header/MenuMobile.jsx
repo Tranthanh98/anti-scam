@@ -162,7 +162,7 @@ function MenuMobile(props) {
         width="100%"
       >
         <MenuIcon style={{ color: "white" }} onClick={_handleDrawerOpen} />
-        <img src={logoText} height="20px" />
+        <img onClick={() => history.push("/")} src={logoText} height="20px" />
         <SelectLanguage />
       </Box>
       <Drawer
@@ -176,7 +176,13 @@ function MenuMobile(props) {
         onClose={_handleDrawerClose}
       >
         <Box display="flex" className={classes.drawerHeader}>
-          <Box display="flex">
+          <Box
+            display="flex"
+            onClick={() => {
+              _handleDrawerClose();
+              history.push("/");
+            }}
+          >
             <Avatar
               src={logo}
               variant="square"
