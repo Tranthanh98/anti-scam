@@ -19,7 +19,7 @@ function App() {
   const isMobile = window.mobileCheck();
 
   return (
-    <Box style={{ backgroundColor: "#f1f1f18a" }}>
+    <Box style={{ backgroundColor: "#bbbbbb8a" }}>
       <div className="App">
         <ThemeProvider theme={theme}>
           <Router>

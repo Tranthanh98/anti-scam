@@ -107,3 +107,7 @@ export function formateDateTime(date, format = "DD/MM/YYYY") {
 export function getGuid() {
   return uuidv4();
 }
+
+export function getPath(p) {
+  return window.applicationBaseUrl ? window.applicationBaseUrl + p : p;
+}

@@ -6,10 +6,18 @@ import { selectMenuAct } from "../../actions/select-menu";
 import MenuHeader from "../../components/Header/MenuHeader";
 import MenuMobile from "../../components/Header/MenuMobile";
 import route, { Paths } from "../route";
+import bgImg from "../../assets/images/antiscam.png";
 
 const styles = makeStyles((theme) => ({
   backgroundBody: {
     backgroundColor: theme.palette.primary.backgroundBody,
+  },
+  body: {
+    backgroundImage: `url(${bgImg})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "contain",
+    backgroundAttachment: "fixed",
   },
 }));
 
@@ -37,7 +45,7 @@ function HomePage(props) {
     //react-hooks/exhaustive-deps
   }, []);
   return (
-    <Box>
+    <Box className={classes.body}>
       {isMobile ? <MenuMobile isMobile={isMobile} /> : <MenuHeader />}
       <Box height={isMobile ? "50px" : "80px"}></Box>
       <Box

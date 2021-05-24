@@ -142,7 +142,8 @@ function ReportItem(props) {
                   display="flex"
                   alignItems="center"
                   marginLeft="4px"
-                  color="warning.main"
+                  color="error.main"
+                  fontSize="18px"
                 >
                   {comment}
                 </Box>
@@ -166,7 +167,8 @@ function ReportItem(props) {
                   display="flex"
                   alignItems="center"
                   marginLeft="4px"
-                  color="warning.main"
+                  color="error.main"
+                  fontSize="18px"
                 >
                   {reviewNumber}
                 </Box>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -12,6 +12,7 @@ import { useHistory, useParams } from "react-router";
 import { connectToContext } from "../../../components/BaseContext";
 import CommentComponent from "./CommentComponent";
 import RightpageDetail from "./RightpageDetail";
+import PhotoSwipeWrapper from "../../../components/PhotoSwipe/PhotoSwipeWrapper";
 
 const useStyles = makeStyles((theme) => ({
   titleCss: {
@@ -34,6 +35,24 @@ function LeftPageDetail(props) {
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = window.mobileCheck();
+  const [openImg, setOpenImg] = useState(false);
+  const [indexImg, setIndexImg] = useState(0);
+
+  const imgShows = imageList.map((i) => {
+    return {
+      src: i,
+      w: 600,
+      h: 400,
+    };
+  });
+
+  const _openImage = (index) => {
+    setIndexImg(index);
+    setOpenImg(true);
+  };
+  const _onCloseImg = () => {
+    setOpenImg(false);
+  };
   return (
     <Box>
       {isMobile ? (
@@ -80,6 +99,7 @@ function LeftPageDetail(props) {
                   width="150px"
                   height="170px"
                   margin="8px"
+                  onClick={() => _openImage(index)}
                 >
                   <img
                     src={image}
@@ -88,6 +108,12 @@ function LeftPageDetail(props) {
                 </Box>
               );
             })}
+            <PhotoSwipeWrapper
+              isOpen={openImg}
+              index={indexImg}
+              items={imgShows}
+              onClose={_onCloseImg}
+            />
           </Box>
         </CardContent>
       </Card>
