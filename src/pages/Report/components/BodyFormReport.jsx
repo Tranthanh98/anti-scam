@@ -207,7 +207,7 @@ function BodyFormReport(props) {
                 <TextField
                   variant="outlined"
                   label="Mô tả"
-                  placeholder="Mô tả bạn bị nó lừa như thế nào..."
+                  placeholder="Mô tả thêm..."
                   size="small"
                   fullWidth
                   rows={6}

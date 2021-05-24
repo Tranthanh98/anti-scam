@@ -57,7 +57,12 @@ function BaseModal() {
       aria-labelledby="simple-dialog-title"
       open={modalData.isOpen}
     >
-      <DialogTitle id="simple-dialog-title">{modalData.title}</DialogTitle>
+      <DialogTitle id="simple-dialog-title">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          {modalData.title}
+          <CloseIcon style={{ cursor: "pointer" }} onClick={_handleClose} />
+        </Box>
+      </DialogTitle>
       <DialogContent>{body}</DialogContent>
     </Dialog>
   );
