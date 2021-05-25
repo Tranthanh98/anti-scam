@@ -4,10 +4,13 @@ import AboutMeIcon from "@material-ui/icons/ChevronRight";
 import ContactIcon from "@material-ui/icons/Mail";
 import ReportIcon from "@material-ui/icons/Report";
 import React from "react";
+import AboutMe from "./AboutMe";
 import Detail from "./Detail";
 import ReportPage from "./Report";
 import ReputationPage from "./Reputation";
 import UserProfile from "./UserProfile/UserProfile";
+import HelpIcon from "@material-ui/icons/Help";
+import AskedQuestions from "./AskedQuestions";
 
 let i = 1;
 function createRoute(title, icon, path, component, isShow = true) {
@@ -39,6 +42,11 @@ export default [
     ReputationPage
   ),
   createRoute("Profile", <AccountCircleIcon />, Paths.profile, UserProfile),
-  createRoute("Liên hệ", <ContactIcon />, Paths.contact, ReportPage),
-  createRoute("Về chúng tôi", <AboutMeIcon />, Paths.about, ReportPage),
+  createRoute("Về chúng tôi", <AboutMeIcon />, Paths.about, AboutMe),
+  createRoute(
+    "Câu hỏi thường gặp",
+    <HelpIcon />,
+    Paths.contact,
+    AskedQuestions
+  ),
 ];
