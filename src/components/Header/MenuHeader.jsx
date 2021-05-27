@@ -84,6 +84,9 @@ const useStyles = makeStyles((theme) => ({
       width: "20ch",
     },
   },
+  logoIcon: {
+    cursor: "pointer",
+  },
 }));
 
 export default function MenuHeader() {
@@ -108,7 +111,12 @@ export default function MenuHeader() {
         padding="8px 8px 0 8px"
         justifyContent="space-between"
       >
-        <Box display="flex" alignItems="center">
+        <Box
+          display="flex"
+          alignItems="center"
+          className={classes.logoIcon}
+          onClick={() => history.push("/")}
+        >
           <img src={logo} height="25px" style={{ margin: "0 8px 0 0" }} />
           <img src={logoText} height="20px" />
         </Box>
