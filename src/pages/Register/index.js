@@ -17,6 +17,7 @@ import * as yup from "yup";
 import { addAlert } from "../../actions/alertify.action";
 import { loadingAct } from "../../actions/loading.action";
 import { sleep } from "../../general/helper";
+import * as httpClient from "../../general/HttpClient";
 
 function Copyright() {
   return (
@@ -65,8 +66,17 @@ export default function RegisterPage() {
   const _onSignUp = async () => {
     dispatch(loadingAct(true));
     try {
-      await sleep(1500);
-      dispatch(addAlert("Đăng ký thành công", "success"));
+      // await sleep(1500);
+      // dispatch(addAlert("Đăng ký thành công", "success"));
+      const userRegister = {
+        ...formik.values,
+        confirmPassword: formik.values.password,
+      };
+      let response = await httpClient.sendPost("/user/register", userRegister);
+      console.log("response:", response);
+      if (!response.data.isSuccess) {
+        throw new Error(response.data.messages);
+      }
       history.push("/login");
     } catch (e) {
       dispatch(addAlert(String(e), "error"));

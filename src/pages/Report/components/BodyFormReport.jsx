@@ -19,6 +19,7 @@ import UploadComponent from "../../../components/UploadComponent";
 import { useInputText } from "../../../general/CustomHook";
 import { sleep } from "../../../general/helper";
 import types from "../config/dummyTypes";
+import * as httpClient from "../../../general/HttpClient";
 
 const typeOptions = [...types].splice(1);
 
@@ -68,25 +69,22 @@ function BodyFormReport(props) {
   };
 
   const _onUploadFile = async (imgList) => {
-    console.log("imgList:", imgList);
-    // const { files } = e.target;
-    // const fileList = [];
-    // for (let i of files) {
-    //   let reader = new FileReader();
-    //   let url = await reader.readAsDataURL(i);
-    //   reader.onloadend = async function (m) {
-    //     fileList.push(reader.result);
-    //     const cloneImageList = [...fileImages, ...fileList];
-    //     await setFileImage(cloneImageList);
-    //   };
-    // }
+    let cloneImgList = [...fileImages, ...imgList];
+    setFileImage(cloneImgList);
   };
-  const _onDeleteImage = (image) => {
-    let cloneListImage = [...fileImages];
-    const index = fileImages.findIndex((i) => i == image);
-    if (index != -1) {
-      cloneListImage.splice(index, 1);
-      setFileImage(cloneListImage);
+  const _onDeleteImage = async (imageId) => {
+    try {
+      let response = await httpClient.sendGet("/file/DeleteFile?id=" + imageId);
+      if (response.data.isSuccess) {
+        let cloneListImage = [...fileImages];
+        const index = fileImages.findIndex((i) => i.fileId == imageId);
+        if (index != -1) {
+          cloneListImage.splice(index, 1);
+          setFileImage(cloneListImage);
+        }
+      }
+    } catch (e) {
+      console.error(String(e));
     }
   };
 
@@ -124,8 +122,20 @@ function BodyFormReport(props) {
     );
   };
 
+  const _deleteAllFileClosing = async () => {
+    try {
+      const listId = fileImages.map((i) => i.fileId);
+      let resonpse = await httpClient.sendPost(
+        "/file/DeleteMultipleFile",
+        listId
+      );
+    } catch (e) {
+      console.error(String(e));
+    }
+  };
+
   const _onCancel = () => {
-    props.onConfirm();
+    props.onConfirm(_deleteAllFileClosing);
   };
 
   const _closeDialogConfirm = () => {
@@ -216,7 +226,6 @@ function BodyFormReport(props) {
                 />
               </Box>
               <Box marginBottom="12px">
-                {/* <DropzoneArea onChange={_uploadFile} /> */}
                 <UploadComponent onChange={_onUploadFile} />
               </Box>
               <Grid container spacing={1}>
@@ -239,12 +248,12 @@ function BodyFormReport(props) {
                       >
                         <IconButton
                           style={{ position: "absolute", top: 0, right: -15 }}
-                          onClick={() => _onDeleteImage(ima)}
+                          onClick={() => _onDeleteImage(ima.fileId)}
                         >
                           <DeleteIcon />
                         </IconButton>
                         <img
-                          src={ima}
+                          src={ima.url}
                           style={{ maxWidth: "100%", maxHeight: "100%" }}
                         />
                       </Box>

@@ -5,6 +5,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeDrawerAct } from "../actions/drawer.action";
 import CloseIcon from "@material-ui/icons/Close";
+import * as httpClient from "../general/HttpClient";
 
 const drawerWidth = window.innerWidth;
 
@@ -28,6 +29,7 @@ export default function BaseDrawer() {
 
   const _onClose = (callback) => {
     typeof callback == "function" && callback();
+    httpClient.sendGet("/file/DeleteFileUnUsage");
     dispatch(closeDrawerAct());
   };
 
