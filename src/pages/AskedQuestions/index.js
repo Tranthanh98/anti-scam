@@ -49,6 +49,7 @@ function AskedQuestions(props) {
             textAlign="left"
             padding={widthScreen > 960 ? "0 96px" : "0 16px"}
             letterSpacing="0.8px"
+            lineHeight={1.5}
           >
             <Box margin="8px 0" fontWeight="bold">
               1. Làm thế nào để tôi có thể báo cáo lừa đảo?
@@ -110,7 +111,7 @@ function AskedQuestions(props) {
             <Box margin="8px 0" fontWeight="bold">
               2. Làm thế nào để tôi có thể tìm kiếm chính xác thông tin?
             </Box>
-            <Box margin="8px 0">
+            <Box margin="8px 0" style={{ textIndent: "24px" }}>
               Nếu bạn sắp mua hàng trên website/ Fanpage (hoặc cá nhân), hãy
               dùng link của website/ SĐT/ Fanpage (link tài khoản cá nhân) đó để
               tra cứu. Nếu bạn sắp thực hiện giao dịch chuyển khoản, hãy sử dụng
@@ -120,7 +121,7 @@ function AskedQuestions(props) {
             <Box margin="8px 0" fontWeight="bold">
               3. Làm thế nào để bài báo cáo được duyệt?
             </Box>
-            <Box margin="8px 0">
+            <Box margin="8px 0" style={{ textIndent: "24px" }}>
               Vì một số lý do, chúng tôi sẽ không thể duyệt những bài báo cáo có
               thông tin nhạy cảm, những vấn đề dễ gây tranh cãi, hay những vấn
               đề mâu thuẫn với pháp luật, hay bài mang tính phản đối nhà nước...
@@ -134,9 +135,9 @@ function AskedQuestions(props) {
               4. Bạn tố cáo nhầm lẫn? Hay kẻ lừa đảo đã hoàn lương và bây giờ
               tôi muốn xóa bài tố cáo?
             </Box>
-            <Box margin="8px 0">
+            <Box margin="8px 0" style={{ textIndent: "24px" }}>
               Điều này rất tốt và chúng tôi rất vui vì điều đó. Bạn có thể Copy
-              link bài báo cáo của bạn trước đó và gửi về
+              link bài báo cáo của bạn trước đó và gửi về{" "}
               <a
                 href="https://mail.google.com/mail/?view=cm&fs=1&to=antiscam.contact@gmail.com"
                 target="_blank"
@@ -161,11 +162,12 @@ function AskedQuestions(props) {
             textAlign="left"
             padding={widthScreen > 960 ? "0 96px" : "0 16px"}
             letterSpacing="0.8px"
+            lineHeight={1.5}
           >
             <Box margin="8px 0" fontWeight="bold">
               1. Tại sao lại có dịch vụ uy tín ở trên Website chống lừa đảo?
             </Box>
-            <Box margin="8px 0">
+            <Box margin="8px 0" style={{ textIndent: "24px" }}>
               Đúng là rất lạ, nhưng vì để giúp bạn tránh khỏi lừa đảo, chúng tôi
               cần đề xuất những dịch vụ/nhà cung cấp/website uy tín để bạn có
               thể yên tâm khi sử dụng và không cần lo lắng gì cả. Tất nhiên là
@@ -176,7 +178,7 @@ function AskedQuestions(props) {
             <Box margin="8px 0" fontWeight="bold">
               2. Người dùng có thể tự đăng bài vào phần Dịch vụ uy tín không?
             </Box>
-            <Box margin="8px 0">
+            <Box margin="8px 0" style={{ textIndent: "24px" }}>
               Rất tiếc là không, vì để xuất hiện trong Dịch Vụ Uy Tín, chúng tôi
               cần kiểm tra rất kĩ càng và tất nhiên chỉ chúng tôi mới có thể để
               đề xuất vì nếu ai cũng có thể đăng thì sẽ không đảm bảo được độ
@@ -186,7 +188,7 @@ function AskedQuestions(props) {
               3. Tôi là doanh nghiệp uy tín, làm sao để tôi được đăng bài vào
               DỊCH VỤ UY TÍN?
             </Box>
-            <Box margin="8px 0">
+            <Box margin="8px 0" style={{ textIndent: "24px" }}>
               Nếu bạn tự tin về độ tin cậy của mình, xin hãy liên hệ với chúng
               tôi thông qua{" "}
               <a

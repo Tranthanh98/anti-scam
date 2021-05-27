@@ -76,7 +76,7 @@ function ReportPage(props) {
     return (
       <>
         <Card>
-          <CardHeader title="CÁC WEBSITE, TỔ CHỨC, CÁC NHÂN BỊ TỐ CÁO LỪA ĐẢO" />
+          <CardHeader title="CÁC WEBSITE, TỔ CHỨC, CÁ NHÂN BỊ TỐ CÁO LỪA ĐẢO" />
           <CardContent>
             <Grid container>
               <Grid item xs={12}>
