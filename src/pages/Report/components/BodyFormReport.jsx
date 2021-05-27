@@ -34,7 +34,7 @@ function BodyFormReport(props) {
 
   const titleReport = useInputText(
     "",
-    yup.string().required("trường này là bắt buộc").max(150)
+    yup.string().required("Bắt buộc").max(150)
   );
 
   const description = useInputText("");
@@ -67,18 +67,19 @@ function BodyFormReport(props) {
     setListType(cloneList);
   };
 
-  const _onUploadFile = async (e) => {
-    const { files } = e.target;
-    const fileList = [];
-    for (let i of files) {
-      let reader = new FileReader();
-      let url = await reader.readAsDataURL(i);
-      reader.onloadend = async function (m) {
-        fileList.push(reader.result);
-        const cloneImageList = [...fileImages, ...fileList];
-        await setFileImage(cloneImageList);
-      };
-    }
+  const _onUploadFile = async (imgList) => {
+    console.log("imgList:", imgList);
+    // const { files } = e.target;
+    // const fileList = [];
+    // for (let i of files) {
+    //   let reader = new FileReader();
+    //   let url = await reader.readAsDataURL(i);
+    //   reader.onloadend = async function (m) {
+    //     fileList.push(reader.result);
+    //     const cloneImageList = [...fileImages, ...fileList];
+    //     await setFileImage(cloneImageList);
+    //   };
+    // }
   };
   const _onDeleteImage = (image) => {
     let cloneListImage = [...fileImages];
@@ -91,7 +92,7 @@ function BodyFormReport(props) {
 
   const _validateData = () => {
     if (!titleReport.value || titleReport.value.length === 0) {
-      dispatch(addAlert("Trường title là bắt buộc", "error"));
+      dispatch(addAlert("Trường 'Tiêu đề' là bắt buộc", "error"));
       return false;
     }
     if (listTypeInput.length === 0) {
@@ -116,7 +117,10 @@ function BodyFormReport(props) {
     props.onConfirm();
     dispatch(loadingAct(false));
     dispatch(
-      addAlert("gửi báo cáo lừa đảo thành công và đang chờ duyệt", "success")
+      addAlert(
+        "Báo cáo của bạn đã gửi thành công và đang chờ được duyệt",
+        "success"
+      )
     );
   };
 
@@ -137,8 +141,8 @@ function BodyFormReport(props) {
         <Grid item xs={12}>
           <TextField
             variant="outlined"
-            label="Title"
-            placeholder="Nhập title, phần này được xem như một trường tìm kiếm"
+            label="Tiêu đề"
+            placeholder="Ví dụ: Tố cáo lừa đảo mua bán tiền điện tử"
             size="small"
             fullWidth
             {...titleReport}
@@ -184,11 +188,7 @@ function BodyFormReport(props) {
                           value={item.data || ""}
                           onChange={(e) => _onChangeValueType(e, item)}
                           error={!Boolean(item.data)}
-                          helperText={
-                            !Boolean(item.data)
-                              ? "*Trường này là bắt buộc"
-                              : null
-                          }
+                          helperText={!Boolean(item.data) ? "*Bắt buộc" : null}
                         />
                         <IconButton
                           style={{ width: 40, height: 40 }}
@@ -207,7 +207,7 @@ function BodyFormReport(props) {
                 <TextField
                   variant="outlined"
                   label="Mô tả"
-                  placeholder="Mô tả thêm..."
+                  placeholder="Mô tả thêm về câu chuyện của bạn..."
                   size="small"
                   fullWidth
                   rows={6}
@@ -275,7 +275,7 @@ function BodyFormReport(props) {
       </Box>
       <Dialog open={openDialogConfirm} onClose={_closeDialogConfirm}>
         <DialogContent>
-          Cam đoan những điều bạn vừa điền là chính xác
+          Xác nhận những điều bạn vừa báo cáo là chính xác
         </DialogContent>
         <DialogActions>
           <Button

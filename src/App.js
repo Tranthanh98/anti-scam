@@ -47,16 +47,6 @@ function App() {
           <BaseDrawer />
           <Alertify />
           <LoadingComponent />
-          <Footer />
-          <Box
-            padding="16px"
-            textAlign="center"
-            fontSize="20px"
-            fontWeight="700"
-            color="gray"
-          >
-            ANTI SCAM VIETNAM - 2021
-          </Box>
         </ThemeProvider>
       </div>
     </Box>

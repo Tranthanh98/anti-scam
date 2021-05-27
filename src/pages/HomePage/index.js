@@ -7,6 +7,7 @@ import MenuHeader from "../../components/Header/MenuHeader";
 import MenuMobile from "../../components/Header/MenuMobile";
 import route, { Paths } from "../route";
 import bgImg from "../../assets/images/antiscam.png";
+import Footer from "../../components/Footer";
 
 const styles = makeStyles((theme) => ({
   backgroundBody: {
@@ -78,6 +79,16 @@ function HomePage(props) {
             </Route>
           </Switch>
         </Container>
+      </Box>
+      <Footer />
+      <Box
+        padding="16px"
+        textAlign="center"
+        fontSize="20px"
+        fontWeight="700"
+        color="gray"
+      >
+        ANTI SCAM VIETNAM - 2021
       </Box>
     </Box>
   );

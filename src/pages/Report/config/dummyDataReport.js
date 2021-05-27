@@ -1,8 +1,6 @@
 import { KIND_OF } from "../../../general/enum";
 import types from "./dummyTypes";
 
-var dateTime = new Date();
-
 let id = 10000001;
 
 export function dummyData(

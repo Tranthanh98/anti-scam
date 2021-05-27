@@ -1,24 +1,25 @@
-import React from "react";
+import { Hidden } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { useInputText } from "../../general/CustomHook";
-import * as yup from "yup";
-import { useHistory } from "react-router";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { loginAct } from "../../actions/login.action";
-import { addAlert } from "../../actions/alertify.action";
+import { useHistory } from "react-router";
 import { useLastLocation } from "react-router-last-location";
+import * as yup from "yup";
+import { addAlert } from "../../actions/alertify.action";
+import { loginAct } from "../../actions/login.action";
+import antiscamText from "../../assets/images/antiscam.png";
+import logoAntiscam from "../../assets/images/logo-primary.png";
+import { useInputText } from "../../general/CustomHook";
 
 function Copyright() {
   return (
@@ -38,14 +39,8 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   image: {
-    backgroundImage: "url(https://source.unsplash.com/random)",
-    backgroundRepeat: "no-repeat",
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    width: "100%",
+    maxHeight: "100vh",
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -102,7 +97,33 @@ export default function LoginPage() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={false} sm={4} md={7} style={{ maxHeight: "100vh" }}>
+        <Hidden smDown>
+          <Box
+            width="100%"
+            height="100vh"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Box maxHeight="500px" maxWidth="80%">
+              <img
+                style={{ maxWidth: "100%", maxHeight: "100%" }}
+                src={logoAntiscam}
+                alt="antiscam vietnam"
+              />
+            </Box>
+            <Box maxHeight="250px" maxWidth="80%">
+              <img
+                style={{ maxWidth: "100%", maxHeight: "100%" }}
+                src={antiscamText}
+                alt="antiscam vietnam"
+              />
+            </Box>
+          </Box>
+        </Hidden>
+      </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>

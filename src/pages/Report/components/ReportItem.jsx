@@ -12,6 +12,8 @@ import React from "react";
 import { useHistory } from "react-router";
 import createLinkDetail from "../../../general/createLinkDetail";
 import { formateDateTime } from "../../../general/helper";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubbleOutlineOutlined";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -121,7 +123,7 @@ function ReportItem(props) {
                 textAlign="start"
                 margin="8px 0"
               >
-                Ngày báo: {formateDateTime(createdDate)}
+                <CalendarTodayIcon /> {formateDateTime(createdDate)}
               </Box>
             </Grid>
             <Grid
@@ -137,7 +139,7 @@ function ReportItem(props) {
                 margin="8px 0"
                 alignItems="center"
               >
-                Comment:
+                <ChatBubbleIcon />
                 <Box
                   display="flex"
                   alignItems="center"

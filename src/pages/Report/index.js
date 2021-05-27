@@ -76,7 +76,7 @@ function ReportPage(props) {
     return (
       <>
         <Card>
-          <CardHeader title="CÁC TRANG WEB, SỐ TÀI KHOẢN BỊ BÁO CÁO XẤU" />
+          <CardHeader title="CÁC WEBSITE, TỔ CHỨC, CÁC NHÂN BỊ TỐ CÁO LỪA ĐẢO" />
           <CardContent>
             <Grid container>
               <Grid item xs={12}>
@@ -84,7 +84,7 @@ function ReportPage(props) {
                   variant="outlined"
                   size="small"
                   fullWidth
-                  placeholder="Tìm kiếm theo tên, số tài khoản,..."
+                  placeholder="Tìm kiếm link, số tài khoản, số điện thoại,..."
                   {...searchText}
                 />
               </Grid>
@@ -160,6 +160,7 @@ function ReportPage(props) {
             frameBorder="0"
             allowFullScreen={true}
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            title="fan page facebook, kết nối antiscam vietnam"
           ></iframe>
         </div>
       </>

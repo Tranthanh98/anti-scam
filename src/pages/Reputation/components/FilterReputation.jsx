@@ -22,7 +22,7 @@ function FilterReputation({
 }) {
   return (
     <Card>
-      <CardHeader title="CÁC TRANG WEB, SỐ TÀI KHOẢN UY TÍN LUÔN" />
+      <CardHeader title="CÁC WEBSITE, TỔ CHỨC, CÁ NHÂN CUNG CẤP DỊCH VỤ UY TÍN" />
       <CardContent>
         <Grid container>
           <Grid item xs={12}>

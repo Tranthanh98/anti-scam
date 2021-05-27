@@ -1,15 +1,16 @@
-import { Box } from "@material-ui/core";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { Box, InputBase } from "@material-ui/core";
+import { fade, makeStyles } from "@material-ui/core/styles";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { selectMenuAct } from "../../actions/select-menu";
 import logoText from "../../assets/images/antiscam.png";
-import route, { Paths } from "../../pages/route";
-import SelectLanguage from "../SelectLanguage";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import logo from "../../assets/images/logo-primary.png";
+import route from "../../pages/route";
+import SelectLanguage from "../SelectLanguage";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,6 +45,45 @@ const useStyles = makeStyles((theme) => ({
     borderBottomStyle: "solid",
     borderBottomWidth: theme.spacing(0.5),
   },
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(3),
+      width: "auto",
+    },
+    height: "38px",
+    marginTop: "6px",
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputRoot: {
+    color: "inherit",
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
 }));
 
 export default function MenuHeader() {
@@ -75,49 +115,67 @@ export default function MenuHeader() {
         <SelectLanguage />
       </Box>
       <Box display="flex" justifyContent="flex-end" width="100%" height="50px">
-        {route.map((menu, index) => {
-          if (menu.isShow) {
-            return (
-              <Box
-                key={index}
-                onClick={() => _goTo(menu)}
-                className={clsx(classes.title, {
-                  [classes.selected]: menuSelected.id === menu.id,
-                })}
-              >
-                {/* <Box margin="0 8px">
-                                        {menu.icon}
-                                    </Box> */}
-                {menu.title}
+        <Box display="flex" justifyContent="space-between" width="100%">
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Tìm kiếm"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ "aria-label": "search" }}
+            />
+          </div>
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            width="100%"
+            height="50px"
+          >
+            {route.map((menu, index) => {
+              if (menu.isShow) {
+                return (
+                  <Box
+                    key={index}
+                    onClick={() => _goTo(menu)}
+                    className={clsx(classes.title, {
+                      [classes.selected]: menuSelected.id === menu.id,
+                    })}
+                  >
+                    {menu.title}
+                  </Box>
+                );
+              }
+            })}
+            <Box borderRight="1px solid grey"></Box>
+            {user.data?.isAuth ? (
+              <Box onClick={_logout} className={classes.title}>
+                Đăng xuất
+                <Box width="8px"></Box>
+                <ExitToAppIcon />
               </Box>
-            );
-          }
-        })}
-
-        <Box borderRight="1px solid grey"></Box>
-        {user.data?.isAuth ? (
-          <Box onClick={_logout} className={classes.title}>
-            Đăng xuất
-            <Box width="8px"></Box>
-            <ExitToAppIcon />
+            ) : (
+              <>
+                <Box
+                  onClick={() => history.push("/login")}
+                  className={classes.title}
+                >
+                  Đăng nhập
+                </Box>
+                <Box
+                  onClick={() => history.push("/sign-up")}
+                  className={classes.title}
+                >
+                  Đăng ký
+                </Box>
+              </>
+            )}
+            <Box marginLeft="48px"></Box>
           </Box>
-        ) : (
-          <>
-            <Box
-              onClick={() => history.push("/login")}
-              className={classes.title}
-            >
-              Đăng nhập
-            </Box>
-            <Box
-              onClick={() => history.push("/sign-up")}
-              className={classes.title}
-            >
-              Đăng ký
-            </Box>
-          </>
-        )}
-        <Box marginLeft="48px"></Box>
+        </Box>
       </Box>
     </div>
   );
