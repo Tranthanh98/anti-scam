@@ -3,6 +3,7 @@ import {
   LOGIN_SUCCESS,
   REQUEST_LOGIN,
 } from "../actions/login.action";
+import { SIGN_IN_DATA } from "../actions/signin.action";
 
 const initialState = {
   requesting: false,
@@ -20,14 +21,16 @@ export const loginReducer = (state = initialState, action) => {
       };
     }
     case LOGIN_SUCCESS: {
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
         requesting: false,
-        data: action.payload.data,
+        data: action.payload.user,
         message: null,
       };
     }
     case LOGIN_FAIL: {
+      localStorage.removeItem("token");
       return {
         ...state,
         requesting: false,
@@ -36,7 +39,17 @@ export const loginReducer = (state = initialState, action) => {
       };
     }
     case "LOGOUT": {
+      localStorage.removeItem("token");
       return initialState;
+    }
+    case SIGN_IN_DATA: {
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        requesting: false,
+        data: action.payload.user,
+        message: null,
+      };
     }
     default:
       return state;

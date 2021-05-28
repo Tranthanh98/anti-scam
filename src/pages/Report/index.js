@@ -53,6 +53,8 @@ function ReportPage(props) {
     setSortType(value);
   };
 
+  console.log("user:", user);
+
   const _onClickReport = () => {
     if (user?.data?.isAuth) {
       let modalData = {

@@ -82,9 +82,13 @@ function BodyFormReport(props) {
           cloneListImage.splice(index, 1);
           setFileImage(cloneListImage);
         }
+        dispatch(addAlert("Xóa ảnh thành công", "success"));
+      } else {
+        throw new Error(response.data.messages);
       }
     } catch (e) {
       console.error(String(e));
+      dispatch(addAlert("Có lỗi xảy ra khi xóa ảnh", "error"));
     }
   };
 
@@ -129,8 +133,13 @@ function BodyFormReport(props) {
         "/file/DeleteMultipleFile",
         listId
       );
+      if (!resonpse.data.isSuccess) {
+        throw new Error(resonpse.data.messages);
+      }
+      dispatch(addAlert("Xóa ảnh thành công", "success"));
     } catch (e) {
       console.error(String(e));
+      dispatch(addAlert("Có lỗi xảy ra khi xóa ảnh", "error"));
     }
   };
 

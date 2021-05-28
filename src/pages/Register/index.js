@@ -16,6 +16,7 @@ import { useHistory } from "react-router";
 import * as yup from "yup";
 import { addAlert } from "../../actions/alertify.action";
 import { loadingAct } from "../../actions/loading.action";
+import { signIdData } from "../../actions/signin.action";
 import { sleep } from "../../general/helper";
 import * as httpClient from "../../general/HttpClient";
 
@@ -73,11 +74,11 @@ export default function RegisterPage() {
         confirmPassword: formik.values.password,
       };
       let response = await httpClient.sendPost("/user/register", userRegister);
-      console.log("response:", response);
       if (!response.data.isSuccess) {
         throw new Error(response.data.messages);
       }
-      history.push("/login");
+      dispatch(signIdData(response.data.data));
+      history.push("/");
     } catch (e) {
       dispatch(addAlert(String(e), "error"));
     } finally {
