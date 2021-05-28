@@ -1,6 +1,7 @@
 import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGOUT,
   REQUEST_LOGIN,
 } from "../actions/login.action";
 import { SIGN_IN_DATA } from "../actions/signin.action";
@@ -38,7 +39,7 @@ export const loginReducer = (state = initialState, action) => {
         data: null,
       };
     }
-    case "LOGOUT": {
+    case LOGOUT: {
       localStorage.removeItem("token");
       return initialState;
     }
