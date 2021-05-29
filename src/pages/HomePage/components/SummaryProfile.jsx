@@ -57,7 +57,12 @@ const SummaryProfile = React.memo((props) => {
           className={classes.userName}
         >
           Email:{" "}
-          <Box marginLeft="4px" fontWeight="bold" color="error.main">
+          <Box
+            marginLeft="4px"
+            fontWeight="bold"
+            color="error.main"
+            style={{ wordBreak: "break-all" }}
+          >
             {user.email}
           </Box>
         </Box>

@@ -6,6 +6,7 @@ import { formateDateTime } from "../../../general/helper";
 import { connectToContext } from "../../../components/BaseContext";
 import { KIND_OF } from "../../../general/enum";
 import ReportIcon from "@material-ui/icons/Report";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 
 function RightpageDetail(props) {
   const { writer, reviewNumber, createdDate, kindOf } = props.post;
@@ -39,7 +40,7 @@ function RightpageDetail(props) {
             textAlign="start"
             margin="8px 0"
           >
-            Đăng bởi:
+            <Icon style={{ marginRight: "8px" }}>person</Icon>
             <Box color="primary.dark" marginLeft="4px">
               {writer}
             </Box>
@@ -52,7 +53,8 @@ function RightpageDetail(props) {
             fontStyle="italic"
             fontSize="14px"
           >
-            Ngày báo: {formateDateTime(createdDate, "DD/MM/YYYY HH:mm A")}
+            <CalendarTodayIcon style={{ marginRight: "8px" }} />
+            {formateDateTime(createdDate, "DD/MM/YYYY HH:mm A")}
           </Box>
           <Box
             textAlign="start"
@@ -60,7 +62,7 @@ function RightpageDetail(props) {
             margin="8px 0"
             alignItems="center"
           >
-            <VisibilityIcon />
+            <VisibilityIcon style={{ marginRight: "8px" }} />
             <Box marginLeft="4px" color="warning.main">
               {reviewNumber}
             </Box>

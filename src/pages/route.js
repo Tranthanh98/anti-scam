@@ -35,12 +35,17 @@ export default [
   createRoute("Detail", null, Paths.detail, Detail, false),
   createRoute("Báo cáo lừa đảo", <ReportIcon />, Paths.report, ReportPage),
   createRoute(
-    "Trang web uy tín",
+    "Dịch vụ uy tín",
     <Icon>verified_user</Icon>,
     Paths.reputation,
     ReputationPage
   ),
-  createRoute("Profile", <AccountCircleIcon />, Paths.profile, UserProfile),
+  createRoute(
+    "Thông tin người dùng",
+    <AccountCircleIcon />,
+    Paths.profile,
+    UserProfile
+  ),
   createRoute("Về chúng tôi", <AboutMeIcon />, Paths.about, AboutMe),
   createRoute(
     "Câu hỏi thường gặp",

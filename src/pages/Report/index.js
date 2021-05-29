@@ -93,7 +93,7 @@ function ReportPage(props) {
             </Grid>
             <Box margin="16px 0"></Box>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} sm={6}>
                 <SelectOption
                   value={type}
                   onChange={_onChangeType}
@@ -101,7 +101,7 @@ function ReportPage(props) {
                   label="Thể loại"
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} sm={6}>
                 <SelectOption
                   value={sortType}
                   onChange={_onChangeSort}
