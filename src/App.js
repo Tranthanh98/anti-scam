@@ -32,7 +32,7 @@ function App() {
   const dispatch = useDispatch();
 
   const _handleLogout = () => {
-    return <Redirect to="/login" />;
+    return window.open("/login");
   };
 
   useEffect(() => {

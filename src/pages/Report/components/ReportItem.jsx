@@ -45,7 +45,7 @@ function ReportItem(props) {
     writer,
     object,
     reviewNumber,
-    type,
+    typePosts,
     createdDate,
     link,
     id,
@@ -77,23 +77,33 @@ function ReportItem(props) {
             margin="8px 0"
             alignItems="center"
           >
-            {type.label}:{" "}
-            {type.value === 3 ? (
-              <Box style={{ wordBreak: "break-all" }}>
-                <a style={{ marginLeft: 4 }} href={object} target="_blank">
-                  {object}
-                </a>
-              </Box>
-            ) : (
-              <Box
-                textOverflow="ellipsis"
-                overflow="hidden"
-                marginLeft="4px"
-                color="error.main"
-              >
-                {object}
-              </Box>
-            )}
+            {typePosts.map((type, index) => {
+              return (
+                <React.Fragment key={index}>
+                  {type.type.name}:{" "}
+                  {type.type.id === 3 ? (
+                    <Box style={{ wordBreak: "break-all" }}>
+                      <a
+                        style={{ marginLeft: 4 }}
+                        href={object}
+                        target="_blank"
+                      >
+                        {type.object}
+                      </a>
+                    </Box>
+                  ) : (
+                    <Box
+                      textOverflow="ellipsis"
+                      overflow="hidden"
+                      marginLeft="4px"
+                      color="error.main"
+                    >
+                      {type.object}
+                    </Box>
+                  )}
+                </React.Fragment>
+              );
+            })}
           </Box>
           <Grid container spacing={1}>
             <Grid

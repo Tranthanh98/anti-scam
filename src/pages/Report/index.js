@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAlert } from "../../actions/alertify.action";
 import { openDrawerAct } from "../../actions/drawer.action";
@@ -23,7 +23,9 @@ import BodyFormReport from "./components/BodyFormReport";
 import ProfileAnonymous from "./components/ProfileAnonymous";
 import ReportItem from "./components/ReportItem";
 import dummyDataReport from "./config/dummyDataReport";
-import types from "./config/dummyTypes";
+import * as httpClient from "../../general/HttpClient";
+import axios from "axios";
+// import types from "./config/dummyTypes";
 
 const sortOptions = [
   {
@@ -37,8 +39,46 @@ const sortOptions = [
 ];
 
 function ReportPage(props) {
-  const [type, setType] = useState();
   const [sortType, setSortType] = useState(sortOptions[0]);
+  const [typeOptions, setTypeOptions] = useState([]);
+  const [dataReport, setDataReport] = useState([]);
+
+  const [type, setType] = useState();
+
+  const cancelToken = axios.CancelToken.source();
+
+  const _getDefaultData = async () => {
+    let res = await httpClient.sendGet("/DefaultPage/GetReportDefaultData");
+    if (res.data.isSuccess) {
+      setTypeOptions(res.data?.data?.types || []);
+    }
+  };
+
+  const _getDataReport = async () => {
+    let searchModel = {
+      currentPage: 1,
+      SearchText: searchText.value,
+      TypeId: type?.value,
+      SortType: sortType?.value,
+      KindOfValue: KIND_OF.Cheat,
+    };
+
+    let res = await httpClient.sendPost("/Post/GetPosts", { searchModel });
+    if (res.data.isSuccess) {
+      setDataReport(res.data?.data?.data || []);
+    }
+  };
+
+  useEffect(() => {
+    _getDefaultData();
+    return () => {
+      cancelToken.cancel();
+    };
+  }, []);
+
+  useEffect(() => {
+    _getDataReport();
+  }, [type, sortType]);
 
   const isMobile = window.mobileCheck();
   const user = useSelector((state) => state.loginReducer);
@@ -52,8 +92,6 @@ function ReportPage(props) {
   const _onChangeSort = (value) => {
     setSortType(value);
   };
-
-  console.log("user:", user);
 
   const _onClickReport = () => {
     if (user?.data?.isAuth) {
@@ -97,7 +135,7 @@ function ReportPage(props) {
                 <SelectOption
                   value={type}
                   onChange={_onChangeType}
-                  options={types}
+                  options={typeOptions}
                   label="Thể loại"
                 />
               </Grid>
@@ -126,11 +164,9 @@ function ReportPage(props) {
           </CardContent>
         </Card>
         <Box>
-          {dummyDataReport
-            .filter((i) => i.kindOf === KIND_OF.Cheat)
-            .map((data, index) => {
-              return <ReportItem key={data.id} {...data} />;
-            })}
+          {dataReport.map((data, index) => {
+            return <ReportItem key={data.id} {...data} />;
+          })}
         </Box>
         <Box margin="16px" display="flex" justifyContent="center">
           <Pagination
