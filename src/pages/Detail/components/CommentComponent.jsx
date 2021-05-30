@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import {
   Avatar,
   Box,
@@ -7,14 +5,15 @@ import {
   Card,
   CardContent,
   makeStyles,
-  TextField,
 } from "@material-ui/core";
-import { formateDateTime, sleep } from "../../../general/helper";
-import { useSelector } from "react-redux";
-import { useInputText } from "../../../general/CustomHook";
-import TextFromField from "../../../components/TextFromField";
-import ItemComponent from "./ItemComponent";
 import { Pagination } from "@material-ui/lab";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addAlert } from "../../../actions/alertify.action";
+import { connectToContext } from "../../../components/BaseContext";
+import TextFromField from "../../../components/TextFromField";
+import * as httpClient from "../../../general/HttpClient";
+import ItemComponent from "./ItemComponent";
 
 let idComment = 1;
 function createComment(name, imageAvatar, commentContent) {
@@ -53,17 +52,39 @@ const useStyles = makeStyles((theme) => ({
 const CommentComponent = React.memo((props) => {
   const isMobile = window.mobileCheck();
   const userData = useSelector((state) => state.loginReducer);
+
   const currentUser = userData.data;
 
   const [commentList, setCommentList] = useState([]);
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    total: 0,
+  });
 
   const [yourComment, setYourComment] = useState("");
 
   const [commentHtml, setCommentHtml] = useState("");
+  const dispatch = useDispatch();
 
-  const _getComment = async () => {
-    setCommentList(commentItem);
+  const _getComment = async (pageIndex) => {
+    try {
+      let postData = {
+        postId: props.post.id,
+        currentPage: pageIndex || pagination.currentPage,
+      };
+      let res = await httpClient.sendPost("/comment/GetComment", postData);
+      if (res.data.isSuccess) {
+        setCommentList(res.data?.data?.data);
+        setPagination({
+          total: res.data?.data?.total,
+          currentPage: res.data?.data?.currentPage,
+        });
+      }
+    } catch (e) {
+      dispatch(addAlert("Có lỗi khi tải bình luận", "error"));
+    }
   };
+
   useEffect(() => {
     _getComment();
     document.addEventListener("keyup", _onKeyPressComment);
@@ -77,18 +98,30 @@ const CommentComponent = React.memo((props) => {
     setYourComment(value);
   };
 
-  const _onComment = () => {
-    const cmt = createComment(
-      currentUser.userName,
-      currentUser.imageAvatar,
-      yourComment,
-      new Date()
-    );
-    let cloneCommentList = [...commentList];
-    cloneCommentList.unshift(cmt);
+  const _onClickComment = async () => {
+    // const cmt = createComment(
+    //   currentUser.userName,
+    //   currentUser.imageAvatar,
+    //   yourComment,
+    //   new Date()
+    // );
 
-    setCommentList(cloneCommentList);
-    setYourComment("");
+    let postData = {
+      PostId: props.post.id,
+      Content: yourComment,
+    };
+    try {
+      let res = await httpClient.sendPost("/comment/create", postData);
+      const response = res.data;
+      if (response.isSuccess) {
+        let cloneCommentList = [...commentList];
+        cloneCommentList.unshift(response.data);
+        setCommentList(cloneCommentList);
+        setYourComment("");
+      }
+    } catch (e) {
+      dispatch(addAlert("Có lỗi khi bình luận", "error"));
+    }
   };
   const _onKeyPressComment = (e) => {
     if (e.keyCode === 13) {
@@ -97,6 +130,10 @@ const CommentComponent = React.memo((props) => {
 
       setCommentHtml(cloneYourComment);
     }
+  };
+
+  const _handleChangePage = (e, value) => {
+    _getComment(value);
   };
   const classes = useStyles();
   return (
@@ -143,7 +180,7 @@ const CommentComponent = React.memo((props) => {
                   justifyContent="flex-start"
                 >
                   <Button
-                    onClick={_onComment}
+                    onClick={_onClickComment}
                     variant="contained"
                     color="primary"
                     size="small"
@@ -160,14 +197,19 @@ const CommentComponent = React.memo((props) => {
           Đăng nhập để bình luận
         </Box>
       )}
-      {commentList.map((cmt, index) => {
-        return <ItemComponent key={cmt.id} cmt={cmt} />;
-      })}
+      {commentList && commentList.length > 0 ? (
+        commentList.map((cmt, index) => {
+          return <ItemComponent key={cmt.id} cmt={cmt} />;
+        })
+      ) : (
+        <Box fontStyle="italic">Chưa có bình luận nào</Box>
+      )}
       <Box display="flex" justifyContent="center" margin="16px 0">
         <Pagination
           size={isMobile ? "small" : "medium"}
-          // page={2}
-          count={10}
+          page={pagination.currentPage}
+          count={pagination.total}
+          onChange={_handleChangePage}
           color="secondary"
           variant="outlined"
           shape="rounded"
@@ -179,4 +221,8 @@ const CommentComponent = React.memo((props) => {
 
 CommentComponent.propTypes = {};
 
-export default CommentComponent;
+const mapStateToProps = (context) => ({
+  post: context.post,
+});
+
+export default connectToContext(mapStateToProps)(CommentComponent);

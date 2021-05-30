@@ -32,7 +32,14 @@ function App() {
   const dispatch = useDispatch();
 
   const _handleLogout = () => {
-    return window.open("/login");
+    let confirmLogout = window.confirm(
+      "Tài khoản đã hết hạn, vui lòng đăng nhập lại"
+    );
+    if (confirmLogout) {
+      window.open("/login", "_self");
+    } else {
+      return;
+    }
   };
 
   useEffect(() => {

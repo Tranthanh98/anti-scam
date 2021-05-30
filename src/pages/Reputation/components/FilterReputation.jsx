@@ -6,20 +6,46 @@ import {
   Grid,
   TextField,
 } from "@material-ui/core";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { connectToContext } from "../../../components/BaseContext";
 import SelectOption from "../../../components/SelectOption";
 import types from "../../Report/config/dummyTypes";
 import { sortOptions } from "../index";
+import * as httpClient from "../../../general/HttpClient";
+import debounce from "lodash.debounce";
 
 function FilterReputation({
-  searchText,
   onChangeSearchText,
-  type,
+  typeId,
   sortType,
   onChangeType,
   onChangeSort,
 }) {
+  const [typeOptions, setTypeOptions] = useState([]);
+
+  const [privateSearchText, setPrivateSearchText] = useState("");
+
+  const _getDefaultData = async () => {
+    let res = await httpClient.sendGet("/DefaultPage/GetReportDefaultData");
+    if (res.data.isSuccess) {
+      setTypeOptions(res.data?.data?.types || []);
+    }
+  };
+
+  useEffect(() => {
+    _getDefaultData();
+  }, []);
+
+  const _debounceGetData = useCallback(
+    debounce((nextValue) => onChangeSearchText(nextValue), 800),
+    []
+  );
+
+  const _onChangeSearchText = (e) => {
+    const { value } = e.target;
+    setPrivateSearchText(value);
+    _debounceGetData(value);
+  };
   return (
     <Card>
       <CardHeader title="CÁC WEBSITE, TỔ CHỨC, CÁ NHÂN CUNG CẤP DỊCH VỤ UY TÍN" />
@@ -31,8 +57,8 @@ function FilterReputation({
               size="small"
               fullWidth
               placeholder="Tìm kiếm theo tên, số tài khoản,..."
-              value={searchText}
-              onChange={onChangeSearchText}
+              value={privateSearchText}
+              onChange={_onChangeSearchText}
             />
           </Grid>
         </Grid>
@@ -40,15 +66,15 @@ function FilterReputation({
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <SelectOption
-              value={type}
+              value={typeOptions.find((i) => i.value == typeId)}
               onChange={onChangeType}
-              options={types}
+              options={typeOptions}
               label="Thể loại"
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <SelectOption
-              value={sortType}
+              value={sortOptions.find((i) => i.value == sortType)}
               onChange={onChangeSort}
               options={sortOptions}
               label="Sắp xếp"
@@ -64,16 +90,14 @@ function FilterReputation({
 FilterReputation.propTypes = {};
 
 const mapContextToProps = ({
-  searchText,
   onChangeSearchText,
-  type,
+  typeId,
   sortType,
   onChangeType,
   onChangeSort,
 }) => ({
-  searchText,
   onChangeSearchText,
-  type,
+  typeId,
   sortType,
   onChangeType,
   onChangeSort,

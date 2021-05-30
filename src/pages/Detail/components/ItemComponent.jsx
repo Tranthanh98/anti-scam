@@ -31,7 +31,7 @@ const ItemComponent = React.memo((props) => {
       >
         <Box display="flex">
           <Box padding="8px">
-            <Avatar alt={cmt.name} src="/125.jpg" />
+            <Avatar alt={cmt.userName} src="/125.jpg" />
           </Box>
           <Box width="100%">
             <Box
@@ -42,14 +42,14 @@ const ItemComponent = React.memo((props) => {
               alignItems="center"
             >
               <Box color="primary.main" fontSize="18px" fontWeight="bold">
-                {cmt.name}
+                {cmt.userName}
               </Box>
               <Box fontWeight="400" fontSize="14px" fontStyle="italic">
                 {formateDateTime(cmt.createdDate, "DD/MM/YYYY hh:mm A")}
               </Box>
             </Box>
             <Box padding="8px" textAlign="start">
-              <div dangerouslySetInnerHTML={{ __html: cmt.commentContent }} />
+              <div dangerouslySetInnerHTML={{ __html: cmt.content }} />
             </Box>
           </Box>
         </Box>

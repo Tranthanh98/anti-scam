@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAlert } from "../../actions/alertify.action";
 import { openDrawerAct } from "../../actions/drawer.action";
@@ -25,7 +25,7 @@ import ReportItem from "./components/ReportItem";
 import dummyDataReport from "./config/dummyDataReport";
 import * as httpClient from "../../general/HttpClient";
 import axios from "axios";
-// import types from "./config/dummyTypes";
+import debounce from "lodash.debounce";
 
 const sortOptions = [
   {
@@ -39,11 +39,23 @@ const sortOptions = [
 ];
 
 function ReportPage(props) {
-  const [sortType, setSortType] = useState(sortOptions[0]);
+  // const [sortType, setSortType] = useState(sortOptions[0]);
+  // const [type, setType] = useState();
+
   const [typeOptions, setTypeOptions] = useState([]);
   const [dataReport, setDataReport] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
-  const [type, setType] = useState();
+  const [searchModel, setSearchModel] = useState({
+    currentPage: 1,
+    searchText: "",
+    typeId: 0,
+    sortType: 0,
+    kindOfValue: KIND_OF.Cheat,
+    pageSize: 10,
+    total: 0,
+    totalPage: 0,
+  });
 
   const cancelToken = axios.CancelToken.source();
 
@@ -54,18 +66,23 @@ function ReportPage(props) {
     }
   };
 
-  const _getDataReport = async () => {
-    let searchModel = {
-      currentPage: 1,
-      SearchText: searchText.value,
-      TypeId: type?.value,
-      SortType: sortType?.value,
-      KindOfValue: KIND_OF.Cheat,
-    };
+  const _getDataReport = async (searchTextValue) => {
+    let cloneSearchModel = { ...searchModel };
+    if (searchTextValue) {
+      cloneSearchModel.searchText = searchTextValue;
+    } else {
+      cloneSearchModel.searchText = searchText;
+    }
 
-    let res = await httpClient.sendPost("/Post/GetPosts", { searchModel });
+    let res = await httpClient.sendPost("/Post/GetPosts", {
+      searchModel: cloneSearchModel,
+    });
     if (res.data.isSuccess) {
       setDataReport(res.data?.data?.data || []);
+      setSearchModel({
+        ...searchModel,
+        totalPage: res.data?.data?.totalPage,
+      });
     }
   };
 
@@ -78,19 +95,34 @@ function ReportPage(props) {
 
   useEffect(() => {
     _getDataReport();
-  }, [type, sortType]);
+  }, [searchModel.typeId, searchModel.currentPage, searchModel.sortType]);
 
   const isMobile = window.mobileCheck();
   const user = useSelector((state) => state.loginReducer);
 
   const dispatch = useDispatch();
 
-  const searchText = useInputText("");
   const _onChangeType = (value) => {
-    setType(value);
+    let cloneSearchModel = { ...searchModel };
+    cloneSearchModel.typeId = value.value;
+    setSearchModel(cloneSearchModel);
   };
+
   const _onChangeSort = (value) => {
-    setSortType(value);
+    let cloneSearchModel = { ...searchModel };
+    cloneSearchModel.sortType = value.value;
+    setSearchModel(cloneSearchModel);
+  };
+
+  const _debounceGetData = useCallback(
+    debounce((nextValue) => _getDataReport(nextValue), 800),
+    []
+  );
+
+  const _onChangeSearchText = (e) => {
+    const { value } = e.target;
+    setSearchText(value);
+    _debounceGetData(value);
   };
 
   const _onClickReport = () => {
@@ -112,6 +144,12 @@ function ReportPage(props) {
       dispatch(addAlert("Đăng nhập để báo cáo lừa đảo", "error"));
     }
   };
+  const _onChangePageIndex = (e, value) => {
+    setSearchModel({
+      ...searchModel,
+      currentPage: value,
+    });
+  };
   const leftChildren = () => {
     return (
       <>
@@ -125,7 +163,8 @@ function ReportPage(props) {
                   size="small"
                   fullWidth
                   placeholder="Tìm kiếm link, số tài khoản, số điện thoại,..."
-                  {...searchText}
+                  value={searchText}
+                  onChange={_onChangeSearchText}
                 />
               </Grid>
             </Grid>
@@ -133,7 +172,7 @@ function ReportPage(props) {
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <SelectOption
-                  value={type}
+                  value={typeOptions.find((i) => i.value == searchModel.typeId)}
                   onChange={_onChangeType}
                   options={typeOptions}
                   label="Thể loại"
@@ -141,7 +180,9 @@ function ReportPage(props) {
               </Grid>
               <Grid item xs={12} md={6}>
                 <SelectOption
-                  value={sortType}
+                  value={sortOptions.find(
+                    (i) => i.value == searchModel.sortType
+                  )}
                   onChange={_onChangeSort}
                   options={sortOptions}
                   label="Sắp xếp"
@@ -171,8 +212,9 @@ function ReportPage(props) {
         <Box margin="16px" display="flex" justifyContent="center">
           <Pagination
             size={isMobile ? "small" : "medium"}
-            // page={2}
-            count={10}
+            page={searchModel.currentPage}
+            onChange={_onChangePageIndex}
+            count={searchModel.totalPage}
             color="secondary"
             variant="outlined"
             shape="rounded"

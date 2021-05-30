@@ -49,7 +49,7 @@ function ReportItem(props) {
     createdDate,
     link,
     id,
-    comment,
+    totalComment,
   } = props;
 
   const history = useHistory();
@@ -71,37 +71,21 @@ function ReportItem(props) {
           >
             {title}
           </Box>
-          <Box
-            textAlign="start"
-            display="flex"
-            margin="8px 0"
-            alignItems="center"
-          >
+          <Box textAlign="start" margin="8px 0">
             {typePosts.map((type, index) => {
               return (
-                <React.Fragment key={index}>
+                <Box display="flex" key={index}>
                   {type.type.name}:{" "}
-                  {type.type.id === 3 ? (
-                    <Box style={{ wordBreak: "break-all" }}>
-                      <a
-                        style={{ marginLeft: 4 }}
-                        href={object}
-                        target="_blank"
-                      >
-                        {type.object}
-                      </a>
-                    </Box>
-                  ) : (
-                    <Box
-                      textOverflow="ellipsis"
-                      overflow="hidden"
-                      marginLeft="4px"
-                      color="error.main"
-                    >
-                      {type.object}
-                    </Box>
-                  )}
-                </React.Fragment>
+                  <Box
+                    textOverflow="ellipsis"
+                    overflow="hidden"
+                    marginLeft="4px"
+                    color="error.main"
+                    style={{ wordBreak: "break-all" }}
+                  >
+                    {type.object}
+                  </Box>
+                </Box>
               );
             })}
           </Box>
@@ -157,7 +141,7 @@ function ReportItem(props) {
                   color="error.main"
                   fontSize="18px"
                 >
-                  {comment}
+                  {totalComment}
                 </Box>
               </Box>
             </Grid>
