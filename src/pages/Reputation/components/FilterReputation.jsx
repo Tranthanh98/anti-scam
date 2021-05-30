@@ -13,6 +13,7 @@ import types from "../../Report/config/dummyTypes";
 import { sortOptions } from "../index";
 import * as httpClient from "../../../general/HttpClient";
 import debounce from "lodash.debounce";
+import { KIND_OF } from "../../../general/enum";
 
 function FilterReputation({
   onChangeSearchText,
@@ -20,15 +21,19 @@ function FilterReputation({
   sortType,
   onChangeType,
   onChangeSort,
+  setNewestPost,
 }) {
   const [typeOptions, setTypeOptions] = useState([]);
 
   const [privateSearchText, setPrivateSearchText] = useState("");
 
   const _getDefaultData = async () => {
-    let res = await httpClient.sendGet("/DefaultPage/GetReportDefaultData");
+    let res = await httpClient.sendGet(
+      "/DefaultPage/GetReportDefaultData/" + KIND_OF.Cheat
+    );
     if (res.data.isSuccess) {
       setTypeOptions(res.data?.data?.types || []);
+      setNewestPost(res.data?.data?.newestPosts || []);
     }
   };
 
@@ -95,12 +100,14 @@ const mapContextToProps = ({
   sortType,
   onChangeType,
   onChangeSort,
+  setNewestPost,
 }) => ({
   onChangeSearchText,
   typeId,
   sortType,
   onChangeType,
   onChangeSort,
+  setNewestPost,
 });
 
 export default connectToContext(mapContextToProps)(FilterReputation);

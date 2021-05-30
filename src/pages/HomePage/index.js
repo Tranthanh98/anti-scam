@@ -44,7 +44,7 @@ function HomePage(props) {
   useEffect(() => {
     _componentDidMount();
     //react-hooks/exhaustive-deps
-  }, []);
+  }, [history.location.pathname]);
   return (
     <Box className={classes.body}>
       {isMobile ? <MenuMobile isMobile={isMobile} /> : <MenuHeader />}

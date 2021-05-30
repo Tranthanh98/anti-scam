@@ -1,10 +1,8 @@
-import { Box } from "@material-ui/core";
+import { Box, CircularProgress } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import React from "react";
 import { connectToContext } from "../../../components/BaseContext";
-import { KIND_OF } from "../../../general/enum";
 import ReportItem from "../../Report/components/ReportItem";
-import dummyDataReport from "../../Report/config/dummyDataReport";
 import FilterReputation from "./FilterReputation";
 
 function LeftPage({ searchModel, onChangePageIndex, dataTable }) {
@@ -13,10 +11,16 @@ function LeftPage({ searchModel, onChangePageIndex, dataTable }) {
     <Box>
       <FilterReputation />
       <Box>
-        {dataTable &&
+        {!dataTable || dataTable.length === 0 ? (
+          <Box margin="24px 0">
+            <Box margin="16px 0">Đang tải bài viết</Box>
+            <CircularProgress />
+          </Box>
+        ) : (
           dataTable.map((data, index) => {
             return <ReportItem key={data.id} {...data} />;
-          })}
+          })
+        )}
       </Box>
       <Box margin="16px" display="flex" justifyContent="center">
         <Pagination

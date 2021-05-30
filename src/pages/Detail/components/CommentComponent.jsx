@@ -208,7 +208,7 @@ const CommentComponent = React.memo((props) => {
         <Pagination
           size={isMobile ? "small" : "medium"}
           page={pagination.currentPage}
-          count={pagination.total}
+          count={pagination.totalPage}
           onChange={_handleChangePage}
           color="secondary"
           variant="outlined"

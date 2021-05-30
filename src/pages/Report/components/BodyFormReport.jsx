@@ -17,10 +17,9 @@ import { loadingAct } from "../../../actions/loading.action";
 import SelectOption from "../../../components/SelectOption";
 import UploadComponent from "../../../components/UploadComponent";
 import { useInputText } from "../../../general/CustomHook";
-import { sleep } from "../../../general/helper";
-import types from "../config/dummyTypes";
-import * as httpClient from "../../../general/HttpClient";
 import { KIND_OF } from "../../../general/enum";
+import * as httpClient from "../../../general/HttpClient";
+import types from "../config/dummyTypes";
 
 const typeOptions = [...types].splice(1);
 

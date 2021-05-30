@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CircularProgress,
   Grid,
   TextField,
 } from "@material-ui/core";
@@ -45,6 +46,7 @@ function ReportPage(props) {
   const [typeOptions, setTypeOptions] = useState([]);
   const [dataReport, setDataReport] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [highlightPost, setHighlightPost] = useState([]);
 
   const [searchModel, setSearchModel] = useState({
     currentPage: 1,
@@ -60,9 +62,12 @@ function ReportPage(props) {
   const cancelToken = axios.CancelToken.source();
 
   const _getDefaultData = async () => {
-    let res = await httpClient.sendGet("/DefaultPage/GetReportDefaultData");
+    let res = await httpClient.sendGet(
+      "/DefaultPage/GetReportDefaultData/" + KIND_OF.Reputation
+    );
     if (res.data.isSuccess) {
       setTypeOptions(res.data?.data?.types || []);
+      setHighlightPost(res.data?.data?.newestPosts);
     }
   };
 
@@ -205,9 +210,16 @@ function ReportPage(props) {
           </CardContent>
         </Card>
         <Box>
-          {dataReport.map((data, index) => {
-            return <ReportItem key={data.id} {...data} />;
-          })}
+          {!dataReport || dataReport.length === 0 ? (
+            <Box margin="24px 0">
+              <Box margin="16px 0">Đang tải bài viết</Box>
+              <CircularProgress />
+            </Box>
+          ) : (
+            dataReport.map((data, index) => {
+              return <ReportItem key={data.id} {...data} />;
+            })
+          )}
         </Box>
         <Box margin="16px" display="flex" justifyContent="center">
           <Pagination
@@ -228,7 +240,10 @@ function ReportPage(props) {
       <>
         {user?.data?.isAuth ? <SummaryProfile /> : <ProfileAnonymous />}
         <Box margin="8px 0">
-          <HighLightReputation />
+          <HighLightReputation
+            highlightPost={highlightPost}
+            titleName="Bài đăng uy tín nổi bật"
+          />
         </Box>
         <div>
           <iframe

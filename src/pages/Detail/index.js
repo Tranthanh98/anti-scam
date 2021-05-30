@@ -1,4 +1,4 @@
-import { Box } from "@material-ui/core";
+import { Box, CircularProgress } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
@@ -44,7 +44,10 @@ class Detail extends Component {
             notFoundContent ? (
               <Box>Bài viết không tồn tại</Box>
             ) : post === null ? (
-              <Box>Đang tải bài viết</Box>
+              <Box margin="24px 0">
+                <Box margin="16px 0">Đang tải bài viết</Box>
+                <CircularProgress />
+              </Box>
             ) : (
               <LeftPageDetail />
             )

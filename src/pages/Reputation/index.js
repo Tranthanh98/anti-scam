@@ -5,11 +5,9 @@ import { selectMenuAct } from "../../actions/select-menu";
 import BaseContext from "../../components/BaseContext";
 import BaseLayout from "../../components/BaseLayout";
 import { KIND_OF, SORT_DAY } from "../../general/enum";
-import types from "../Report/config/dummyTypes";
-import route from "../route";
+import * as httpClient from "../../general/HttpClient";
 import LeftPage from "./components/LeftPage";
 import RightPage from "./components/RightPage";
-import * as httpClient from "../../general/HttpClient";
 
 export const sortOptions = [
   {
@@ -35,6 +33,7 @@ class ReputationPage extends Component {
       totalPage: 0,
     },
     dataTable: [],
+    newestPost: [],
   };
 
   async componentDidMount() {
@@ -48,6 +47,7 @@ class ReputationPage extends Component {
       onChangeSort: this._setSortType,
       onChangePageIndex: this._onChangePageIndex,
       getDataTable: this._getDataTable,
+      setNewestPost: this._setNewestPost,
     };
     return (
       <BaseContext.Provider value={provider}>
@@ -55,6 +55,10 @@ class ReputationPage extends Component {
       </BaseContext.Provider>
     );
   }
+
+  _setNewestPost = (newestPost) => {
+    this.setState({ newestPost });
+  };
 
   _onChangePageIndex = (e, value) => {
     this.setState(

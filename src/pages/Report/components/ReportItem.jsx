@@ -43,7 +43,6 @@ function ReportItem(props) {
   const {
     title,
     writer,
-    object,
     reviewNumber,
     typePosts,
     createdDate,

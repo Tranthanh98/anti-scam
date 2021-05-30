@@ -1,11 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { Box, Card, CardContent, Icon, useTheme } from "@material-ui/core";
+import ReportIcon from "@material-ui/icons/Report";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import { formateDateTime } from "../../../general/helper";
+import React from "react";
 import { connectToContext } from "../../../components/BaseContext";
 import { KIND_OF } from "../../../general/enum";
-import ReportIcon from "@material-ui/icons/Report";
+import { formateDateTime } from "../../../general/helper";
 
 function RightpageDetail(props) {
   const { writer, reviewNumber, createdDate, kindOf } = props.post;
