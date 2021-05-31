@@ -5,7 +5,6 @@ import React from "react";
 import { connectToContext } from "../../../components/BaseContext";
 import { KIND_OF } from "../../../general/enum";
 import { formateDateTime } from "../../../general/helper";
-import ReportIcon from "@material-ui/icons/Report";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 
 function RightpageDetail(props) {
