@@ -6,11 +6,14 @@ import {
   Chip,
   makeStyles,
 } from "@material-ui/core";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { formateDateTime } from "../../../general/helper";
 import { Paths } from "../../route";
+import * as httpClient from "../../../general/HttpClient";
+import { addAlert } from "../../../actions/alertify.action";
+import { UPDATE_USER } from "../../../actions/login.action";
 
 const useStyles = makeStyles((theme) => ({
   userName: {
@@ -27,17 +30,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SummaryProfile = React.memo((props) => {
+const SummaryProfile = React.memo(({ isCallApi }) => {
   const classes = useStyles();
   const userData = useSelector((state) => state.loginReducer);
+  const [userProfile, setUserProfile] = useState(null);
 
   const user = userData.data;
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const _getData = async () => {
+    try {
+      let res = await httpClient.sendGet("/user/detail");
+      if (res.data.isSuccess) {
+        setUserProfile(res.data.data);
+        dispatch({
+          type: UPDATE_USER,
+          payload: {
+            totalPosts: res.data.data?.totalPosts,
+          },
+        });
+      } else {
+        throw new Error(res.data.messages);
+      }
+    } catch (e) {
+      dispatch(addAlert(String(e), "error"));
+    }
+  };
+
+  useEffect(() => {
+    _getData();
+  }, []);
   return (
     <Card>
       <CardContent>
         <Box display="flex" justifyContent="center">
-          <Avatar alt={user.userName} src={user.imageAvatar} />
+          <Avatar
+            alt={userProfile?.userName ?? user.userName}
+            src={user.imageAvatar}
+          />
         </Box>
         <Box
           margin="8px 0"
@@ -48,7 +79,7 @@ const SummaryProfile = React.memo((props) => {
           justifyContent="center"
           className={classes.userName}
         >
-          {user.userName}
+          {userProfile?.userName ?? user.userName}
         </Box>
         <Box
           margin="8px 0"
@@ -63,7 +94,7 @@ const SummaryProfile = React.memo((props) => {
             color="error.main"
             style={{ wordBreak: "break-all" }}
           >
-            {user.email}
+            {userProfile?.email ?? user.email}
           </Box>
         </Box>
         <Box
@@ -84,7 +115,7 @@ const SummaryProfile = React.memo((props) => {
         >
           Số lượng bài viết:{" "}
           <Box fontWeight="bold" fontSize="25px" color="success.main">
-            {user.totalPosts}
+            {userProfile?.totalPosts ?? user.totalPosts}
           </Box>
         </Box>
         <Box

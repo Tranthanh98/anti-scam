@@ -7,7 +7,7 @@ import {
   Grid,
   makeStyles,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { addAlert } from "../../../actions/alertify.action";
@@ -18,6 +18,8 @@ import { useInputText } from "../../../general/CustomHook";
 import { sleep } from "../../../general/helper";
 import SummaryProfile from "../../HomePage/components/SummaryProfile";
 import FormChangePassword from "./FormChangePassword";
+import * as httpClient from "../../../general/HttpClient";
+import { UPDATE_USER } from "../../../actions/login.action";
 
 const useStyles = makeStyles((theme) => ({
   cardContentCss: {
@@ -32,7 +34,6 @@ function LeftPageProfile(props) {
   const user = userData.data;
 
   const [isEditing, setIsEditing] = useState(false);
-  const [totalPost, setTotalPost] = useState(0);
   const [openChangePw, setOpenChangePw] = useState(false);
 
   const userName = useInputText(
@@ -51,9 +52,17 @@ function LeftPageProfile(props) {
     }
     dispatch(loadingAct(true));
     try {
-      await sleep(1000);
-      setIsEditing(false);
-      dispatch(addAlert("Cập nhật thông tin thành công", "success"));
+      // await sleep(1000);
+      let res = await httpClient.sendPost("/user/edit", {
+        NewUserName: userName.value,
+      });
+      if (res.data.isSuccess) {
+        dispatch({ type: UPDATE_USER, payload: { userName: userName.value } });
+        setIsEditing(false);
+        dispatch(addAlert("Cập nhật thông tin thành công", "success"));
+      } else {
+        throw new Error(res.data.messages);
+      }
     } catch (e) {
       dispatch(addAlert(String(e), "error"));
     } finally {
@@ -61,13 +70,6 @@ function LeftPageProfile(props) {
     }
   };
 
-  const _getTotalAmountPost = async () => {
-    await sleep(300);
-    setTotalPost(3);
-  };
-  useEffect(() => {
-    _getTotalAmountPost();
-  }, []);
   return (
     <Box>
       {userData?.data?.isAuth ? (
@@ -124,7 +126,7 @@ function LeftPageProfile(props) {
               </Box>
               <Divider />
               <Box marginTop={1} display="flex">
-                Số lượng bài báo cáo: {totalPost}
+                Số lượng bài báo cáo: {user.totalPosts}
               </Box>
             </CardContent>
           </Card>

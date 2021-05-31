@@ -1,16 +1,28 @@
 import { Box, ThemeProvider } from "@material-ui/core";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+} from "react-router-dom";
+import { LastLocationProvider } from "react-router-last-location";
+import { addAlert } from "./actions/alertify.action";
+import { LOGOUT } from "./actions/login.action";
 import "./App.css";
 import Alertify from "./components/Alertify";
 import BaseDrawer from "./components/BaseDrawer";
 import BaseModal from "./components/BaseModal";
 import LoadingComponent from "./components/LoadingComponent";
+import eventBus from "./general/EventBus";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
+import ResetPassword from "./pages/ResetPassword";
+import { Paths } from "./pages/route";
 import theme from "./pages/theme";
-import { LastLocationProvider } from "react-router-last-location";
-import Footer from "./components/Footer";
 
 window.mobileCheck = function () {
   return window.innerWidth <= 960 && window.innerHeight <= 1024;
@@ -18,6 +30,38 @@ window.mobileCheck = function () {
 
 function App() {
   const isMobile = window.mobileCheck();
+  const [needLogout, setNeedLogout] = useState(false);
+  const dispatch = useDispatch();
+
+  const _handleLogout = () => {
+    let confirmLogout = window.confirm(
+      "Tài khoản đã hết hạn, vui lòng đăng nhập lại"
+    );
+    if (confirmLogout) {
+      window.open("/login", "_self");
+    } else {
+      return;
+    }
+  };
+
+  useEffect(() => {
+    eventBus.subscribe(App, "error/authorized", () => {
+      setNeedLogout(true);
+    });
+    return () => {
+      eventBus.unsubscribe(App);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (needLogout) {
+      dispatch({ type: LOGOUT });
+      dispatch(
+        addAlert("Tài khoản đã hết hạn, vui lòng đăng nhập lại", "error")
+      );
+      _handleLogout();
+    }
+  }, [needLogout]);
 
   return (
     <Box style={{ backgroundColor: "#bbbbbb8a" }}>
@@ -34,6 +78,12 @@ function App() {
                   path="/sign-up"
                   render={(prop) => (
                     <RegisterPage {...prop} isMobile={isMobile} />
+                  )}
+                />
+                <Route
+                  path={Paths.resetPassword}
+                  render={(prop) => (
+                    <ResetPassword {...prop} isMobile={isMobile} />
                   )}
                 />
                 <Route
@@ -54,29 +104,3 @@ function App() {
 }
 
 export default App;
-
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-// <div className="App">
-//   <header className="App-header">
-//     <img src={logo} className="App-logo" alt="logo" />
-//     <p>
-//       Edit <code>src/App.js</code> and save to reload.
-//     </p>
-//     <a
-//       className="App-link"
-//       href="https://reactjs.org"
-//       target="_blank"
-//       rel="noopener noreferrer"
-//     >
-//       Learn React
-//     </a>
-//   </header>
-// </div>
-//   );
-// }
-
-// export default App;

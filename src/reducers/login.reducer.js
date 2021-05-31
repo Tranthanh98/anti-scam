@@ -1,7 +1,9 @@
 import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGOUT,
   REQUEST_LOGIN,
+  UPDATE_USER,
 } from "../actions/login.action";
 import { SIGN_IN_DATA } from "../actions/signin.action";
 
@@ -38,7 +40,7 @@ export const loginReducer = (state = initialState, action) => {
         data: null,
       };
     }
-    case "LOGOUT": {
+    case LOGOUT: {
       localStorage.removeItem("token");
       return initialState;
     }
@@ -50,6 +52,11 @@ export const loginReducer = (state = initialState, action) => {
         data: action.payload.user,
         message: null,
       };
+    }
+    case UPDATE_USER: {
+      let cloneState = { ...state };
+      cloneState.data = { ...cloneState.data, ...action.payload };
+      return cloneState;
     }
     default:
       return state;

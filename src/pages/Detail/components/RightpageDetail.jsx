@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { Box, Card, CardContent, Icon, useTheme } from "@material-ui/core";
+import ReportIcon from "@material-ui/icons/Report";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import { formateDateTime } from "../../../general/helper";
+import React from "react";
 import { connectToContext } from "../../../components/BaseContext";
 import { KIND_OF } from "../../../general/enum";
+import { formateDateTime } from "../../../general/helper";
 import ReportIcon from "@material-ui/icons/Report";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 

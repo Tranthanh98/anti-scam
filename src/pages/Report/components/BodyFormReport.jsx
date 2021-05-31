@@ -17,9 +17,9 @@ import { loadingAct } from "../../../actions/loading.action";
 import SelectOption from "../../../components/SelectOption";
 import UploadComponent from "../../../components/UploadComponent";
 import { useInputText } from "../../../general/CustomHook";
-import { sleep } from "../../../general/helper";
-import types from "../config/dummyTypes";
+import { KIND_OF } from "../../../general/enum";
 import * as httpClient from "../../../general/HttpClient";
+import types from "../config/dummyTypes";
 
 const typeOptions = [...types].splice(1);
 
@@ -115,15 +115,35 @@ function BodyFormReport(props) {
       return;
     }
     dispatch(loadingAct(true));
-    await sleep(1500);
-    props.onConfirm();
-    dispatch(loadingAct(false));
-    dispatch(
-      addAlert(
-        "Báo cáo của bạn đã gửi thành công và đang chờ được duyệt",
-        "success"
-      )
-    );
+    try {
+      let dataModel = {
+        title: titleReport.value,
+        description: description.value,
+        kindOf: KIND_OF.Cheat,
+        typePostList: listTypeInput.map((i) => ({
+          typeId: i.type.value,
+          object: i.data,
+        })),
+        imageIds: fileImages.map((i) => i.fileId),
+      };
+      let response = await httpClient.sendPost("/Post/CreatePost", dataModel);
+      console.log("response:", response);
+      if (!response.data.isSuccess) {
+        throw new Error(response.data.messages);
+      }
+      dispatch(
+        addAlert(
+          "Báo cáo của bạn đã gửi thành công và đang chờ được duyệt",
+          "success"
+        )
+      );
+      props.onConfirm();
+    } catch (e) {
+      console.error(String(e));
+      dispatch(addAlert(String(e), "error"));
+    } finally {
+      dispatch(loadingAct(false));
+    }
   };
 
   const _deleteAllFileClosing = async () => {

@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { addAlert } from "../../../actions/alertify.action";
 import ButtonCommon from "../../../components/ButtonCommon";
 import TextFromField from "../../../components/TextFromField";
+import * as httpClient from "../../../general/HttpClient";
 
 const validationSchema = yup.object({
   oldPassword: yup.string().required("Không được để trống"),
@@ -30,9 +31,21 @@ const FormChangePassword = React.memo((props) => {
   });
 
   const dispatch = useDispatch();
-  function _onSubmitChangePw() {
-    props.callbackOnSave && props.callbackOnSave();
-    dispatch(addAlert("thay đổi mk thành công", "success"));
+  async function _onSubmitChangePw() {
+    try {
+      let res = await httpClient.sendPost(
+        "/user/ChangePassword",
+        formik.values
+      );
+      if (res.data.isSuccess) {
+        props.callbackOnSave && props.callbackOnSave();
+        dispatch(addAlert("Thay đổi mật khẩu thành công", "success"));
+      } else {
+        throw new Error(res.data.messages);
+      }
+    } catch (e) {
+      dispatch(addAlert(String(e), "error"));
+    }
   }
   return (
     <form onSubmit={formik.handleSubmit}>

@@ -17,7 +17,6 @@ import * as yup from "yup";
 import { addAlert } from "../../actions/alertify.action";
 import { loadingAct } from "../../actions/loading.action";
 import { signIdData } from "../../actions/signin.action";
-import { sleep } from "../../general/helper";
 import * as httpClient from "../../general/HttpClient";
 
 function Copyright() {

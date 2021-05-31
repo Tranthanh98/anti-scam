@@ -20,6 +20,7 @@ import { loginAct } from "../../actions/login.action";
 import antiscamText from "../../assets/images/antiscam.png";
 import logoAntiscam from "../../assets/images/logo-primary.png";
 import { useInputText } from "../../general/CustomHook";
+import { Paths } from "../route";
 
 function Copyright() {
   return (
@@ -79,7 +80,11 @@ export default function LoginPage() {
   const lastHistory = useLastLocation();
   const _gotoBack = () => {
     console.log("lastHistory:", lastHistory);
-    if (lastHistory == null || lastHistory.pathname === "/sign-in") {
+    if (
+      lastHistory == null ||
+      lastHistory.pathname === "/sign-in" ||
+      lastHistory.pathname === Paths.resetPassword
+    ) {
       history.push("/");
     } else {
       history.goBack();
@@ -164,7 +169,7 @@ export default function LoginPage() {
             </Button>
             <Grid container spacing={2}>
               <Grid item xs={12} sm>
-                <Link href="/sign-up" variant="body2">
+                <Link href={Paths.resetPassword} variant="body2">
                   Quên mật khẩu?
                 </Link>
               </Grid>

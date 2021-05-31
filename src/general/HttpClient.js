@@ -1,4 +1,5 @@
 import axios from "axios";
+import eventBus from "./EventBus";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -41,6 +42,9 @@ httpClient.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (error.response && error.response.status === 401) {
+      eventBus.publish("error/authorized", "Vui lòng đăng nhập lại");
+    }
     if (error.response && error.response.status === 422) {
       return Promise.reject(error);
     } else {

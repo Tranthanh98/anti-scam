@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import {
   Box,
   Card,
   CardContent,
-  CardHeader,
   makeStyles,
   useTheme,
 } from "@material-ui/core";
-import { useHistory, useParams } from "react-router";
+import React, { useState } from "react";
 import { connectToContext } from "../../../components/BaseContext";
+import PhotoSwipeWrapper from "../../../components/PhotoSwipe/PhotoSwipeWrapper";
 import CommentComponent from "./CommentComponent";
 import RightpageDetail from "./RightpageDetail";
-import PhotoSwipeWrapper from "../../../components/PhotoSwipe/PhotoSwipeWrapper";
 
 const useStyles = makeStyles((theme) => ({
   titleCss: {
@@ -29,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LeftPageDetail(props) {
-  const { id, title, writer, object, type, description, imageList } =
+  const { id, title, writer, object, typePosts, description, imageList } =
     props.post;
 
   const classes = useStyles();
@@ -65,17 +62,23 @@ function LeftPageDetail(props) {
           <Box color="primary.main" fontSize={theme.spacing(2.5)}>
             {title}
           </Box>
-          <Box marginTop="8px">
-            <Box color="secondary.main">{type.label} :</Box>
-            <Box marginLeft="4px" style={{ wordBreak: "break-all" }}>
-              {type.value == 3 || type.value == 1 ? (
-                <a href={object} target="_blank">
-                  {object}
-                </a>
-              ) : (
-                object
-              )}
-            </Box>
+          <Box textAlign="start" margin="8px 0">
+            {typePosts.map((type, index) => {
+              return (
+                <Box display="flex" key={index}>
+                  {type.type.name}:{" "}
+                  <Box
+                    textOverflow="ellipsis"
+                    overflow="hidden"
+                    marginLeft="4px"
+                    color="error.main"
+                    style={{ wordBreak: "break-all" }}
+                  >
+                    {type.object}
+                  </Box>
+                </Box>
+              );
+            })}
           </Box>
         </Box>
         <CardContent>
