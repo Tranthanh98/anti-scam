@@ -30,6 +30,7 @@ export const Paths = {
   profile: "/profile",
   contact: "/contact",
   about: "/about-me",
+  resetPassword: "/reset-password",
 };
 export default [
   createRoute("Detail", null, Paths.detail, Detail, false),

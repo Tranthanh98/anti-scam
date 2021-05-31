@@ -20,6 +20,8 @@ import eventBus from "./general/EventBus";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
+import ResetPassword from "./pages/ResetPassword";
+import { Paths } from "./pages/route";
 import theme from "./pages/theme";
 
 window.mobileCheck = function () {
@@ -76,6 +78,12 @@ function App() {
                   path="/sign-up"
                   render={(prop) => (
                     <RegisterPage {...prop} isMobile={isMobile} />
+                  )}
+                />
+                <Route
+                  path={Paths.resetPassword}
+                  render={(prop) => (
+                    <ResetPassword {...prop} isMobile={isMobile} />
                   )}
                 />
                 <Route
