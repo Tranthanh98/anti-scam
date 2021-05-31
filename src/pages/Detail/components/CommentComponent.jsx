@@ -99,13 +99,10 @@ const CommentComponent = React.memo((props) => {
   };
 
   const _onClickComment = async () => {
-    // const cmt = createComment(
-    //   currentUser.userName,
-    //   currentUser.imageAvatar,
-    //   yourComment,
-    //   new Date()
-    // );
-
+    if (!yourComment || yourComment.length === 0) {
+      dispatch(addAlert("Không được để trống bình luận", "error"));
+      return;
+    }
     let postData = {
       PostId: props.post.id,
       Content: yourComment,
@@ -118,9 +115,11 @@ const CommentComponent = React.memo((props) => {
         cloneCommentList.unshift(response.data);
         setCommentList(cloneCommentList);
         setYourComment("");
+      } else {
+        throw new Error(response.messages);
       }
     } catch (e) {
-      dispatch(addAlert("Có lỗi khi bình luận", "error"));
+      dispatch(addAlert(String(e), "error"));
     }
   };
   const _onKeyPressComment = (e) => {
@@ -184,6 +183,7 @@ const CommentComponent = React.memo((props) => {
                     variant="contained"
                     color="primary"
                     size="small"
+                    disabled={!yourComment || yourComment.length === 0}
                   >
                     Bình luận
                   </Button>

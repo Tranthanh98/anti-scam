@@ -40,13 +40,11 @@ const sortOptions = [
 ];
 
 function ReportPage(props) {
-  // const [sortType, setSortType] = useState(sortOptions[0]);
-  // const [type, setType] = useState();
-
   const [typeOptions, setTypeOptions] = useState([]);
   const [dataReport, setDataReport] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [highlightPost, setHighlightPost] = useState([]);
+  const [notFoundContent, setNotFoundContent] = useState(false);
 
   const [searchModel, setSearchModel] = useState({
     currentPage: 1,
@@ -72,6 +70,7 @@ function ReportPage(props) {
   };
 
   const _getDataReport = async (searchTextValue) => {
+    setNotFoundContent(true);
     let cloneSearchModel = { ...searchModel };
     if (searchTextValue) {
       cloneSearchModel.searchText = searchTextValue;
@@ -79,15 +78,23 @@ function ReportPage(props) {
       cloneSearchModel.searchText = searchText;
     }
 
-    let res = await httpClient.sendPost("/Post/GetPosts", {
-      searchModel: cloneSearchModel,
-    });
-    if (res.data.isSuccess) {
-      setDataReport(res.data?.data?.data || []);
-      setSearchModel({
-        ...searchModel,
-        totalPage: res.data?.data?.totalPage,
+    try {
+      let res = await httpClient.sendPost("/Post/GetPosts", {
+        searchModel: cloneSearchModel,
       });
+      if (res.data.isSuccess) {
+        setDataReport(res.data?.data?.data || []);
+        setSearchModel({
+          ...searchModel,
+          totalPage: res.data?.data?.totalPage,
+        });
+      } else {
+        throw new Error(res.data.messages);
+      }
+    } catch (e) {
+      dispatch(addAlert(String(e), "error"));
+    } finally {
+      setNotFoundContent(false);
     }
   };
 
@@ -210,11 +217,13 @@ function ReportPage(props) {
           </CardContent>
         </Card>
         <Box>
-          {!dataReport || dataReport.length === 0 ? (
+          {notFoundContent ? (
             <Box margin="24px 0">
               <Box margin="16px 0">Đang tải bài viết</Box>
               <CircularProgress />
             </Box>
+          ) : !dataReport || dataReport.length === 0 ? (
+            <Box margin="24px 0">Không tìm thấy kết quả phù hợp</Box>
           ) : (
             dataReport.map((data, index) => {
               return <ReportItem key={data.id} {...data} />;

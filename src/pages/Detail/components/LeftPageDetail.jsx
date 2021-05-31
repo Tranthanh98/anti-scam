@@ -58,7 +58,7 @@ function LeftPageDetail(props) {
         </Box>
       ) : null}
       <Card>
-        <Box textAlign="start" margin="8px 0" className={classes.titleCss}>
+        <Box textAlign="start" className={classes.titleCss}>
           <Box color="primary.main" fontSize={theme.spacing(2.5)}>
             {title}
           </Box>
@@ -82,11 +82,16 @@ function LeftPageDetail(props) {
           </Box>
         </Box>
         <CardContent>
-          <Box textAlign="start">{description}</Box>
+          <Box textAlign="start" margin="0 0 8px 0" fontWeight="500">
+            Nội dung:
+          </Box>
+          <Box margin="0 16px" textAlign="start">
+            {description}
+          </Box>
           <Box
-            className={classes.imageTitleCss}
+            // className={classes.imageTitleCss}
             textAlign="start"
-            margin="8px 0"
+            margin="16px 0"
             fontWeight="500"
           >
             Hình ảnh:

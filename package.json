@@ -31,6 +31,7 @@
     "redux-thunk": "^2.3.0",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.2",
+    "workbox-precaching": "^6.1.5",
     "yup": "^0.32.9"
   },
   "scripts": {
