@@ -97,25 +97,29 @@ function LeftPageDetail(props) {
             Hình ảnh:
           </Box>
           <Box textAlign="start" display="flex" marginTop="8px">
-            {imageList.map((image, index) => {
-              return (
-                <Box
-                  key={index}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  width="150px"
-                  height="170px"
-                  margin="8px"
-                  onClick={() => _openImage(index)}
-                >
-                  <img
-                    src={image}
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                  />
-                </Box>
-              );
-            })}
+            {!imageList || imageList.length === 0 ? (
+              <Box>Không có hình ảnh nào được cung cấp</Box>
+            ) : (
+              imageList.map((image, index) => {
+                return (
+                  <Box
+                    key={index}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    width="150px"
+                    height="170px"
+                    margin="8px"
+                    onClick={() => _openImage(index)}
+                  >
+                    <img
+                      src={image}
+                      style={{ maxWidth: "100%", maxHeight: "100%" }}
+                    />
+                  </Box>
+                );
+              })
+            )}
             <PhotoSwipeWrapper
               isOpen={openImg}
               index={indexImg}

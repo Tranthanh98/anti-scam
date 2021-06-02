@@ -42,7 +42,7 @@ class Detail extends Component {
         <BaseLayout
           leftChilren={
             notFoundContent ? (
-              <Box>Bài viết không tồn tại</Box>
+              <Box fontWeight="bold">Chưa có báo cáo nào về thông tin này,</Box>
             ) : post === null ? (
               <Box margin="24px 0">
                 <Box margin="16px 0">Đang tải bài viết</Box>

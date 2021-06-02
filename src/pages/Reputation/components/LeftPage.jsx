@@ -5,17 +5,25 @@ import { connectToContext } from "../../../components/BaseContext";
 import ReportItem from "../../Report/components/ReportItem";
 import FilterReputation from "./FilterReputation";
 
-function LeftPage({ searchModel, onChangePageIndex, dataTable }) {
+function LeftPage({
+  searchModel,
+  onChangePageIndex,
+  dataTable,
+  notFoundContent,
+}) {
   const isMobile = window.mobileCheck();
+
   return (
     <Box>
       <FilterReputation />
       <Box>
-        {!dataTable || dataTable.length === 0 ? (
+        {notFoundContent ? (
           <Box margin="24px 0">
             <Box margin="16px 0">Đang tải bài viết</Box>
             <CircularProgress />
           </Box>
+        ) : !dataTable || dataTable.length === 0 ? (
+          <Box margin="24px 0">Không tìm thấy kết quả phù hợp</Box>
         ) : (
           dataTable.map((data, index) => {
             return <ReportItem key={data.id} {...data} />;
@@ -39,9 +47,15 @@ function LeftPage({ searchModel, onChangePageIndex, dataTable }) {
 
 LeftPage.propTypes = {};
 
-const mapStateToProps = ({ onChangePageIndex, searchModel, dataTable }) => ({
+const mapStateToProps = ({
+  onChangePageIndex,
+  searchModel,
+  dataTable,
+  notFoundContent,
+}) => ({
   searchModel,
   onChangePageIndex,
   dataTable,
+  notFoundContent,
 });
 export default connectToContext(mapStateToProps)(LeftPage);

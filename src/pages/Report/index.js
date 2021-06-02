@@ -9,6 +9,8 @@ import {
   TextField,
 } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
+import axios from "axios";
+import debounce from "lodash.debounce";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAlert } from "../../actions/alertify.action";
@@ -16,17 +18,13 @@ import { openDrawerAct } from "../../actions/drawer.action";
 import { openModalAct } from "../../actions/modal.action";
 import BaseLayout from "../../components/BaseLayout";
 import SelectOption from "../../components/SelectOption";
-import { useInputText } from "../../general/CustomHook";
 import { KIND_OF, SORT_DAY } from "../../general/enum";
+import * as httpClient from "../../general/HttpClient";
 import HighLightReputation from "../HomePage/components/HighLightReputation";
 import SummaryProfile from "../HomePage/components/SummaryProfile";
 import BodyFormReport from "./components/BodyFormReport";
 import ProfileAnonymous from "./components/ProfileAnonymous";
 import ReportItem from "./components/ReportItem";
-import dummyDataReport from "./config/dummyDataReport";
-import * as httpClient from "../../general/HttpClient";
-import axios from "axios";
-import debounce from "lodash.debounce";
 
 const sortOptions = [
   {
@@ -251,14 +249,14 @@ function ReportPage(props) {
         <Box margin="8px 0">
           <HighLightReputation
             highlightPost={highlightPost}
-            titleName="Bài đăng uy tín nổi bật"
+            titleName="CÁC DỊCH VỤ UY TÍN NHẤT HIỆN NAY"
           />
         </Box>
         <div>
           <iframe
             src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbaocaoluadao&tabs=timeline&width=270&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
             width="260"
-            height="500"
+            height="650"
             style={{ border: "none", overflow: "hidden" }}
             scrolling="no"
             frameBorder="0"

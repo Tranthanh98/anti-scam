@@ -164,7 +164,12 @@ export default function RegisterPage() {
           >
             Đăng ký
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justify="space-between">
+            <Grid item>
+              <Link href="/" variant="body2">
+                Trang chủ
+              </Link>
+            </Grid>
             <Grid item>
               <Link href="/login" variant="body2">
                 Bạn đã có tài khoản? Đăng nhập

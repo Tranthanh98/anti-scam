@@ -34,6 +34,7 @@ class ReputationPage extends Component {
     },
     dataTable: [],
     newestPost: [],
+    notFoundContent: false,
   };
 
   async componentDidMount() {
@@ -48,6 +49,7 @@ class ReputationPage extends Component {
       onChangePageIndex: this._onChangePageIndex,
       getDataTable: this._getDataTable,
       setNewestPost: this._setNewestPost,
+      setNotFoundContent: this._setNotFoundContent,
     };
     return (
       <BaseContext.Provider value={provider}>
@@ -55,6 +57,10 @@ class ReputationPage extends Component {
       </BaseContext.Provider>
     );
   }
+
+  _setNotFoundContent = (status) => {
+    this.setState({ notFoundContent: status });
+  };
 
   _setNewestPost = (newestPost) => {
     this.setState({ newestPost });
@@ -97,6 +103,7 @@ class ReputationPage extends Component {
 
   _getDataTable = async () => {
     const { searchModel } = this.state;
+    this._setNotFoundContent(true);
     try {
       let res = await httpClient.sendPost("/Post/GetPosts", {
         searchModel,
@@ -108,7 +115,10 @@ class ReputationPage extends Component {
           searchModel: { ...searchModel, totalPage: response.data.total },
         });
       }
-    } catch (e) {}
+    } catch (e) {
+    } finally {
+      this._setNotFoundContent(false);
+    }
   };
 }
 

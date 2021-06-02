@@ -58,7 +58,7 @@ const CommentComponent = React.memo((props) => {
   const [commentList, setCommentList] = useState([]);
   const [pagination, setPagination] = useState({
     currentPage: 1,
-    total: 0,
+    totalPage: 0,
   });
 
   const [yourComment, setYourComment] = useState("");
@@ -76,7 +76,7 @@ const CommentComponent = React.memo((props) => {
       if (res.data.isSuccess) {
         setCommentList(res.data?.data?.data);
         setPagination({
-          total: res.data?.data?.total,
+          totalPage: res.data?.data?.totalPage,
           currentPage: res.data?.data?.currentPage,
         });
       }

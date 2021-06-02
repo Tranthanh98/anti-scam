@@ -113,8 +113,13 @@ const SummaryProfile = React.memo(({ isCallApi }) => {
           alignItems="center"
           className={classes.userName}
         >
-          Số lượng bài viết:{" "}
-          <Box fontWeight="bold" fontSize="25px" color="success.main">
+          Số lượng bài viết:
+          <Box
+            marginLeft="8px"
+            fontWeight="bold"
+            fontSize="20px"
+            color="success.main"
+          >
             {userProfile?.totalPosts ?? user.totalPosts}
           </Box>
         </Box>

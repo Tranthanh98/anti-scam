@@ -179,6 +179,16 @@ export default function LoginPage() {
                 </Link>
               </Grid>
             </Grid>
+            <Box
+              margin="16px 0"
+              display="flex"
+              justifyContent="center"
+              width="100%"
+            >
+              <Button color="secondary" onClick={() => history.push("/")}>
+                Về trang chủ
+              </Button>
+            </Box>
             <Box mt={5}>
               <Copyright />
             </Box>

@@ -61,7 +61,7 @@ function FilterReputation({
               variant="outlined"
               size="small"
               fullWidth
-              placeholder="Tìm kiếm theo tên, số tài khoản,..."
+              placeholder="Tìm kiếm theo loại dịch vụ, tên dịch vụ,..."
               value={privateSearchText}
               onChange={_onChangeSearchText}
             />

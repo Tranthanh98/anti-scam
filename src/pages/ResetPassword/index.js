@@ -1,5 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
 import {
   Box,
   Button,
@@ -7,21 +5,19 @@ import {
   CardActions,
   CardContent,
   CardHeader,
-  Container,
-  CssBaseline,
   makeStyles,
   ThemeProvider,
 } from "@material-ui/core";
-import TextFromField from "../../components/TextFromField";
-import { useInputText } from "../../general/CustomHook";
-import * as yup from "yup";
 import { useFormik } from "formik";
-import theme from "../theme";
-import { useHistory } from "react-router";
-import * as httpClient from "../../general/HttpClient";
+import React from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import * as yup from "yup";
 import { addAlert } from "../../actions/alertify.action";
 import { loadingAct } from "../../actions/loading.action";
+import TextFromField from "../../components/TextFromField";
+import * as httpClient from "../../general/HttpClient";
+import theme from "../theme";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
