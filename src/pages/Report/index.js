@@ -48,7 +48,7 @@ function ReportPage(props) {
     currentPage: 1,
     searchText: "",
     typeId: 0,
-    sortType: 0,
+    sortType: SORT_DAY.Lastest,
     kindOfValue: KIND_OF.Cheat,
     pageSize: 10,
     total: 0,
@@ -136,10 +136,11 @@ function ReportPage(props) {
   };
 
   const _onClickReport = () => {
+    console.log("type options:", typeOptions);
     if (user?.data?.isAuth) {
       let modalData = {
         title: "Báo cáo lừa đảo",
-        body: <BodyFormReport />,
+        body: <BodyFormReport typeOptions={typeOptions} />,
         style: {
           fullWidth: true,
           maxWidth: "md",

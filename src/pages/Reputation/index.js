@@ -8,6 +8,7 @@ import { KIND_OF, SORT_DAY } from "../../general/enum";
 import * as httpClient from "../../general/HttpClient";
 import LeftPage from "./components/LeftPage";
 import RightPage from "./components/RightPage";
+import axios from "axios";
 
 export const sortOptions = [
   {
@@ -26,7 +27,7 @@ class ReputationPage extends Component {
       currentPage: 1,
       searchText: "",
       typeId: 0,
-      sortType: 0,
+      sortType: SORT_DAY.Lastest,
       kindOfValue: KIND_OF.Reputation,
       pageSize: 10,
       total: 0,
@@ -37,8 +38,14 @@ class ReputationPage extends Component {
     notFoundContent: false,
   };
 
+  cancelToken = axios.CancelToken.source();
+
   async componentDidMount() {
     await this._getDataTable();
+  }
+
+  componentWillUnmount() {
+    this.cancelToken.cancel();
   }
   render() {
     let provider = {

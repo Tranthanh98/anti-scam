@@ -19,12 +19,11 @@ import UploadComponent from "../../../components/UploadComponent";
 import { useInputText } from "../../../general/CustomHook";
 import { KIND_OF } from "../../../general/enum";
 import * as httpClient from "../../../general/HttpClient";
-import types from "../config/dummyTypes";
-
-const typeOptions = [...types].splice(1);
 
 function BodyFormReport(props) {
-  const [type, setType] = useState(typeOptions[0]);
+  const [type, setType] = useState(
+    props.typeOptions ? props.typeOptions[0] : null
+  );
 
   const [listTypeInput, setListType] = useState([]);
   const [fileImages, setFileImage] = useState([]);
@@ -127,7 +126,6 @@ function BodyFormReport(props) {
         imageIds: fileImages.map((i) => i.fileId),
       };
       let response = await httpClient.sendPost("/Post/CreatePost", dataModel);
-      console.log("response:", response);
       if (!response.data.isSuccess) {
         throw new Error(response.data.messages);
       }
@@ -174,6 +172,15 @@ function BodyFormReport(props) {
   const _openDialogConfirm = () => {
     setOpenDialogConfirm(true);
   };
+  let typeOptions = [];
+  const findUndefinedType = props.typeOptions.findIndex((i) => i.value == 0);
+  if (findUndefinedType != -1) {
+    let clone = [...props.typeOptions];
+    clone.splice(findUndefinedType, 1);
+    typeOptions = clone;
+  } else {
+    typeOptions = props.typeOptions;
+  }
   return (
     <Box>
       <Grid container spacing={2}>

@@ -1,6 +1,6 @@
 export const SORT_DAY = {
-  Lastest: 0,
-  Oldest: 1,
+  Lastest: 1,
+  Oldest: 0,
 };
 
 export const KIND_OF = {
