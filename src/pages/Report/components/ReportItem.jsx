@@ -60,7 +60,9 @@ function ReportItem(props) {
   return (
     <Box onClick={_gotoDetail} className={classes.wrapper}>
       <Card className={classes.cardCss}>
-        <CardContent>
+        <CardContent
+          style={{ backgroundColor: props.isSummary ? "#e6e6e6" : undefined }}
+        >
           <Box
             color="primary.dark"
             textAlign="start"
@@ -103,6 +105,7 @@ function ReportItem(props) {
                 </Box>
               </Box>
             </Grid>
+            {props.isSummary ? <Box width="18px"></Box> : null}
             <Grid
               item
               xs={6}
@@ -119,56 +122,60 @@ function ReportItem(props) {
                 <CalendarTodayIcon /> {formateDateTime(createdDate)}
               </Box>
             </Grid>
-            <Grid
-              item
-              xs={3}
-              sm={6}
-              md={3}
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <Box
-                textAlign="start"
-                display="flex"
-                margin="8px 0"
-                alignItems="center"
-              >
-                <ChatBubbleIcon />
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  marginLeft="4px"
-                  color="error.main"
-                  fontSize="18px"
+            {props.isSummary ? null : (
+              <>
+                <Grid
+                  item
+                  xs={3}
+                  sm={6}
+                  md={3}
+                  style={{ display: "flex", alignItems: "center" }}
                 >
-                  {totalComment}
-                </Box>
-              </Box>
-            </Grid>
-            <Grid
-              item
-              xs={3}
-              sm={6}
-              md={3}
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <Box
-                textAlign="start"
-                display="flex"
-                margin="8px 0"
-                alignItems="center"
-              >
-                <VisibilityIcon />
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  marginLeft="4px"
-                  color="error.main"
-                  fontSize="18px"
+                  <Box
+                    textAlign="start"
+                    display="flex"
+                    margin="8px 0"
+                    alignItems="center"
+                  >
+                    <ChatBubbleIcon />
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      marginLeft="4px"
+                      color="error.main"
+                      fontSize="18px"
+                    >
+                      {totalComment}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid
+                  item
+                  xs={3}
+                  sm={6}
+                  md={3}
+                  style={{ display: "flex", alignItems: "center" }}
                 >
-                  {reviewNumber}
-                </Box>
-              </Box>
-            </Grid>
+                  <Box
+                    textAlign="start"
+                    display="flex"
+                    margin="8px 0"
+                    alignItems="center"
+                  >
+                    <VisibilityIcon />
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      marginLeft="4px"
+                      color="error.main"
+                      fontSize="18px"
+                    >
+                      {reviewNumber}
+                    </Box>
+                  </Box>
+                </Grid>
+              </>
+            )}
           </Grid>
         </CardContent>
       </Card>

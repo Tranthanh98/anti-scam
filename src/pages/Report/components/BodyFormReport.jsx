@@ -183,6 +183,9 @@ function BodyFormReport(props) {
   }
   return (
     <Box>
+      <Box margin="0 0 12px 0" fontStyle="italic" fontSize="14px">
+        (Những từ ngữ không phù hợp sẽ tự động chuyển thành dấu '***')
+      </Box>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField

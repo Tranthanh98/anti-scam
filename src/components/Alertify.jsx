@@ -16,8 +16,8 @@ const useStyle = makeStyles({
   },
   root: {
     position: "fixed",
-    bottom: "30px",
-    right: "30px",
+    bottom: "90px",
+    right: "20px",
     width: "fit-content",
     height: "fit-content",
     zIndex: 99999,

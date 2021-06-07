@@ -2,7 +2,7 @@ import { Box, InputBase } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import clsx from "clsx";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { selectMenuAct } from "../../actions/select-menu";
@@ -11,6 +11,10 @@ import logo from "../../assets/images/logo-primary.png";
 import route from "../../pages/route";
 import SelectLanguage from "../SelectLanguage";
 import SearchIcon from "@material-ui/icons/Search";
+import SearchComponent from "./SearchComponent";
+import debounce from "lodash.debounce";
+import * as httpClient from "../../general/HttpClient";
+import { useRef } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,6 +96,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuHeader() {
   const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [searchText, setSearchText] = useState("");
+  const [listPosts, setListPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const refSearch = useRef();
+
   const dispatch = useDispatch();
   const history = useHistory();
   const _goTo = (menu) => {
@@ -99,12 +110,51 @@ export default function MenuHeader() {
     history.push(menu.path);
   };
 
+  const _handleOnCloseSearch = () => {
+    setAnchorEl(null);
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", _handleOnCloseSearch);
+    return () => {
+      document.removeEventListener("click", _handleOnCloseSearch);
+    };
+  }, []);
+
   const _logout = () => {
     dispatch({ type: "LOGOUT" });
   };
   const menuSelected = useSelector((state) => state.selectMenu);
   const user = useSelector((state) => state.loginReducer);
 
+  const _getData = async (searchValue) => {
+    if (searchValue && searchValue.length > 0) {
+      setAnchorEl(refSearch.current);
+      setIsLoading(true);
+      try {
+        let res = await httpClient.sendGet("/post/search/" + searchValue);
+        if (res.data.isSuccess) {
+          setListPosts(res.data.data);
+        }
+      } catch (e) {
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const _debounceGetData = useCallback(
+    debounce((nextValue) => _getData(nextValue), 800),
+    []
+  );
+
+  const _handleOnChange = (e) => {
+    const { value } = e.target;
+    setSearchText(value);
+    if (value.length >= 3) {
+      _debounceGetData(value);
+    }
+  };
   return (
     <div className={classes.boxShadowMenu}>
       <Box
@@ -125,17 +175,25 @@ export default function MenuHeader() {
       </Box>
       <Box display="flex" justifyContent="flex-end" width="100%" height="50px">
         <Box display="flex" justifyContent="space-between" width="100%">
-          <div className={classes.search}>
+          <div className={classes.search} ref={refSearch}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Tìm kiếm"
+              placeholder="Tìm kiếm (ít nhất 3 ký tự)"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
+              value={searchText}
+              onChange={_handleOnChange}
+            />
+            <SearchComponent
+              anchorEl={anchorEl}
+              handleClose={_handleOnCloseSearch}
+              listPosts={listPosts}
+              isLoading={isLoading}
             />
           </div>
           <Box

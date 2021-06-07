@@ -15,7 +15,7 @@ function RightPage({ newestPost }) {
       <Box margin="8px 0">
         <HighLightReputation
           highlightPost={newestPost}
-          titleName="Các báo cáo lừa đảo nổi bật"
+          titleName="Báo cáo lừa đảo gần đây"
         />
       </Box>
     </>

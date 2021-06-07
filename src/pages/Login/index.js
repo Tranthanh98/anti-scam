@@ -1,4 +1,11 @@
-import { Hidden } from "@material-ui/core";
+import {
+  FormControl,
+  Hidden,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
@@ -9,8 +16,9 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { useLastLocation } from "react-router-last-location";
@@ -64,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginPage() {
   const classes = useStyles();
+  const [showPassword, setShowPassword] = useState(false);
 
   const userName = useInputText(
     "",
@@ -97,6 +106,10 @@ export default function LoginPage() {
     } else {
       dispatch(loginAct(userName.value, password.value, _gotoBack));
     }
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -148,7 +161,7 @@ export default function LoginPage() {
               autoFocus
               {...userName}
             />
-            <TextField
+            {/* <TextField
               variant="outlined"
               margin="normal"
               required
@@ -157,7 +170,34 @@ export default function LoginPage() {
               type="password"
               autoComplete="current-password"
               {...password}
-            />
+            /> */}
+            <FormControl
+              style={{ marginTop: "12px" }}
+              variant="outlined"
+              fullWidth
+            >
+              <InputLabel htmlFor="outlined-adornment-password">
+                Mật khẩu
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                {...password}
+                required
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                labelWidth={70}
+              />
+            </FormControl>
             <Button
               fullWidth
               variant="contained"

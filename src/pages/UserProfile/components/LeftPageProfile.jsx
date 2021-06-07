@@ -12,14 +12,13 @@ import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { addAlert } from "../../../actions/alertify.action";
 import { loadingAct } from "../../../actions/loading.action";
+import { UPDATE_USER } from "../../../actions/login.action";
 import ButtonCommon from "../../../components/ButtonCommon";
 import TextFromField from "../../../components/TextFromField";
 import { useInputText } from "../../../general/CustomHook";
-import { sleep } from "../../../general/helper";
+import * as httpClient from "../../../general/HttpClient";
 import SummaryProfile from "../../HomePage/components/SummaryProfile";
 import FormChangePassword from "./FormChangePassword";
-import * as httpClient from "../../../general/HttpClient";
-import { UPDATE_USER } from "../../../actions/login.action";
 
 const useStyles = makeStyles((theme) => ({
   cardContentCss: {

@@ -162,6 +162,14 @@ const CommentComponent = React.memo((props) => {
                     {currentUser?.userName}
                   </Box>
                 </Box>
+                <Box
+                  textAlign="start"
+                  fontStyle="italic"
+                  fontSize="14px"
+                  color="#ccc"
+                >
+                  (Các ngôn từ không phù hợp sẽ tự động chuyển thành dấu '***')
+                </Box>
                 <Box padding="8px" textAlign="start">
                   <TextFromField
                     variant="outlined"
