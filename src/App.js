@@ -1,6 +1,6 @@
 import { Box, ThemeProvider } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -13,6 +13,7 @@ import { addAlert } from "./actions/alertify.action";
 import { LOGOUT } from "./actions/login.action";
 import "./App.css";
 import Alertify from "./components/Alertify";
+import AppLoading from "./components/AppLoading";
 import BaseDrawer from "./components/BaseDrawer";
 import BaseModal from "./components/BaseModal";
 import LoadingComponent from "./components/LoadingComponent";
@@ -63,8 +64,11 @@ function App() {
     }
   }, [needLogout]);
 
+  const loading = useSelector((state) => state.apploading);
+
   return (
     <Box style={{ backgroundColor: "#bbbbbb8a" }}>
+      {loading ? <AppLoading /> : null}
       <div className="App">
         <ThemeProvider theme={theme}>
           <Router>

@@ -9,6 +9,7 @@ import * as httpClient from "../../general/HttpClient";
 import LeftPage from "./components/LeftPage";
 import RightPage from "./components/RightPage";
 import axios from "axios";
+import { updateLoading } from "../../actions/apploading.action";
 
 export const sortOptions = [
   {
@@ -41,6 +42,7 @@ class ReputationPage extends Component {
   cancelToken = axios.CancelToken.source();
 
   async componentDidMount() {
+    this.props.updateLoading(true);
     await this._getDataTable();
   }
 
@@ -125,6 +127,7 @@ class ReputationPage extends Component {
     } catch (e) {
     } finally {
       this._setNotFoundContent(false);
+      this.props.updateLoading(false);
     }
   };
 }
@@ -132,6 +135,7 @@ class ReputationPage extends Component {
 const mapStateToProps = (state) => ({});
 const mapDispatchToProps = {
   selectMenuAct: selectMenuAct,
+  updateLoading: updateLoading,
 };
 export default connect(
   mapStateToProps,

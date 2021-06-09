@@ -14,6 +14,7 @@ import debounce from "lodash.debounce";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAlert } from "../../actions/alertify.action";
+import { updateLoading } from "../../actions/apploading.action";
 import { openDrawerAct } from "../../actions/drawer.action";
 import { openModalAct } from "../../actions/modal.action";
 import BaseLayout from "../../components/BaseLayout";
@@ -93,10 +94,12 @@ function ReportPage(props) {
       dispatch(addAlert(String(e), "error"));
     } finally {
       setNotFoundContent(false);
+      dispatch(updateLoading(false));
     }
   };
 
   useEffect(() => {
+    dispatch(updateLoading(true));
     _getDefaultData();
     return () => {
       cancelToken.cancel();
