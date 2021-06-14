@@ -10,6 +10,7 @@ import LeftPage from "./components/LeftPage";
 import RightPage from "./components/RightPage";
 import axios from "axios";
 import { updateLoading } from "../../actions/apploading.action";
+import { Helmet } from "react-helmet";
 
 export const sortOptions = [
   {
@@ -62,6 +63,9 @@ class ReputationPage extends Component {
     };
     return (
       <BaseContext.Provider value={provider}>
+        <Helmet>
+          <title>Antiscam - Chống lừa đảo</title>
+        </Helmet>
         <BaseLayout leftChilren={<LeftPage />} rightChildren={<RightPage />} />
       </BaseContext.Provider>
     );

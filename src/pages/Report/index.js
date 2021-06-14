@@ -26,6 +26,7 @@ import SummaryProfile from "../HomePage/components/SummaryProfile";
 import BodyFormReport from "./components/BodyFormReport";
 import ProfileAnonymous from "./components/ProfileAnonymous";
 import ReportItem from "./components/ReportItem";
+import { Helmet } from "react-helmet";
 
 const sortOptions = [
   {
@@ -273,7 +274,15 @@ function ReportPage(props) {
     );
   };
   return (
-    <BaseLayout leftChilren={leftChildren()} rightChildren={rightChildren()} />
+    <>
+      <Helmet>
+        <title>Antiscam - Chống lừa đảo</title>
+      </Helmet>
+      <BaseLayout
+        leftChilren={leftChildren()}
+        rightChildren={rightChildren()}
+      />
+    </>
   );
 }
 
