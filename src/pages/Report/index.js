@@ -250,7 +250,7 @@ function ReportPage(props) {
         <Box margin="8px 0">
           <HighLightReputation
             highlightPost={highlightPost}
-            titleName="CÁC DỊCH VỤ UY TÍN NHẤT HIỆN NAY"
+            titleName="CÁC DỊCH VỤ UY TÍN HIỆN NAY"
           />
         </Box>
         <div>
