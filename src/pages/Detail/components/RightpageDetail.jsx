@@ -28,7 +28,7 @@ function RightpageDetail(props) {
               <>
                 <ReportIcon color="error" />
                 <Box fontWeight="bold" color="error.main" margin="0 0 0 8px">
-                  LỪA ĐẢO
+                  CÓ THỂ LỪA ĐẢO
                 </Box>
               </>
             )}

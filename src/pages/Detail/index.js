@@ -18,6 +18,13 @@ class Detail extends Component {
     window.scrollTo(0, 0);
     await this._getData();
   }
+
+  async componentDidUpdate(prevProp, prevState) {
+    const { match } = this.props;
+    if (prevProp?.match?.params.id !== match.params.id) {
+      await this._getData();
+    }
+  }
   _getData = async () => {
     const { match } = this.props;
     try {

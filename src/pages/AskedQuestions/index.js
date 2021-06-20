@@ -184,9 +184,9 @@ function AskedQuestions(props) {
             </Box>
             <Box margin="8px 0 24px 0" style={{ textIndent: "24px" }}>
               Rất tiếc là không, vì để xuất hiện trong Dịch Vụ Uy Tín, chúng tôi
-              cần kiểm tra rất kĩ càng và tất nhiên chỉ chúng tôi mới có thể để
-              đề xuất vì nếu ai cũng có thể đăng thì sẽ không đảm bảo được độ
-              tin cậy của bài viết. Tất cả là vì lời ích của người dùng.
+              cần kiểm tra rất kĩ càng và tất nhiên chỉ chúng tôi mới có thể đề
+              xuất vì nếu ai cũng có thể đăng thì sẽ không đảm bảo được độ tin
+              cậy của bài viết. Tất cả là vì lời ích của người dùng.
             </Box>
             <Box margin="8px 0" fontWeight="bold">
               3. Tôi là doanh nghiệp uy tín, làm sao để tôi được đăng bài vào
