@@ -10,7 +10,6 @@ export const LOGOUT = "LOGOUT";
 export const UPDATE_USER = "UPDATE_USER";
 
 export const loginAct = (email, password, callback) => async (dispatch) => {
-  console.log("loading");
   dispatch(loadingAct(true));
   try {
     dispatch({ type: REQUEST_LOGIN });

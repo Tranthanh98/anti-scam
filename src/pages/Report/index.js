@@ -140,7 +140,6 @@ function ReportPage(props) {
   };
 
   const _onClickReport = () => {
-    console.log("type options:", typeOptions);
     if (user?.data?.isAuth) {
       let modalData = {
         title: "Báo cáo lừa đảo",

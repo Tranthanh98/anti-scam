@@ -43,7 +43,6 @@ class Detail extends Component {
     let provider = {
       ...this.state,
     };
-    console.log("post:", post);
     return (
       <BaseContext.Provider value={provider}>
         <BaseLayout
