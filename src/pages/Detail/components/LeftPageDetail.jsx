@@ -10,7 +10,7 @@ import { connectToContext } from "../../../components/BaseContext";
 import PhotoSwipeWrapper from "../../../components/PhotoSwipe/PhotoSwipeWrapper";
 import CommentComponent from "./CommentComponent";
 import RightpageDetail from "./RightpageDetail";
-import {Helmet} from 'react-helmet';
+import { Helmet } from "react-helmet";
 
 const useStyles = makeStyles((theme) => ({
   titleCss: {
@@ -55,11 +55,11 @@ function LeftPageDetail(props) {
     <Box>
       <Helmet>
         <title>{title}</title>
-        <meta name="description" content={description ?? title}/>
-        <meta name="keywords" content={title}/>
-        {imageList && 
-          <meta property="og:image" content={imageList && imageList[1]} />        
-        }
+        <meta name="description" content={description ?? title} />
+        <meta name="keywords" content={title} />
+        {imageList && (
+          <meta property="og:image" content={imageList && imageList[1]} />
+        )}
       </Helmet>
       {isMobile ? (
         <Box margin="16px 0">
@@ -95,7 +95,7 @@ function LeftPageDetail(props) {
             Nội dung:
           </Box>
           <Box margin="0 16px" textAlign="start">
-            {description}
+            <div dangerouslySetInnerHTML={{ __html: description }} />
           </Box>
           <Box
             // className={classes.imageTitleCss}

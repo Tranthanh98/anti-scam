@@ -114,10 +114,14 @@ function BodyFormReport(props) {
       return;
     }
     dispatch(loadingAct(true));
+    //test
+    // console.log("text desciption:", [description.value]);
+    // return;
+    //
     try {
       let dataModel = {
         title: titleReport.value,
-        description: description.value,
+        description: description.value.replaceAll("\n", "<br/>"),
         kindOf: KIND_OF.Cheat,
         typePostList: listTypeInput.map((i) => ({
           typeId: i.type.value,
@@ -230,8 +234,8 @@ function BodyFormReport(props) {
                       <Box display="flex" marginBottom="12px">
                         <TextField
                           variant="outlined"
-                          label={item.type.label}
-                          placeholder={`Nhập ${item.type.label}`}
+                          label={item?.type?.label}
+                          placeholder={`Nhập ${item?.type?.label}`}
                           size="small"
                           fullWidth
                           value={item.data || ""}

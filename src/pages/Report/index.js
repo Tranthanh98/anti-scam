@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Checkbox,
   CircularProgress,
   Grid,
   TextField,
@@ -55,6 +56,7 @@ function ReportPage(props) {
     pageSize: 10,
     total: 0,
     totalPage: 0,
+    isMine: false,
   });
 
   const cancelToken = axios.CancelToken.source();
@@ -109,7 +111,12 @@ function ReportPage(props) {
 
   useEffect(() => {
     _getDataReport();
-  }, [searchModel.typeId, searchModel.currentPage, searchModel.sortType]);
+  }, [
+    searchModel.typeId,
+    searchModel.currentPage,
+    searchModel.sortType,
+    searchModel.isMine,
+  ]);
 
   const isMobile = window.mobileCheck();
   const user = useSelector((state) => state.loginReducer);
@@ -164,6 +171,15 @@ function ReportPage(props) {
       currentPage: value,
     });
   };
+
+  const _onCheckIsMine = (e) => {
+    const { checked } = e.target;
+    setSearchModel({
+      ...searchModel,
+      isMine: checked,
+    });
+  };
+
   const leftChildren = () => {
     return (
       <>
@@ -205,16 +221,37 @@ function ReportPage(props) {
               </Grid>
             </Grid>
             <Box margin="16px 0"></Box>
-            <Grid item xs={12}>
-              <Box display="flex" justifyContent="flex-end" width="100%">
-                <Button
-                  onClick={_onClickReport}
-                  variant="contained"
-                  color="primary"
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Box
+                  display="flex"
+                  justifyContent="flex-start"
+                  width="100%"
+                  alignItems="center"
                 >
-                  Báo cáo lừa đảo
-                </Button>
-              </Box>
+                  {user?.data?.isAuth ? (
+                    <>
+                      <Checkbox
+                        checked={searchModel.isMine}
+                        onChange={_onCheckIsMine}
+                        color="primary"
+                      />
+                      <Box marginLeft="8px">Bài đăng của tôi</Box>
+                    </>
+                  ) : null}
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <Box display="flex" justifyContent="flex-end" width="100%">
+                  <Button
+                    onClick={_onClickReport}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Báo cáo lừa đảo
+                  </Button>
+                </Box>
+              </Grid>
             </Grid>
           </CardContent>
         </Card>
