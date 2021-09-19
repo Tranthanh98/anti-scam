@@ -29,6 +29,11 @@ import antiscamText from "../../assets/images/antiscam.png";
 import logoAntiscam from "../../assets/images/logo-primary.png";
 import { useInputText } from "../../general/CustomHook";
 import { Paths } from "../route";
+import firebase from "firebase/app";
+
+// These imports load individual services into the firebase namespace.
+import "firebase/auth";
+import { signIdData } from "../../actions/signin.action";
 
 function Copyright() {
   return (
@@ -110,6 +115,29 @@ export default function LoginPage() {
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const loginFacebook = () => {
+    var provider = new firebase.auth.FacebookAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        const data = {
+          token: result.credential.accessToken,
+          user: {
+            userName: result.additionalUserInfo?.profile?.name,
+            joinedDate: new Date(),
+            email: result.additionalUserInfo?.profile?.email,
+            isAuth: true,
+            totalPosts: 0,
+            imageAvatar: result.additionalUserInfo?.profile?.picture.data.url,
+          },
+        };
+        dispatch(signIdData(data));
+        _gotoBack();
+      })
+      .catch((e) => dispatch(addAlert("Có lỗi xảy ra khi đăng nhập", "error")));
   };
 
   return (
@@ -219,6 +247,16 @@ export default function LoginPage() {
                 </Link>
               </Grid>
             </Grid>
+            {/* <Box
+              margin="16px 0"
+              display="flex"
+              justifyContent="center"
+              width="100%"
+            >
+              <Button color="primary" onClick={loginFacebook}>
+                Đăng nhập với Facebook
+              </Button>
+            </Box> */}
             <Box
               margin="16px 0"
               display="flex"

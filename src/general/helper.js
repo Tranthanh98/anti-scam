@@ -111,3 +111,7 @@ export function getGuid() {
 export function getPath(p) {
   return window.applicationBaseUrl ? window.applicationBaseUrl + p : p;
 }
+
+export function isBlank(str) {
+  return !str || /^\s*$/.test(str);
+}

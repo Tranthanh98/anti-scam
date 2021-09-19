@@ -12,26 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addAlert } from "../../../actions/alertify.action";
 import { connectToContext } from "../../../components/BaseContext";
 import TextFromField from "../../../components/TextFromField";
+import { isBlank } from "../../../general/helper";
 import * as httpClient from "../../../general/HttpClient";
 import ItemComponent from "./ItemComponent";
-
-let idComment = 1;
-function createComment(name, imageAvatar, commentContent) {
-  return {
-    id: idComment++,
-    name,
-    imageAvatar,
-    commentContent,
-    createdDate: new Date(),
-  };
-}
-
-const commentItem = [
-  createComment("Thành", "/fake-image", "Thằng chó đấy"),
-  createComment("Yến", "/fake-image", "Nó cũng lừa em"),
-  createComment("Ẩn danh", "/fake-image", "Sợ vl"),
-  createComment("Ẩn danh", "/fake-image", "Tránh xa nó ra mn ơi :(("),
-];
 
 const useStyles = makeStyles((theme) => ({
   nameCss: {
@@ -99,7 +82,8 @@ const CommentComponent = React.memo((props) => {
   };
 
   const _onClickComment = async () => {
-    if (!yourComment || yourComment.length === 0) {
+    if (!yourComment || yourComment.length === 0 || isBlank(yourComment)) {
+      setYourComment("");
       dispatch(addAlert("Không được để trống bình luận", "error"));
       return;
     }

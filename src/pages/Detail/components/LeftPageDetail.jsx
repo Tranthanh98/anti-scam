@@ -105,7 +105,7 @@ function LeftPageDetail(props) {
           >
             Hình ảnh:
           </Box>
-          <Box textAlign="start" display="flex" marginTop="8px">
+          <Box textAlign="start" display="block" marginTop="8px">
             {!imageList || imageList.length === 0 ? (
               <Box>Không có hình ảnh nào được cung cấp</Box>
             ) : (
@@ -113,7 +113,7 @@ function LeftPageDetail(props) {
                 return (
                   <Box
                     key={index}
-                    display="flex"
+                    display="inline-block"
                     alignItems="center"
                     justifyContent="center"
                     width="150px"

@@ -8,11 +8,13 @@ import { createStore, applyMiddleware } from "redux";
 import appReducers from "./reducers/index";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-// import * as Firebase from 'firebase';
+import Firebase from "firebase/app";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
 import LoadingComponent from "./components/LoadingComponent";
+import "firebase/auth";
+import "firebase/database";
 
 const persistConfig = {
   key: "userProfile",
@@ -24,22 +26,18 @@ const pReducer = persistReducer(persistConfig, appReducers);
 
 const store = createStore(pReducer, applyMiddleware(thunk));
 const persistor = persistStore(store);
-// const persistor = persistStore(store);
 
-// const store = createStore(appReducers, applyMiddleware(thunk));
+const firebaseConfig = {
+  apiKey: "AIzaSyBAD0375rKfYkYkIXwhnK13zETYqUg5TWo",
+  authDomain: "anti-scam-vn.firebaseapp.com",
+  projectId: "anti-scam-vn",
+  storageBucket: "anti-scam-vn.appspot.com",
+  messagingSenderId: "897567384173",
+  appId: "1:897567384173:web:7143f7e340e43ad703d564",
+  measurementId: "G-PC5L9JTPE6",
+};
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDk-X_2562aHJZD7wmQRMu9o7ke7OzrlKs",
-//   authDomain: "shop-clothes-944e2.firebaseapp.com",
-//   databaseURL: "https://shop-clothes-944e2-default-rtdb.firebaseio.com",
-//   projectId: "shop-clothes-944e2",
-//   storageBucket: "shop-clothes-944e2.appspot.com",
-//   messagingSenderId: "449716003803",
-//   appId: "1:449716003803:web:0cbf577280a0cceb9f7dfe",
-//   measurementId: "G-0NPDF10MRJ"
-// };
-
-// Firebase.initializeApp(firebaseConfig);
+Firebase.initializeApp(firebaseConfig);
 
 ReactDOM.render(
   <Provider store={store}>
