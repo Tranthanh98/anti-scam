@@ -116,9 +116,9 @@ function LeftPageDetail(props) {
                     display="inline-block"
                     alignItems="center"
                     justifyContent="center"
-                    width="150px"
-                    height="170px"
-                    margin="8px"
+                    maxWidth="127px"
+                    // minHeight="170px"
+                    margin="12px"
                     onClick={() => _openImage(index)}
                   >
                     <img
