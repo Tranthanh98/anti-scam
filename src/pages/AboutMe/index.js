@@ -9,6 +9,12 @@ function AboutMe(props) {
   const widthScreen = window.innerWidth;
   return (
     <>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6633404321853475"
+        crossorigin="anonymous"
+      ></script>
+
       <Box width="100%" marginTop="12px">
         <img
           src={logoText}

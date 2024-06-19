@@ -47,6 +47,11 @@ function HomePage(props) {
   }, [history.location.pathname]);
   return (
     <Box className={classes.body}>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6633404321853475"
+        crossorigin="anonymous"
+      ></script>
       {isMobile ? <MenuMobile isMobile={isMobile} /> : <MenuHeader />}
       <Box height={isMobile ? "50px" : "80px"}></Box>
       <Box

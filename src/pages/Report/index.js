@@ -183,6 +183,11 @@ function ReportPage(props) {
   const leftChildren = () => {
     return (
       <>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6633404321853475"
+          crossorigin="anonymous"
+        ></script>
         <Card>
           <CardHeader title="CÁC WEBSITE, TỔ CHỨC, CÁ NHÂN BỊ TỐ CÁO LỪA ĐẢO" />
           <CardContent>

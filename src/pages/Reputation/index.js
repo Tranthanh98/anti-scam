@@ -63,6 +63,12 @@ class ReputationPage extends Component {
     };
     return (
       <BaseContext.Provider value={provider}>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6633404321853475"
+          crossorigin="anonymous"
+        ></script>
+
         <Helmet>
           <title>Antiscam - Chống lừa đảo</title>
         </Helmet>

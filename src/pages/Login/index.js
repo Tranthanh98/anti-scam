@@ -246,7 +246,7 @@ export default function LoginPage() {
               data-client_id="897567384173-rqc5id46ujmvf8es4fhla2ptt96i6v50.apps.googleusercontent.com"
               data-context="signin"
               data-ux_mode="popup"
-              data-login_uri="http://localhost:24508/api/user/login-google"
+              data-login_uri="http://localhost:24508/api/user/LoginGoogle"
               data-auto_prompt="false"
             ></div>
 

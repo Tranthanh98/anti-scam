@@ -12,6 +12,11 @@ function AskedQuestions(props) {
   const theme = useTheme();
   return (
     <>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6633404321853475"
+        crossorigin="anonymous"
+      ></script>
       <Box width="100%" marginTop="-80px">
         <img
           src={logoText}
@@ -145,7 +150,11 @@ function AskedQuestions(props) {
             <Box margin="8px 0 24px 0" style={{ textIndent: "24px" }}>
               Điều này rất tốt và chúng tôi rất vui vì điều đó. Bạn có thể Copy
               link bài báo cáo của bạn trước đó và gửi về{" "}
-              <a href="mailto:antiscam.contact@gmail.com" target="_blank">
+              <a
+                href="mailto:antiscam.contact@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 antiscam.contact@gmail.com
               </a>{" "}
               với tiêu đề “XIN XÓA BÀI BÁO CÁO LỪA ĐẢO”. Chúng tôi sẽ xử lý yêu
@@ -195,7 +204,11 @@ function AskedQuestions(props) {
             <Box margin="8px 0 24px 0" style={{ textIndent: "24px" }}>
               Nếu bạn tự tin về độ tin cậy của mình, xin hãy liên hệ với chúng
               tôi thông qua{" "}
-              <a href="mailto:antiscam.contact@gmail.com" target="_blank">
+              <a
+                href="mailto:antiscam.contact@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 antiscam.contact@gmail.com
               </a>{" "}
               . Chúng tôi sẽ có quy trình xác minh và sau đó bạn sẽ được xuất
