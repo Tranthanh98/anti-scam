@@ -114,6 +114,8 @@
       crossorigin="anonymous"
     ></script>
 
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <style>
       .info {
         display: none;
@@ -142,27 +144,17 @@
     <!-- Your Plugin chat code -->
     <div id="fb-customer-chat" class="fb-customerchat"></div>
 
-    <script>
+    <sc>
       var chatbox = document.getElementById("fb-customer-chat");
       chatbox.setAttribute("page_id", "110689834539830");
-      chatbox.setAttribute("attribution", "page_inbox");
-      window.fbAsyncInit = function () {
-        FB.init({
-          xfbml: true,
-          version: "v10.0",
-        });
-      };
-
-      (function (d, s, id) {
-        var js,
-          fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      })(document, "script", "facebook-jssdk");
-    </script>
+      chatbox.setAttribute("attribution", "page_inbox"); window.fbAsyncInit =
+      function () { FB.init({ xfbml: true, version: "v10.0", }); }; (function
+      (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if
+      (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src
+      = "https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js";
+      fjs.parentNode.insertBefore(js, fjs); })(document, "script",
+      "facebook-jssdk");
+    </sc>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

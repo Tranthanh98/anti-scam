@@ -18,7 +18,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { useLastLocation } from "react-router-last-location";
@@ -30,6 +30,7 @@ import logoAntiscam from "../../assets/images/logo-primary.png";
 import { useInputText } from "../../general/CustomHook";
 import { Paths } from "../route";
 import firebase from "firebase/app";
+import * as httpClient from "../../general/HttpClient";
 
 // These imports load individual services into the firebase namespace.
 import "firebase/auth";
@@ -91,6 +92,48 @@ export default function LoginPage() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    // Load the Google Sign-In script
+    const loadGoogleScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      script.onload = initializeGoogleSignIn;
+      document.body.appendChild(script);
+    };
+
+    // Initialize the Google Sign-In button
+    const initializeGoogleSignIn = () => {
+      window.google.accounts.id.initialize({
+        client_id:
+          "897567384173-rqc5id46ujmvf8es4fhla2ptt96i6v50.apps.googleusercontent.com",
+        callback: handleCredentialResponse,
+        ux_mode: "popup",
+        // login_uri: "http://localhost:24508/api/user/LoginGoogle",
+      });
+
+      window.google.accounts.id.renderButton(
+        document.getElementById("google-signin-button"),
+        { theme: "outline", size: "large" }
+      );
+    };
+
+    const handleCredentialResponse = (response) => {
+      console.log("Google ID token:", response.credential);
+      httpClient
+        .sendPost("/user/LoginGoogle", {
+          credential: response.credential,
+        })
+        .then((res) => {
+          dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data });
+          _gotoBack();
+        });
+    };
+
+    loadGoogleScript();
+  }, []);
+
   const lastHistory = useLastLocation();
   const _gotoBack = () => {
     console.log("lastHistory:", lastHistory);
@@ -114,9 +157,7 @@ export default function LoginPage() {
   };
 
   const onSignIn = (googleUser) => {
-    const id_token = googleUser.getAuthResponse().id_token;
-
-    console.log("id token:", id_token);
+    console.log("callback:", googleUser);
   };
 
   const handleClickShowPassword = () => {
@@ -241,13 +282,14 @@ export default function LoginPage() {
             >
               Đăng nhập
             </Button>
-            <div
+            {/* <div
               id="g_id_onload"
               data-client_id="897567384173-rqc5id46ujmvf8es4fhla2ptt96i6v50.apps.googleusercontent.com"
               data-context="signin"
               data-ux_mode="popup"
               data-login_uri="http://localhost:24508/api/user/LoginGoogle"
               data-auto_prompt="false"
+              data-callback="function (){}"
             ></div>
 
             <div
@@ -258,7 +300,8 @@ export default function LoginPage() {
               data-text="signin_with"
               data-size="large"
               data-logo_alignment="left"
-            ></div>
+            ></div> */}
+            <div id="google-signin-button"></div>
 
             <Grid container spacing={2}>
               <Grid item xs={12} sm>
